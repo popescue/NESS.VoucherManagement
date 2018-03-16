@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using NESS.VoucherManagement.Models;
 
 namespace NESS.VoucherManagement.ViewModels
 {
-    public class WorkingPeriodVm
+    public class WorkingPeriodViewModel
     {
-        public WorkingPeriodVm(int year, int month)
+        public WorkingPeriodViewModel(int year, int month)
         {
             Year = year;
             AvailableMonths = DateTimeFormatInfo.CurrentInfo.MonthNames.Zip(Enumerable.Range(1, 12), (name, index) => new Month(index, name));

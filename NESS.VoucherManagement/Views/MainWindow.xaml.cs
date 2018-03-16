@@ -1,12 +1,10 @@
-﻿using System;
-using System.Linq;
 using System.Windows;
-using System.Windows.Forms;
+using NESS.VoucherManagement.Utils;
 using NESS.VoucherManagement.ViewModels;
 using DataFormats = System.Windows.DataFormats;
 using DragEventArgs = System.Windows.DragEventArgs;
 
-namespace NESS.VoucherManagement
+namespace NESS.VoucherManagement.Views
 {
     public partial class MainWindow
     {
@@ -44,14 +42,7 @@ namespace NESS.VoucherManagement
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
-            var openFileDialog = new SaveFileDialog();
-            openFileDialog.Filter = "Excel Files|*.xlsx";
-            var dialogResult = openFileDialog.ShowDialog();
-            if (dialogResult == System.Windows.Forms.DialogResult.OK)
-            {
-                ((MainWindowViewModel) DataContext).DestinationFile = openFileDialog.FileName;
-                ((MainWindowViewModel) DataContext).CalculateVouchers();
-            }
+            ExecuteButton.IsEnabled = false;
         }
     }
 }

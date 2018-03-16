@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-
-namespace NESS.VoucherManagement.ViewModels
+﻿namespace NESS.VoucherManagement.Models
 {
     public struct Month
     {

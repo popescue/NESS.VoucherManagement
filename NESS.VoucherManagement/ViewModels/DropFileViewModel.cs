@@ -7,7 +7,7 @@ using NESS.VoucherManagement.Properties;
 
 namespace NESS.VoucherManagement.ViewModels
 {
-    public sealed class DropFileVm : INotifyPropertyChanged
+    public sealed class DropFileViewModel : INotifyPropertyChanged
     {
         private string description;
 
@@ -17,7 +17,7 @@ namespace NESS.VoucherManagement.ViewModels
 
         private string path;
 
-        public DropFileVm(string description) => Description = description;
+        public DropFileViewModel(string description) => Description = description;
 
         public string Path
         {

@@ -1,10 +1,8 @@
-﻿using System;
-using System.Linq;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 
-namespace NESS.VoucherManagement
+namespace NESS.VoucherManagement.Views
 {
     public partial class DropFileControl : UserControl
     {

@@ -3,7 +3,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Windows.Media.Imaging;
 
-namespace NESS.VoucherManagement
+namespace NESS.VoucherManagement.Utils
 {
     internal static class IconExtensions
     {

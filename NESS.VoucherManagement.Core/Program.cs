@@ -10,36 +10,33 @@ namespace NESS.VoucherManagement.Core
 {
     public class Program
     {
-        private static readonly List<string> DaysOutOfOffice = new List<string> {"1201", "401", "980", "201", "902", "501", "901", "910", "981", "701" };
+        private static readonly List<string> DaysOutOfOffice = new List<string> {"1201", "401", "980", "201", "902", "501", "901", "910", "981", "701"};
 
-
-        public static void Calculate(string employeesXmlPath, string businessTripsXmlPath, string timeKeepingXmlPath, string destinationFolder, int v, int selectedYear)
+        public static void Calculate(string employeesXmlPath, string businessTripsXmlPath, string timeKeepingXmlPath, string destinationFolder, int month, int year)
         {
-
             var timesheets = GetTimesheets(timeKeepingXmlPath);
 
             var delegations = GetDelegations(businessTripsXmlPath);
 
             var employees = GetEmployees(employeesXmlPath);
 
-            var tickets = GetLunchTickets(employees, timesheets, delegations, v, selectedYear);
+            var tickets = GetLunchTickets(employees, timesheets, delegations, month, year);
 
             Export(tickets, Path.Combine(destinationFolder));
         }
 
-        private static void Export(IEnumerable<LunchTicket> tickets, string filePath)
+        private static void Export(IEnumerable<LunchTicketThing> tickets, string filePath)
         {
             var lunchTicketMapper = new Mapper();
 
             lunchTicketMapper
-                .Map<LunchTicket>("NUME", x => x.LastName)
-                .Map<LunchTicket>("PRENUME", x => x.FirstName)
-                .Map<LunchTicket>("CNP", x => x.PersonalId)
-                .Map<LunchTicket>("NR_TICHETE", x => x.Count)
-                .Map<LunchTicket>("FV", x => x.Value).UseFormat(typeof(decimal), "#.00");
+                .Map<LunchTicketThing>("NUME", x => x.Employee.LastName)
+                .Map<LunchTicketThing>("PRENUME", x => x.Employee.FirstName)
+                .Map<LunchTicketThing>("CNP", x => x.Employee.PersonalId)
+                .Map<LunchTicketThing>("NR_TICHETE", x => x.Count)
+                .Map<LunchTicketThing>("FV", x => LunchTicketThing.Value).UseFormat(typeof(decimal), "#.00");
 
             lunchTicketMapper.Save(filePath, tickets);
-
         }
 
         private static IEnumerable<DateTime> GetHolidays(int month, int year)
@@ -53,73 +50,71 @@ namespace NESS.VoucherManagement.Core
                 .ToList();
         }
 
-        private static IEnumerable<Employee> GetEmployees(string employeesXmlPath)
+        private static IEnumerable<ExcelEmployee> GetEmployees(string employeesXmlPath)
         {
             var employeeMapper = new Mapper(employeesXmlPath);
 
             employeeMapper
-                .Map<Employee>("Pers.no.", x => x.SapId)
-                .Map<Employee>("Last name", x => x.LastName)
-                .Map<Employee>("First name", x => x.FirstName)
-                .Map<Employee>("ID number", x => x.PersonalId);
+                .Map<ExcelEmployee>("Pers.no.", x => x.SapId)
+                .Map<ExcelEmployee>("Last name", x => x.LastName)
+                .Map<ExcelEmployee>("First name", x => x.FirstName)
+                .Map<ExcelEmployee>("ID number", x => x.PersonalId);
 
-            return employeeMapper.Take<Employee>().Select(x => x.Value);
+            return employeeMapper.Take<ExcelEmployee>().Select(x => x.Value);
         }
 
-        private static IEnumerable<Delegation> GetDelegations(string businessTripsXmlPath)
+        private static IEnumerable<ExcelDelegation> GetDelegations(string businessTripsXmlPath)
         {
             var delegationMapper = new Mapper(businessTripsXmlPath);
 
             delegationMapper
-                .Map<Delegation>("Company code", x => x.CompanyCode)
-                .Map<Delegation>("SAP ID", x => x.SapId)
-                .Map<Delegation>("Nume Prenume", x => x.Name)
-                .Map<Delegation>(3, x => x.DaysInDelegation);
+                .Map<ExcelDelegation>("Company code", x => x.CompanyCode)
+                .Map<ExcelDelegation>("SAP ID", x => x.SapId)
+                .Map<ExcelDelegation>("Nume Prenume", x => x.Name)
+                .Map<ExcelDelegation>(3, x => x.DaysInDelegation);
 
-            return delegationMapper.Take<Delegation>().Select(x => x.Value);
+            return delegationMapper.Take<ExcelDelegation>().Select(x => x.Value);
         }
 
-        private static IEnumerable<Timesheet> GetTimesheets(string timeKeepingXmlPath)
+        private static IEnumerable<ExcelTimesheet> GetTimesheets(string timeKeepingXmlPath)
         {
             var timesheetMapper = new Mapper(timeKeepingXmlPath);
 
             timesheetMapper
-                .Map<Timesheet>("Pers.No.", x => x.SapId)
-                .Map<Timesheet>("Name", x => x.Name)
-                .Map<Timesheet>("OpAc", x => x.OperationId)
-                .Map<Timesheet>("Ac.Descr.", x => x.OperationDescription)
-                .Map<Timesheet>("Date", x => x.Date).Format<Timesheet>("dd.MM.yyyy", t=>t.Date);
+                .Map<ExcelTimesheet>("Pers.No.", x => x.EmployeeSapId)
+                .Map<ExcelTimesheet>("Name", x => x.EmployeeName)
+                .Map<ExcelTimesheet>("OpAc", x => x.OperationId)
+                .Map<ExcelTimesheet>("Ac.Descr.", x => x.OperationDescription)
+                .Map<ExcelTimesheet>("Date", x => x.Date).Format<ExcelTimesheet>("dd.MM.yyyy", t => t.Date);
 
-            return timesheetMapper.Take<Timesheet>().Select(x => x.Value);
+            return timesheetMapper.Take<ExcelTimesheet>().Select(x => x.Value);
         }
 
-        private static IEnumerable<LunchTicket> GetLunchTickets(IEnumerable<Employee> employees,
-            IEnumerable<Timesheet> timesheets, IEnumerable<Delegation> delegations, int month, int year)
+        private static IEnumerable<LunchTicketThing> GetLunchTickets(IEnumerable<ExcelEmployee> employees,
+            IEnumerable<ExcelTimesheet> timesheets, IEnumerable<ExcelDelegation> delegations, int month, int year)
         {
             var workingDaysCount = GetWorkingDaysCount(month, year);
 
             var bankHolidaysCount = GetHolidays(month, year).Count();
 
-            var tickets = new List<LunchTicket>();
+            var tickets = new List<LunchTicketThing>();
 
             foreach (var employee in employees)
             {
-                var timesheet = timesheets.Where(x => x.SapId == employee.SapId);
+                var timesheet = timesheets.Where(x => x.EmployeeSapId == employee.SapId);
 
                 var daysOff = timesheet.Count(x => DaysOutOfOffice.Contains(x.OperationId));
                 var workedDays = timesheet.Count(x => !DaysOutOfOffice.Contains(x.OperationId));
 
-                var delegationDaysOff = delegations.Where(x => x.SapId == employee.SapId).Sum(_ =>_.DaysInDelegation);
+                var delegationDaysOff = delegations.Where(x => x.SapId == employee.SapId).Sum(_ => _.DaysInDelegation);
 
                 var ticketsCount = 0;
                 if (workedDays > 0)
                     ticketsCount = workingDaysCount - bankHolidaysCount - daysOff - delegationDaysOff;
-                
-                tickets.Add(new LunchTicket
+
+                tickets.Add(new LunchTicketThing
                 {
-                    PersonalId = employee.PersonalId,
-                    LastName= employee.LastName,
-                    FirstName= employee.FirstName,
+                    Employee = employee,
                     Count = ticketsCount
                 });
             }
@@ -134,33 +129,25 @@ namespace NESS.VoucherManagement.Core
 
             bool IsWorkingDay(DateTime x) => x.DayOfWeek != DayOfWeek.Saturday && x.DayOfWeek != DayOfWeek.Sunday;
 
-           return daysOfMonth.Where(IsWorkingDay).Count();
+            return daysOfMonth.Where(IsWorkingDay).Count();
         }
     }
 
-    internal class LunchTicket
+    public class LunchTicketThing
     {
-//        [Column("NUME")]
-        public string LastName { get; set; }
+        public const decimal Value = 15M;
 
-//        [Column("PRENUME")]
-        public string FirstName { get; set; }
+        public ExcelEmployee Employee { get; set; }
 
-//        [Column("CNP")]
-        public string PersonalId { get; set; }
-        
-//        [Column("NR_TICHETE")]
         public int Count { get; set; }
-
-//        [Column("FV")]
-        public decimal Value => 15M;
     }
 
-    internal class Timesheet
+    public class ExcelTimesheet
     {
-        public string SapId { get; set; }
+        public string EmployeeSapId { get; set; }
 
-        public string Name { get; set; }
+        // Maybe we don't need this column
+        public string EmployeeName { get; set; }
 
         public string OperationId { get; set; }
 
@@ -169,7 +156,7 @@ namespace NESS.VoucherManagement.Core
         public DateTime Date { get; set; }
     }
 
-    internal class Employee
+    public class ExcelEmployee
     {
         public string SapId { get; set; }
 
@@ -180,7 +167,7 @@ namespace NESS.VoucherManagement.Core
         public string PersonalId { get; set; }
     }
 
-    internal class Delegation
+    public class ExcelDelegation
     {
         public string SapId { get; set; }
 

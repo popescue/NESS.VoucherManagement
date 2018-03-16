@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2036
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NESS.VoucherManagement", "NESS.VoucherManagement\NESS.VoucherManagement.csproj", "{FF526940-8C36-43A7-8645-9F7B8710BA71}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NESS.VoucherManagement.Core", "NESS.VoucherManagement.Core\NESS.VoucherManagement.Core.csproj", "{D3C2154B-1889-4831-8DF8-81DAC575CC90}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "NESS.VoucherManagement.Installer", "NESS.VoucherManagement.Installer\NESS.VoucherManagement.Installer.vdproj", "{A914EA93-8651-410A-BB7A-77148D096AF7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FF526940-8C36-43A7-8645-9F7B8710BA71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF526940-8C36-43A7-8645-9F7B8710BA71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF526940-8C36-43A7-8645-9F7B8710BA71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF526940-8C36-43A7-8645-9F7B8710BA71}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3C2154B-1889-4831-8DF8-81DAC575CC90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3C2154B-1889-4831-8DF8-81DAC575CC90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3C2154B-1889-4831-8DF8-81DAC575CC90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3C2154B-1889-4831-8DF8-81DAC575CC90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A914EA93-8651-410A-BB7A-77148D096AF7}.Debug|Any CPU.ActiveCfg = Debug
+		{A914EA93-8651-410A-BB7A-77148D096AF7}.Release|Any CPU.ActiveCfg = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5E9AEB76-E56D-4201-A04D-1593A1A27411}
+	EndGlobalSection
+EndGlobal

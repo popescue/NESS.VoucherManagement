@@ -1,0 +1,148 @@
+﻿<mah:MetroWindow
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:NESS.VoucherManagement"
+    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:Class="NESS.VoucherManagement.MainWindow"
+    Title="Voucher Management"
+    Width="825"
+    Height="350"
+    MinWidth="725"
+    MinHeight="350"
+    BorderThickness="0"
+    GlowBrush="Black"
+    Icon="Images/ness.png"
+    ResizeMode="CanResizeWithGrip"
+    ShowIconOnTitleBar="False"
+    ShowMaxRestoreButton="False"
+    WindowStartupLocation="CenterScreen"
+    WindowTransitionsEnabled="False"
+    mc:Ignorable="d">
+    <mah:MetroWindow.Resources>
+        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent" />
+        <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Transparent" />
+    </mah:MetroWindow.Resources>
+    <mah:MetroWindow.DataContext>
+        <local:MainWindowViewModel />
+    </mah:MetroWindow.DataContext>
+    <mah:MetroWindow.Background>
+        <ImageBrush ImageSource="Images/background.jpg" />
+    </mah:MetroWindow.Background>
+    <Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="90" />
+            </Grid.RowDefinitions>
+
+            <Border
+                Grid.Row="0"
+                Grid.Column="0"
+                AllowDrop="true"
+                Background="Transparent"
+                BorderBrush="White"
+                BorderThickness="2,2,0,2"
+                Drop="TimekeepingDropHandler">
+                <local:DropFileControl
+                    Description="{Binding TimekeepingVm.Description}"
+                    FilePath="{Binding TimekeepingVm.Path}"
+                    FileIcon="{Binding TimekeepingVm.FileIcon}"
+                    FrontFacing="{Binding TimekeepingVm.IsPopulated}" />
+            </Border>
+
+            <Border
+                Grid.Row="0"
+                Grid.Column="1"
+                AllowDrop="true"
+                Background="Transparent"
+                BorderBrush="White"
+                BorderThickness="2"
+                Drop="BusinessTripsDropHandler">
+                <local:DropFileControl
+                    Description="{Binding BusinessTripsVm.Description}"
+                    FilePath="{Binding BusinessTripsVm.Path}"
+                    FileIcon="{Binding BusinessTripsVm.FileIcon}"
+                    FrontFacing="{Binding BusinessTripsVm.IsPopulated}" />
+            </Border>
+
+            <Border
+                Grid.Row="0"
+                Grid.Column="2"
+                AllowDrop="true"
+                Background="Transparent"
+                BorderBrush="White"
+                BorderThickness="0,2,2,2"
+                Drop="EmployeesDropHandler">
+                <local:DropFileControl
+                    Description="{Binding EmployeesVm.Description}"
+                    FilePath="{Binding EmployeesVm.Path}"
+                    FileIcon="{Binding EmployeesVm.FileIcon}"
+                    FrontFacing="{Binding EmployeesVm.IsPopulated}" />
+            </Border>
+
+            <Border
+                Grid.Row="0"
+                Grid.Column="3"
+                AllowDrop="true"
+                Background="Transparent"
+                BorderBrush="White"
+                BorderThickness="2,2,0,2"
+                Drop="TimekeepingDropHandler">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <StackPanel
+                        Grid.Row="1"
+                        Margin="5,5,0,5"
+                        Orientation="Horizontal">
+                        <Label Width="50" VerticalAlignment="Center" Content="Anul:" />
+                        <mah:NumericUpDown
+                            x:Name="YearNumbericDropDown"
+                            Width="100"
+                            Height="20"
+                            HorizontalAlignment="Stretch"
+                            Maximum="2050"
+                            Minimum="2010"
+                            Value="{Binding WorkingPeriodVm.Year, Mode=TwoWay}" />
+                    </StackPanel>
+                    <StackPanel
+                        Grid.Row="2"
+                        Margin="5,5,0,5"
+                        Orientation="Horizontal">
+                        <Label Width="50" VerticalAlignment="Center" Content="Luna:" />
+                        <ComboBox
+                            x:Name="MonthDropDown"
+                            Width="100"
+                            Height="20"
+                            HorizontalAlignment="Stretch"
+                            DisplayMemberPath="Name"
+                            SelectedValuePath="Index"
+                            SelectedItem="{Binding WorkingPeriodVm.Month}"
+                            ItemsSource="{Binding WorkingPeriodVm.AvailableMonths}"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <Button
+                Grid.Row="1"
+                Grid.Column="0"
+                Grid.ColumnSpan="4"
+                Width="200"
+                Height="40"
+                Click="ButtonBase_OnClick"
+                Style="{StaticResource AccentedSquareButtonStyle}" Content="Exporta rezultatul" />
+        </Grid>
+    </Grid>
+</mah:MetroWindow>

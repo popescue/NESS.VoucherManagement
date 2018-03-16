@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
+using NESS.VoucherManagement.ViewModels;
 using DataFormats = System.Windows.DataFormats;
 using DragEventArgs = System.Windows.DragEventArgs;
 

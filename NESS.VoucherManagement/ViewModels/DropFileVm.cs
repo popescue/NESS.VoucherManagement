@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Media.Imaging;
-using NESS.VoucherManagement.Annotations;
+using NESS.VoucherManagement.Properties;
 
 namespace NESS.VoucherManagement.ViewModels
 {

@@ -85,6 +85,7 @@
     </ApplicationDefinition>
     <Compile Include="ViewModels\DropFileVm.cs" />
     <Compile Include="ViewModels\Month.cs" />
+    <Compile Include="Utils\MVVM\RelayCommand.cs" />
     <Compile Include="ViewModels\WorkingPeriodVm.cs" />
     <Page Include="DropFileControl.xaml">
       <SubType>Designer</SubType>
@@ -101,7 +102,7 @@
     <Compile Include="DropFileControl.xaml.cs">
       <DependentUpon>DropFileControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Converters\FilePathValueConverter.cs" />
+    <Compile Include="Utils\Converters\FilePathValueConverter.cs" />
     <Compile Include="IconExtensions.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

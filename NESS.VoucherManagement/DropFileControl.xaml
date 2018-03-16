@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:converters="clr-namespace:NESS.VoucherManagement.Converters"
+    xmlns:converters="clr-namespace:NESS.VoucherManagement.Utils.Converters"
     x:Class="NESS.VoucherManagement.DropFileControl"
     mc:Ignorable="d" x:Name="ThisControl"
     d:DesignHeight="300" d:DesignWidth="300">

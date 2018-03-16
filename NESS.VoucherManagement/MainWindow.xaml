@@ -5,6 +5,7 @@
     xmlns:local="clr-namespace:NESS.VoucherManagement"
     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="clr-namespace:NESS.VoucherManagement.ViewModels"
     x:Class="NESS.VoucherManagement.MainWindow"
     Title="Voucher Management"
     Width="825"
@@ -25,7 +26,7 @@
         <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Transparent" />
     </mah:MetroWindow.Resources>
     <mah:MetroWindow.DataContext>
-        <local:MainWindowViewModel />
+        <viewModels:MainWindowViewModel />
     </mah:MetroWindow.DataContext>
     <mah:MetroWindow.Background>
         <ImageBrush ImageSource="Images/background.jpg" />

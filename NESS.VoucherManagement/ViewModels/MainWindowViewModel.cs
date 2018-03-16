@@ -1,14 +1,11 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Windows.Input;
 using System.Windows.Media.Imaging;
-using NESS.VoucherManagement.Annotations;
 using NESS.VoucherManagement.Core;
-using NESS.VoucherManagement.ViewModels;
+using NESS.VoucherManagement.Properties;
 
-namespace NESS.VoucherManagement
+namespace NESS.VoucherManagement.ViewModels
 {
     public sealed class MainWindowViewModel : INotifyPropertyChanged
     {
@@ -62,32 +59,6 @@ namespace NESS.VoucherManagement
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-    }
-
-    public class RelayCommand : ICommand
-    {
-        private readonly Func<object, bool> canExecute;
-
-        private readonly Action<object> execute;
-
-        public RelayCommand(Action<object> execute, Func<object, bool> canExecute = null)
-        {
-            this.execute = execute;
-            this.canExecute = canExecute;
-        }
-
-        public event EventHandler CanExecuteChanged
-        {
-            add => CommandManager.RequerySuggested += value;
-            remove => CommandManager.RequerySuggested -= value;
-        }
-
-        public bool CanExecute(object parameter) => canExecute == null || canExecute(parameter);
-
-        public void Execute(object parameter)
-        {
-            execute(parameter);
         }
     }
 }

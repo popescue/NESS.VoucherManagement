@@ -56,15 +56,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Delegation.cs" />
-    <Compile Include="Employee.cs" />
     <Compile Include="EmployeeBuilder.cs" />
-    <Compile Include="LunchTicket.cs" />
-    <Compile Include="TestContext.cs" />
-    <Compile Include="TestContextBuilder.cs" />
+    <Compile Include="OperationTests.cs" />
     <Compile Include="TicketServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Timesheet.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

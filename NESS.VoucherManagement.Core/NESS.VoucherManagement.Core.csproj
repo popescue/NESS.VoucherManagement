@@ -66,8 +66,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BankHolidayResponseDto.cs" />
+    <Compile Include="Domain\Delegation.cs" />
+    <Compile Include="Domain\Employee.cs" />
+    <Compile Include="Domain\LunchTicketInfo.cs" />
+    <Compile Include="Domain\Operation.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TicketService.cs" />
+    <Compile Include="Domain\Timesheet.cs" />
+    <Compile Include="TimesheetEnumerableExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

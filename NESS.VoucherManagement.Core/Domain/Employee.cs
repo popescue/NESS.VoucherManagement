@@ -25,11 +25,23 @@ namespace NESS.VoucherManagement.Core.Domain
 			//FirstName = firstName;
 			//LastName = lastName;
 			this.timesheets = timesheets ?? throw new ArgumentNullException(nameof(timesheets));
-			this.delegation = delegation ?? throw new ArgumentNullException(nameof(delegation));
+			this.delegation = delegation;
 		}
 
-		public int DelegationDays => delegation.DaysInDelegation;
+		public LunchTicketInfo CalculateTickets(int workingDaysThisMonth, IEnumerable<Operation> outOfOfficeOperations)
+			=> new LunchTicketInfo
+			(
+				workingDaysThisMonth
+				- timesheets.OutOfOfficeCount(outOfOfficeOperations)
+				- delegation.DaysInDelegation
+			);
+	}
 
-		public int OutOfOfficeDays(IEnumerable<Operation> outOfOfficeOperations) => timesheets.OutOfOfficeCount(outOfOfficeOperations);
+	internal static class TimesheetEnumerableExtensions
+	{
+		public static int OutOfOfficeCount(this IEnumerable<Timesheet> timesheets, IEnumerable<Operation> outOfOfficeOperations)
+		{
+			return timesheets.Count(x => outOfOfficeOperations.Contains(x.Operation));
+		}
 	}
 }

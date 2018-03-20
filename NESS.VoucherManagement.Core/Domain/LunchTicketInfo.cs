@@ -7,13 +7,12 @@ namespace NESS.VoucherManagement.Core.Domain
 	{
 		public const decimal Value = 15M;
 
-		public LunchTicketInfo(Employee employee, int count)
+		public LunchTicketInfo(int count)
 		{
-			Employee = employee;
+			if (count < 0) throw new ArgumentException("Value must be a positive integer.", nameof(count));
+
 			Count = count;
 		}
-
-		public Employee Employee { get; }
 
 		public int Count { get; }
 	}

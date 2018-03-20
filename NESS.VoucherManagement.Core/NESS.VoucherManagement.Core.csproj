@@ -72,9 +72,7 @@
     <Compile Include="Domain\Operation.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TicketService.cs" />
     <Compile Include="Domain\Timesheet.cs" />
-    <Compile Include="TimesheetEnumerableExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

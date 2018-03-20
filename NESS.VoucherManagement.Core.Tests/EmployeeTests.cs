@@ -14,28 +14,28 @@ namespace NESS.VoucherManagement.Core.Tests
 		                                                                      };
 	}
 
-	public class TicketServiceTests
+	public class EmployeeTests
 	{
+		private readonly TimesheetProvider timesheetProvider;
+
+		public EmployeeTests() => timesheetProvider = new TimesheetProvider(TestResources.OutOfOfficeOperations);
+
 		[Theory(DisplayName = "No out-of-office time-sheets and no delegations in the previous month, gets full tickets this month")]
 		[InlineData(1, 20, 20)]
 		[InlineData(3, 23, 23)]
 		public void Test1(int timesheetsInOffice, int workingDaysThisMonth, int expectedTickets)
 		{
 			// Arrange
-			var sut = new TicketService();
-
-			var provider = new TimesheetProvider(TestResources.OutOfOfficeOperations);
-			var inOfficeTimesheets = provider.InOffice(timesheetsInOffice);
+			var inOfficeTimesheets = timesheetProvider.InOffice(timesheetsInOffice);
 
 			var employee = new EmployeeBuilder()
 				.WithTimesheets(inOfficeTimesheets)
 				.Build();
 
 			// Act
-			var result = sut.CalculateTickets(employee, workingDaysThisMonth, TestResources.OutOfOfficeOperations);
+			var result = employee.CalculateTickets(workingDaysThisMonth, TestResources.OutOfOfficeOperations);
 
 			// Assert
-			Assert.Equal(employee, result.Employee);
 			Assert.Equal(expectedTickets, result.Count);
 		}
 
@@ -46,22 +46,20 @@ namespace NESS.VoucherManagement.Core.Tests
 		public void Test2(int timesheetsInOffice, int timesheetsOutOfOffice, int daysInDelegation, int workingDaysThisMonth, int expectedTickets)
 		{
 			// Arrange
-			var sut = new TicketService();
-
-			var provider = new TimesheetProvider(TestResources.OutOfOfficeOperations);
-			var inOfficeTimesheets = provider.InOffice(timesheetsInOffice);
-			var outOfOfficeTimesheets = provider.OutOfOffice(timesheetsOutOfOffice);
+			var inOfficeTimesheets = timesheetProvider.InOffice(timesheetsInOffice);
+			var outOfOfficeTimesheets = timesheetProvider.OutOfOffice(timesheetsOutOfOffice);
+			var timesheets = inOfficeTimesheets.Concat(outOfOfficeTimesheets);
+			var delegation = new Delegation(daysInDelegation);
 
 			var employee = new EmployeeBuilder()
-				.WithTimesheets(inOfficeTimesheets.Concat(outOfOfficeTimesheets))
-				.WithDelegation(new Delegation(daysInDelegation))
+				.WithTimesheets(timesheets)
+				.WithDelegation(delegation)
 				.Build();
 
 			// Act
-			var result = sut.CalculateTickets(employee, workingDaysThisMonth, TestResources.OutOfOfficeOperations);
+			var result = employee.CalculateTickets(workingDaysThisMonth, TestResources.OutOfOfficeOperations);
 
 			// Assert
-			Assert.Equal(employee, result.Employee);
 			Assert.Equal(expectedTickets, result.Count);
 		}
 	}

@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace NESS.VoucherManagement.Core.Domain
 {
-	public class Delegation
+	public struct Delegation
 	{
 		public Delegation(int daysInDelegation)
 		{

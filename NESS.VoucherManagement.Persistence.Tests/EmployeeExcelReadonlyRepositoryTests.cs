@@ -42,7 +42,7 @@ namespace NESS.VoucherManagement.Persistence.Tests
             Assert.Equal(new[] {new BusinessTrip(13), new BusinessTrip(10)}, result.Single().BusinessTrips, new BusinessTripComparer());
         }
 
-        [Fact(DisplayName = "Excel business trip days are aggregated per employee")]
+        [Fact(DisplayName = "Excel business trip are aggregated per employee")]
         public void Test2()
         {
             var contextMock = new Mock<IExcelContext>();
@@ -140,6 +140,72 @@ namespace NESS.VoucherManagement.Persistence.Tests
             var result = sut.GetEmployees();
 
             Assert.Equal(new[] {new Timesheet(new Operation("1", "A"))}, result.Single().Timesheets, new TimesheetComparer());
+        }
+
+        [Fact(DisplayName = "No time-sheets for employee")]
+        public void Test5()
+        {
+            var contextMock = new Mock<IExcelContext>();
+            contextMock.Setup(x => x.Employees).Returns(new[]
+            {
+                new ExcelEmployee
+                {
+                    SapId = "S01"
+                }
+            });
+            contextMock.Setup(x => x.Timesheets).Returns(new[]
+            {
+                new ExcelTimesheet
+                {
+                    EmployeeSapId = "S02",
+                    OperationId = "1",
+                    OperationDescription = "A"
+                },
+                new ExcelTimesheet
+                {
+                    EmployeeSapId = "S02",
+                    OperationId = "2",
+                    OperationDescription = "B"
+                }
+            });
+
+            var sut = new EmployeeExcelReadonlyRepository(contextMock.Object);
+
+            var result = sut.GetEmployees();
+
+            Assert.Empty(result.Single().Timesheets);
+        }
+
+        [Fact(DisplayName = "No business trips for employee")]
+        public void Test6()
+        {
+            var contextMock = new Mock<IExcelContext>();
+            contextMock.Setup(x => x.Employees).Returns(new[]
+            {
+                new ExcelEmployee
+                {
+                    SapId = "S01"
+                }
+            });
+            contextMock.Setup(x => x.BusinessTrips).Returns(new[]
+            {
+                new ExcelBusinessTrip
+                {
+                    EmployeeSapId = "S02",
+                    DaysInDelegation = 13
+                },
+                new ExcelBusinessTrip
+                {
+                    EmployeeSapId = "S02",
+                    DaysInDelegation = 10
+                }
+            });
+
+            var sut = new EmployeeExcelReadonlyRepository(contextMock.Object);
+
+            var result = sut.GetEmployees();
+
+            Assert.Empty(result.Single().BusinessTrips);
         }
     }
 

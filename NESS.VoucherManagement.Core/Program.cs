@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using Newtonsoft.Json;
-using Npoi.Mapper;
 
 namespace NESS.VoucherManagement.Core
 {
@@ -27,16 +26,16 @@ namespace NESS.VoucherManagement.Core
 
         private static void Export(IEnumerable<ExcelVoucher> tickets, string filePath)
         {
-            var voucherMapper = new Mapper();
+            //var voucherMapper = new Mapper();
 
-            voucherMapper
-                .Map<ExcelVoucher>("NUME", x => x.Employee.LastName)
-                .Map<ExcelVoucher>("PRENUME", x => x.Employee.FirstName)
-                .Map<ExcelVoucher>("CNP", x => x.Employee.PersonalId)
-                .Map<ExcelVoucher>("NR_TICHETE", x => x.Count)
-                .Map<ExcelVoucher>("FV", x => ExcelVoucher.Value).UseFormat(typeof(decimal), "#.00");
+            //voucherMapper
+            //    .Map<ExcelVoucher>("NUME", x => x.Employee.LastName)
+            //    .Map<ExcelVoucher>("PRENUME", x => x.Employee.FirstName)
+            //    .Map<ExcelVoucher>("CNP", x => x.Employee.PersonalId)
+            //    .Map<ExcelVoucher>("NR_TICHETE", x => x.Count)
+            //    .Map<ExcelVoucher>("FV", x => ExcelVoucher.Value).UseFormat(typeof(decimal), "#.00");
 
-            voucherMapper.Save(filePath, tickets);
+            //voucherMapper.Save(filePath, tickets);
         }
 
         private static IEnumerable<DateTime> GetHolidays(int month, int year)
@@ -52,42 +51,48 @@ namespace NESS.VoucherManagement.Core
 
         private static IEnumerable<ExcelEmployee> GetEmployees(string employeesXmlPath)
         {
-            var employeeMapper = new Mapper(employeesXmlPath);
+            return null;
 
-            employeeMapper
-                .Map<ExcelEmployee>("Pers.no.", x => x.SapId)
-                .Map<ExcelEmployee>("Last name", x => x.LastName)
-                .Map<ExcelEmployee>("First name", x => x.FirstName)
-                .Map<ExcelEmployee>("ID number", x => x.PersonalId);
+            //var employeeMapper = new Mapper(employeesXmlPath);
 
-            return employeeMapper.Take<ExcelEmployee>().Select(x => x.Value);
+            //employeeMapper
+            //    .Map<ExcelEmployee>("Pers.no.", x => x.SapId)
+            //    .Map<ExcelEmployee>("Last name", x => x.LastName)
+            //    .Map<ExcelEmployee>("First name", x => x.FirstName)
+            //    .Map<ExcelEmployee>("ID number", x => x.PersonalId);
+
+            //return employeeMapper.Take<ExcelEmployee>().Select(x => x.Value);
         }
 
         private static IEnumerable<ExcelBusinessTrip> GetDelegations(string businessTripsXmlPath)
         {
-            var delegationMapper = new Mapper(businessTripsXmlPath);
+            return null;
 
-            delegationMapper
-                .Map<ExcelBusinessTrip>("Company code", x => x.CompanyCode)
-                .Map<ExcelBusinessTrip>("SAP ID", x => x.SapId)
-                .Map<ExcelBusinessTrip>("Nume Prenume", x => x.Name)
-                .Map<ExcelBusinessTrip>(3, x => x.DaysInDelegation);
+            //var delegationMapper = new Mapper(businessTripsXmlPath);
 
-            return delegationMapper.Take<ExcelBusinessTrip>().Select(x => x.Value);
+            //delegationMapper
+            //    .Map<ExcelBusinessTrip>("Company code", x => x.CompanyCode)
+            //    .Map<ExcelBusinessTrip>("SAP ID", x => x.SapId)
+            //    .Map<ExcelBusinessTrip>("Nume Prenume", x => x.Name)
+            //    .Map<ExcelBusinessTrip>(3, x => x.DaysInDelegation);
+
+            //return delegationMapper.Take<ExcelBusinessTrip>().Select(x => x.Value);
         }
 
         private static IEnumerable<ExcelTimesheet> GetTimesheets(string timeKeepingXmlPath)
         {
-            var timesheetMapper = new Mapper(timeKeepingXmlPath);
+            return null;
 
-            timesheetMapper
-                .Map<ExcelTimesheet>("Pers.No.", x => x.EmployeeSapId)
-                .Map<ExcelTimesheet>("Name", x => x.EmployeeName)
-                .Map<ExcelTimesheet>("OpAc", x => x.OperationId)
-                .Map<ExcelTimesheet>("Ac.Descr.", x => x.OperationDescription)
-                .Map<ExcelTimesheet>("Date", x => x.Date).Format<ExcelTimesheet>("dd.MM.yyyy", t => t.Date);
+            //var timesheetMapper = new Mapper(timeKeepingXmlPath);
 
-            return timesheetMapper.Take<ExcelTimesheet>().Select(x => x.Value);
+            //timesheetMapper
+            //    .Map<ExcelTimesheet>("Pers.No.", x => x.EmployeeSapId)
+            //    .Map<ExcelTimesheet>("Name", x => x.EmployeeName)
+            //    .Map<ExcelTimesheet>("OpAc", x => x.OperationId)
+            //    .Map<ExcelTimesheet>("Ac.Descr.", x => x.OperationDescription)
+            //    .Map<ExcelTimesheet>("Date", x => x.Date).Format<ExcelTimesheet>("dd.MM.yyyy", t => t.Date);
+
+            //return timesheetMapper.Take<ExcelTimesheet>().Select(x => x.Value);
         }
 
         private static IEnumerable<ExcelVoucher> GetLunchTickets(IEnumerable<ExcelEmployee> employees,

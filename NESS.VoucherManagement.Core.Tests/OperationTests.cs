@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using NESS.VoucherManagement.Core.Domain;
+using NESS.VoucherManagement.Core.Model;
 using Xunit;
 
 namespace NESS.VoucherManagement.Core.Tests

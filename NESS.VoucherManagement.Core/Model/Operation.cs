@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace NESS.VoucherManagement.Core.Domain
+namespace NESS.VoucherManagement.Core.Model
 {
 	public struct Operation
 	{

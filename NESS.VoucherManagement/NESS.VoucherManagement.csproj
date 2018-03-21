@@ -160,6 +160,10 @@
       <Project>{d3c2154b-1889-4831-8df8-81dac575cc90}</Project>
       <Name>NESS.VoucherManagement.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NESS.VoucherManagement.Persistence\NESS.VoucherManagement.Persistence.csproj">
+      <Project>{2C54C7EC-E034-407F-B71F-A2C002E2AFCC}</Project>
+      <Name>NESS.VoucherManagement.Persistence</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

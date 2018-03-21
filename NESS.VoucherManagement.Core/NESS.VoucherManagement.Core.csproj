@@ -66,9 +66,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BankHolidayResponseDto.cs" />
-    <Compile Include="Domain\Delegation.cs" />
+    <Compile Include="Domain\BusinessTrip.cs" />
     <Compile Include="Domain\Employee.cs" />
-    <Compile Include="Domain\LunchTicketInfo.cs" />
+    <Compile Include="Domain\VoucherInfo.cs" />
     <Compile Include="Domain\Operation.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -76,6 +76,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Domain\ClassDiagram1.cd" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

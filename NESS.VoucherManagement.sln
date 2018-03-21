@@ -11,6 +11,10 @@ Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "NESS.VoucherManagement.Inst
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NESS.VoucherManagement.Core.Tests", "NESS.VoucherManagement.Core.Tests\NESS.VoucherManagement.Core.Tests.csproj", "{33CA4E80-A50B-4E54-A371-3657311573AC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NESS.VoucherManagement.Persistence", "NESS.VoucherManagement.Persistence\NESS.VoucherManagement.Persistence.csproj", "{2C54C7EC-E034-407F-B71F-A2C002E2AFCC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NESS.VoucherManagement.Application", "NESS.VoucherManagement.Application\NESS.VoucherManagement.Application.csproj", "{55716921-384F-4312-AA5D-5FD7A338D94F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +35,14 @@ Global
 		{33CA4E80-A50B-4E54-A371-3657311573AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33CA4E80-A50B-4E54-A371-3657311573AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{33CA4E80-A50B-4E54-A371-3657311573AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C54C7EC-E034-407F-B71F-A2C002E2AFCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C54C7EC-E034-407F-B71F-A2C002E2AFCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C54C7EC-E034-407F-B71F-A2C002E2AFCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C54C7EC-E034-407F-B71F-A2C002E2AFCC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55716921-384F-4312-AA5D-5FD7A338D94F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55716921-384F-4312-AA5D-5FD7A338D94F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55716921-384F-4312-AA5D-5FD7A338D94F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55716921-384F-4312-AA5D-5FD7A338D94F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

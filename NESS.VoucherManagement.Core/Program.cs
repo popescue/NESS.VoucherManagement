@@ -20,23 +20,23 @@ namespace NESS.VoucherManagement.Core
 
             var employees = GetEmployees(employeesXmlPath);
 
-            var tickets = GetLunchTickets(employees, timesheets, delegations, month, year);
+            var vouchers = GetLunchTickets(employees, timesheets, delegations, month, year);
 
-            Export(tickets, Path.Combine(destinationFolder));
+            Export(vouchers, Path.Combine(destinationFolder));
         }
 
-        private static void Export(IEnumerable<LunchTicketThing> tickets, string filePath)
+        private static void Export(IEnumerable<ExcelVoucher> tickets, string filePath)
         {
-            var lunchTicketMapper = new Mapper();
+            var voucherMapper = new Mapper();
 
-            lunchTicketMapper
-                .Map<LunchTicketThing>("NUME", x => x.Employee.LastName)
-                .Map<LunchTicketThing>("PRENUME", x => x.Employee.FirstName)
-                .Map<LunchTicketThing>("CNP", x => x.Employee.PersonalId)
-                .Map<LunchTicketThing>("NR_TICHETE", x => x.Count)
-                .Map<LunchTicketThing>("FV", x => LunchTicketThing.Value).UseFormat(typeof(decimal), "#.00");
+            voucherMapper
+                .Map<ExcelVoucher>("NUME", x => x.Employee.LastName)
+                .Map<ExcelVoucher>("PRENUME", x => x.Employee.FirstName)
+                .Map<ExcelVoucher>("CNP", x => x.Employee.PersonalId)
+                .Map<ExcelVoucher>("NR_TICHETE", x => x.Count)
+                .Map<ExcelVoucher>("FV", x => ExcelVoucher.Value).UseFormat(typeof(decimal), "#.00");
 
-            lunchTicketMapper.Save(filePath, tickets);
+            voucherMapper.Save(filePath, tickets);
         }
 
         private static IEnumerable<DateTime> GetHolidays(int month, int year)
@@ -63,17 +63,17 @@ namespace NESS.VoucherManagement.Core
             return employeeMapper.Take<ExcelEmployee>().Select(x => x.Value);
         }
 
-        private static IEnumerable<ExcelDelegation> GetDelegations(string businessTripsXmlPath)
+        private static IEnumerable<ExcelBusinessTrip> GetDelegations(string businessTripsXmlPath)
         {
             var delegationMapper = new Mapper(businessTripsXmlPath);
 
             delegationMapper
-                .Map<ExcelDelegation>("Company code", x => x.CompanyCode)
-                .Map<ExcelDelegation>("SAP ID", x => x.SapId)
-                .Map<ExcelDelegation>("Nume Prenume", x => x.Name)
-                .Map<ExcelDelegation>(3, x => x.DaysInDelegation);
+                .Map<ExcelBusinessTrip>("Company code", x => x.CompanyCode)
+                .Map<ExcelBusinessTrip>("SAP ID", x => x.SapId)
+                .Map<ExcelBusinessTrip>("Nume Prenume", x => x.Name)
+                .Map<ExcelBusinessTrip>(3, x => x.DaysInDelegation);
 
-            return delegationMapper.Take<ExcelDelegation>().Select(x => x.Value);
+            return delegationMapper.Take<ExcelBusinessTrip>().Select(x => x.Value);
         }
 
         private static IEnumerable<ExcelTimesheet> GetTimesheets(string timeKeepingXmlPath)
@@ -90,14 +90,14 @@ namespace NESS.VoucherManagement.Core
             return timesheetMapper.Take<ExcelTimesheet>().Select(x => x.Value);
         }
 
-        private static IEnumerable<LunchTicketThing> GetLunchTickets(IEnumerable<ExcelEmployee> employees,
-            IEnumerable<ExcelTimesheet> timesheets, IEnumerable<ExcelDelegation> delegations, int month, int year)
+        private static IEnumerable<ExcelVoucher> GetLunchTickets(IEnumerable<ExcelEmployee> employees,
+            IEnumerable<ExcelTimesheet> timesheets, IEnumerable<ExcelBusinessTrip> delegations, int month, int year)
         {
             var workingDaysCount = GetWorkingDaysCount(month, year);
 
             var bankHolidaysCount = GetHolidays(month, year).Count();
 
-            var tickets = new List<LunchTicketThing>();
+            var tickets = new List<ExcelVoucher>();
 
             foreach (var employee in employees)
             {
@@ -112,7 +112,7 @@ namespace NESS.VoucherManagement.Core
                 if (workedDays > 0)
                     ticketsCount = workingDaysCount - bankHolidaysCount - daysOff - delegationDaysOff;
 
-                tickets.Add(new LunchTicketThing
+                tickets.Add(new ExcelVoucher
                 {
                     Employee = employee,
                     Count = ticketsCount
@@ -133,7 +133,7 @@ namespace NESS.VoucherManagement.Core
         }
     }
 
-    public class LunchTicketThing
+    public class ExcelVoucher
     {
         public const decimal Value = 15M;
 
@@ -167,7 +167,7 @@ namespace NESS.VoucherManagement.Core
         public string PersonalId { get; set; }
     }
 
-    public class ExcelDelegation
+    public class ExcelBusinessTrip
     {
         public string SapId { get; set; }
 

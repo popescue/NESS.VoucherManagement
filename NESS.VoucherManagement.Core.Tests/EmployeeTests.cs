@@ -33,7 +33,7 @@ namespace NESS.VoucherManagement.Core.Tests
 				.Build();
 
 			// Act
-			var result = employee.CalculateTickets(workingDaysThisMonth, TestResources.OutOfOfficeOperations);
+			var result = employee.CalculateVouchers(workingDaysThisMonth, TestResources.OutOfOfficeOperations);
 
 			// Assert
 			Assert.Equal(expectedTickets, result.Count);
@@ -49,7 +49,7 @@ namespace NESS.VoucherManagement.Core.Tests
 			var inOfficeTimesheets = timesheetProvider.InOffice(timesheetsInOffice);
 			var outOfOfficeTimesheets = timesheetProvider.OutOfOffice(timesheetsOutOfOffice);
 			var timesheets = inOfficeTimesheets.Concat(outOfOfficeTimesheets);
-			var delegation = new Delegation(daysInDelegation);
+			var delegation = new BusinessTrip(daysInDelegation);
 
 			var employee = new EmployeeBuilder()
 				.WithTimesheets(timesheets)
@@ -57,7 +57,7 @@ namespace NESS.VoucherManagement.Core.Tests
 				.Build();
 
 			// Act
-			var result = employee.CalculateTickets(workingDaysThisMonth, TestResources.OutOfOfficeOperations);
+			var result = employee.CalculateVouchers(workingDaysThisMonth, TestResources.OutOfOfficeOperations);
 
 			// Assert
 			Assert.Equal(expectedTickets, result.Count);
@@ -75,7 +75,7 @@ namespace NESS.VoucherManagement.Core.Tests
 			for (var i = 0; i < count; i++)
 				yield return new Timesheet
 				(
-					new Operation(outOfOfficeOperations.First().Id, outOfOfficeOperations.First().Description)
+					new Operation(outOfOfficeOperations.Single().Id, outOfOfficeOperations.Single().Description)
 				);
 		}
 

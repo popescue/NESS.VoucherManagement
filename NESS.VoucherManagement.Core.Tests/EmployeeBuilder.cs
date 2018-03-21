@@ -15,13 +15,13 @@ namespace NESS.VoucherManagement.Core.Tests
 
 		//private readonly string sapId;
 
-		private Delegation delegation;
+		private BusinessTrip businessTrip;
 
 		private IEnumerable<Timesheet> timesheets;
 
 		public EmployeeBuilder()
 		{
-			delegation = Delegation.NoDelegation();
+			businessTrip = BusinessTrip.NoDelegation();
 			//firstName = "john";
 			//lastName = "doe";
 			//personalId = "1820305035267";
@@ -29,7 +29,7 @@ namespace NESS.VoucherManagement.Core.Tests
 			timesheets = Enumerable.Empty<Timesheet>();
 		}
 
-		public Employee Build() => new Employee(timesheets, delegation);
+		public Employee Build() => new Employee(timesheets, businessTrip);
 
 		public EmployeeBuilder WithTimesheets(IEnumerable<Timesheet> timesheets1)
 		{
@@ -37,9 +37,9 @@ namespace NESS.VoucherManagement.Core.Tests
 			return this;
 		}
 
-		public EmployeeBuilder WithDelegation(Delegation delegation1)
+		public EmployeeBuilder WithDelegation(BusinessTrip delegation1)
 		{
-			delegation = delegation1;
+			businessTrip = delegation1;
 			return this;
 		}
 	}

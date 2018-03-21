@@ -1,17 +1,20 @@
-﻿namespace NESS.VoucherManagement.Models
+﻿using System;
+using System.Linq;
+
+namespace NESS.VoucherManagement.Models
 {
-    public struct Month
-    {
-        public override string ToString() => Name;
+	public struct Month
+	{
+		public override string ToString() => Name;
 
-        public Month(int index, string name)
-        {
-            Index = index;
-            Name = name;
-        }
+		public Month(int index, string name)
+		{
+			Index = index;
+			Name = name;
+		}
 
-        public int Index { get; }
+		public int Index { get; }
 
-        public string Name { get; }
-    }
+		public string Name { get; }
+	}
 }

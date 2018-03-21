@@ -5,12 +5,12 @@ using NESS.VoucherManagement.Persistence.Model;
 
 namespace NESS.VoucherManagement.Persistence
 {
-    public interface IExcelContext
-    {
-        IEnumerable<ExcelEmployee> Employees { get; }
+	public interface IExcelContext
+	{
+		IEnumerable<ExcelEmployee> Employees { get; }
 
-        IEnumerable<ExcelBusinessTrip> BusinessTrips { get; }
+		IEnumerable<ExcelBusinessTrip> BusinessTrips { get; }
 
-        IEnumerable<ExcelTimesheet> Timesheets { get; }
-    }
+		IEnumerable<ExcelTimesheet> Timesheets { get; }
+	}
 }

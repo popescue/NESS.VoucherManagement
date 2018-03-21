@@ -6,67 +6,61 @@ using Npoi.Mapper;
 
 namespace NESS.VoucherManagement.Persistence
 {
-    public class ExcelContext : IExcelContext
-    {
-        private readonly string businessTripsFilePath;
+	public class ExcelContext : IExcelContext
+	{
+		private readonly string businessTripsFilePath;
 
-        private readonly string employeesFilePath;
+		private readonly string employeesFilePath;
 
-        private readonly string timekeepingFilePath;
+		private readonly string timekeepingFilePath;
 
-        private IEnumerable<ExcelBusinessTrip> businessTripSet;
+		private Mapper businessTripsMapper;
 
-        private Mapper businessTripsMapper;
+		private Mapper employeesMapper;
 
-        private IEnumerable<ExcelEmployee> employeeSet;
+		private Mapper timesheetMapper;
 
-        private Mapper employeesMapper;
+		public ExcelContext(string employeesFilePath, string timekeepingFilePath, string businessTripsFilePath)
+		{
+			this.employeesFilePath = employeesFilePath;
+			this.timekeepingFilePath = timekeepingFilePath;
+			this.businessTripsFilePath = businessTripsFilePath;
 
-        private Mapper timesheetMapper;
+			InitializeMappers();
+		}
 
-        private IEnumerable<ExcelTimesheet> timesheetSet;
+		public IEnumerable<ExcelTimesheet> Timesheets => timesheetMapper.Take<ExcelTimesheet>().Select(x => x.Value);
 
-        public ExcelContext(string employeesFilePath, string timekeepingFilePath, string businessTripsFilePath)
-        {
-            this.employeesFilePath = employeesFilePath;
-            this.timekeepingFilePath = timekeepingFilePath;
-            this.businessTripsFilePath = businessTripsFilePath;
+		public IEnumerable<ExcelEmployee> Employees => employeesMapper.Take<ExcelEmployee>().Select(x => x.Value);
 
-            InitializeMappers();
-        }
+		public IEnumerable<ExcelBusinessTrip> BusinessTrips => businessTripsMapper.Take<ExcelBusinessTrip>().Select(x => x.Value);
 
-        public IEnumerable<ExcelTimesheet> Timesheets => timesheetSet ?? (timesheetSet = timesheetMapper.Take<ExcelTimesheet>().Select(x => x.Value));
+		private void InitializeMappers()
+		{
+			employeesMapper = new Mapper(employeesFilePath);
 
-        public IEnumerable<ExcelEmployee> Employees => employeeSet ?? (employeeSet = employeesMapper.Take<ExcelEmployee>().Select(x => x.Value));
+			employeesMapper
+				.Map<ExcelEmployee>("Pers.no.", x => x.SapId)
+				.Map<ExcelEmployee>("Last name", x => x.LastName)
+				.Map<ExcelEmployee>("First name", x => x.FirstName)
+				.Map<ExcelEmployee>("ID number", x => x.PersonalId);
 
-        public IEnumerable<ExcelBusinessTrip> BusinessTrips => businessTripSet ?? (businessTripSet = businessTripsMapper.Take<ExcelBusinessTrip>().Select(x => x.Value));
+			businessTripsMapper = new Mapper(businessTripsFilePath);
 
-        private void InitializeMappers()
-        {
-            employeesMapper = new Mapper(employeesFilePath);
+			businessTripsMapper
+				.Map<ExcelBusinessTrip>("Company code", x => x.CompanyCode)
+				.Map<ExcelBusinessTrip>("SAP ID", x => x.EmployeeSapId)
+				.Map<ExcelBusinessTrip>("Nume Prenume", x => x.Name)
+				.Map<ExcelBusinessTrip>(3, x => x.DaysInDelegation);
 
-            employeesMapper
-                .Map<ExcelEmployee>("Pers.no.", x => x.SapId)
-                .Map<ExcelEmployee>("Last name", x => x.LastName)
-                .Map<ExcelEmployee>("First name", x => x.FirstName)
-                .Map<ExcelEmployee>("ID number", x => x.PersonalId);
+			timesheetMapper = new Mapper(timekeepingFilePath);
 
-            businessTripsMapper = new Mapper(businessTripsFilePath);
-
-            businessTripsMapper
-                .Map<ExcelBusinessTrip>("Company code", x => x.CompanyCode)
-                .Map<ExcelBusinessTrip>("SAP ID", x => x.EmployeeSapId)
-                .Map<ExcelBusinessTrip>("Nume Prenume", x => x.Name)
-                .Map<ExcelBusinessTrip>(3, x => x.DaysInDelegation);
-
-            timesheetMapper = new Mapper(timekeepingFilePath);
-
-            timesheetMapper
-                .Map<ExcelTimesheet>("Pers.No.", x => x.EmployeeSapId)
-                .Map<ExcelTimesheet>("Name", x => x.EmployeeName)
-                .Map<ExcelTimesheet>("OpAc", x => x.OperationId)
-                .Map<ExcelTimesheet>("Ac.Descr.", x => x.OperationDescription)
-                .Map<ExcelTimesheet>("Date", x => x.Date).Format<ExcelTimesheet>("dd.MM.yyyy", t => t.Date);
-        }
-    }
+			timesheetMapper
+				.Map<ExcelTimesheet>("Pers.No.", x => x.EmployeeSapId)
+				.Map<ExcelTimesheet>("Name", x => x.EmployeeName)
+				.Map<ExcelTimesheet>("OpAc", x => x.OperationId)
+				.Map<ExcelTimesheet>("Ac.Descr.", x => x.OperationDescription)
+				.Map<ExcelTimesheet>("Date", x => x.Date).Format<ExcelTimesheet>("dd.MM.yyyy", t => t.Date);
+		}
+	}
 }

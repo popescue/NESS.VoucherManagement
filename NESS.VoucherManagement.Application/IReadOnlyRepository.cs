@@ -5,8 +5,8 @@ using NESS.VoucherManagement.Core.Model;
 
 namespace NESS.VoucherManagement.Application
 {
-    public interface IReadOnlyRepository
-    {
-        IEnumerable<Employee> GetEmployees();
-    }
+	public interface IReadOnlyRepository
+	{
+		IEnumerable<Employee> GetEmployees();
+	}
 }

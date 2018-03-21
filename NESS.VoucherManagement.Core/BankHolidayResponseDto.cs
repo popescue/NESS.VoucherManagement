@@ -1,32 +1,33 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using System.Linq;
+using Newtonsoft.Json;
 
 namespace NESS.VoucherManagement.Core
 {
-    public class BankHolidayResponseDto
-    {
-        [JsonProperty("date")]
-        public BankHolidayDateResponseDto BankHolidayDateResponseDto { get; set; }
+	public class BankHolidayResponseDto
+	{
+		[JsonProperty("date")]
+		public BankHolidayDateResponseDto BankHolidayDateResponseDto { get; set; }
 
-        [JsonProperty("localName")]
-        public string LocalName { get; set; }
+		[JsonProperty("localName")]
+		public string LocalName { get; set; }
 
-        [JsonProperty("englishName")]
-        public string EnglishName { get; set; }
-    }
+		[JsonProperty("englishName")]
+		public string EnglishName { get; set; }
+	}
 
-    public class BankHolidayDateResponseDto
-    {
-        [JsonProperty("day")]
-        public int Day { get; set; }
+	public class BankHolidayDateResponseDto
+	{
+		[JsonProperty("day")]
+		public int Day { get; set; }
 
-        [JsonProperty("month")]
-        public int Month { get; set; }
+		[JsonProperty("month")]
+		public int Month { get; set; }
 
-        [JsonProperty("year")]
-        public int Year { get; set; }
+		[JsonProperty("year")]
+		public int Year { get; set; }
 
-        [JsonProperty("dayOfWeek")]
-        public int DayOfWeek { get; set; }
-    }
-
+		[JsonProperty("dayOfWeek")]
+		public int DayOfWeek { get; set; }
+	}
 }

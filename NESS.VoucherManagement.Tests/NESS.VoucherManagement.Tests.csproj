@@ -6,11 +6,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{73524740-6B8E-4E2C-829D-152533FB5935}</ProjectGuid>
+    <ProjectGuid>{B854126D-252D-42FF-BF09-8E698A02554A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NESS.VoucherManagement.Persistence.Tests</RootNamespace>
-    <AssemblyName>NESS.VoucherManagement.Persistence.Tests</AssemblyName>
+    <RootNamespace>NESS.VoucherManagement.Tests</RootNamespace>
+    <AssemblyName>NESS.VoucherManagement.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
@@ -62,40 +62,29 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EmployeeExcelReadonlyRepositoryTests.cs" />
-    <Compile Include="ExcelContextTests.cs" />
+    <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="ExcelFiles\employees.xlsx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="ExcelFiles\businessTrips.xlsx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="ExcelFiles\timesheets.xlsx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Analyzer Include="..\packages\xunit.analyzers.0.8.0\analyzers\dotnet\cs\xunit.analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NESS.VoucherManagement.Core\NESS.VoucherManagement.Core.csproj">
-      <Project>{D3C2154B-1889-4831-8DF8-81DAC575CC90}</Project>
-      <Name>NESS.VoucherManagement.Core</Name>
+    <ProjectReference Include="..\NESS.VoucherManagement.Application\NESS.VoucherManagement.Application.csproj">
+      <Project>{55716921-384F-4312-AA5D-5FD7A338D94F}</Project>
+      <Name>NESS.VoucherManagement.Application</Name>
     </ProjectReference>
-    <ProjectReference Include="..\NESS.VoucherManagement.Persistence\NESS.VoucherManagement.Persistence.csproj">
-      <Project>{2C54C7EC-E034-407F-B71F-A2C002E2AFCC}</Project>
-      <Name>NESS.VoucherManagement.Persistence</Name>
+    <ProjectReference Include="..\NESS.VoucherManagement\NESS.VoucherManagement.csproj">
+      <Project>{FF526940-8C36-43A7-8645-9F7B8710BA71}</Project>
+      <Name>NESS.VoucherManagement</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Analyzer Include="..\packages\xunit.analyzers.0.7.0\analyzers\dotnet\cs\xunit.analyzers.dll" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

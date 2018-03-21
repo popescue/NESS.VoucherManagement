@@ -7,13 +7,13 @@ namespace NESS.VoucherManagement.Core.Tests
 {
 	public class EmployeeBuilder
 	{
-		//private readonly string firstName;
+		private readonly string firstName;
 
-		//private readonly string lastName;
+		private readonly string lastName;
 
-		//private readonly string personalId;
+		private readonly string personalId;
 
-		//private readonly string sapId;
+		private readonly string sapId;
 
 		private IEnumerable<BusinessTrip> businessTrips;
 
@@ -23,14 +23,14 @@ namespace NESS.VoucherManagement.Core.Tests
 		{
 			businessTrips = Enumerable.Empty<BusinessTrip>();
 
-			//firstName = "john";
-			//lastName = "doe";
-			//personalId = "1820305035267";
-			//sapId = "3700804";
+			firstName = "john";
+			lastName = "doe";
+			personalId = "1820305035267";
+			sapId = "3700804";
 			timesheets = Enumerable.Empty<Timesheet>();
 		}
 
-		public Employee Build() => new Employee(timesheets, businessTrips);
+		public Employee Build() => new Employee(firstName, lastName, personalId, sapId, timesheets, businessTrips);
 
 		public EmployeeBuilder WithTimesheets(IEnumerable<Timesheet> value)
 		{

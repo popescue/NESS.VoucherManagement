@@ -6,22 +6,22 @@ namespace NESS.VoucherManagement.Core.Model
 {
 	public class Employee
 	{
-		//public string FirstName { get; }
+		public string FirstName { get; }
 
-		//public string LastName { get; }
+		public string LastName { get; }
 
-		//public string PersonalId { get; }
+		public string PersonalId { get; }
 
-		//public string SapId { get; }
+		public string SapId { get; }
 
-		public Employee(IEnumerable<Timesheet> timesheets, IEnumerable<BusinessTrip> businessTrips)
+		public Employee(string firstName, string lastName, string personalId, string sapId, IEnumerable<Timesheet> timesheets, IEnumerable<BusinessTrip> businessTrips)
 		{
-			//SapId = sapId;
-			//PersonalId = personalId;
-			//FirstName = firstName;
-			//LastName = lastName;
 			Timesheets = timesheets ?? throw new ArgumentNullException(nameof(timesheets));
 			BusinessTrips = businessTrips;
+			FirstName = firstName;
+			LastName = lastName;
+			PersonalId = personalId;
+			SapId = sapId;
 		}
 
 		public IEnumerable<BusinessTrip> BusinessTrips { get; }

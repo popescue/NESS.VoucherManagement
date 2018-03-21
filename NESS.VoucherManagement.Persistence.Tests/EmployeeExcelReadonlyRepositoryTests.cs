@@ -35,7 +35,7 @@ namespace NESS.VoucherManagement.Persistence.Tests
 				                                                }
 			                                                });
 
-			var sut = new EmployeeExcelReadonlyRepository(contextMock.Object);
+			var sut = new EmployeeExcelReader(contextMock.Object);
 
 			var result = sut.GetEmployees();
 
@@ -70,7 +70,7 @@ namespace NESS.VoucherManagement.Persistence.Tests
 				                                                }
 			                                                });
 
-			var sut = new EmployeeExcelReadonlyRepository(contextMock.Object);
+			var sut = new EmployeeExcelReader(contextMock.Object);
 
 			var result = sut.GetEmployees();
 
@@ -107,7 +107,7 @@ namespace NESS.VoucherManagement.Persistence.Tests
 				                                             }
 			                                             });
 
-			var sut = new EmployeeExcelReadonlyRepository(contextMock.Object);
+			var sut = new EmployeeExcelReader(contextMock.Object);
 
 			var result = sut.GetEmployees();
 
@@ -144,7 +144,7 @@ namespace NESS.VoucherManagement.Persistence.Tests
 				                                             }
 			                                             });
 
-			var sut = new EmployeeExcelReadonlyRepository(contextMock.Object);
+			var sut = new EmployeeExcelReader(contextMock.Object);
 
 			var result = sut.GetEmployees();
 
@@ -181,7 +181,7 @@ namespace NESS.VoucherManagement.Persistence.Tests
 				                                             }
 			                                             });
 
-			var sut = new EmployeeExcelReadonlyRepository(contextMock.Object);
+			var sut = new EmployeeExcelReader(contextMock.Object);
 
 			var result = sut.GetEmployees();
 
@@ -213,7 +213,7 @@ namespace NESS.VoucherManagement.Persistence.Tests
 				                                                }
 			                                                });
 
-			var sut = new EmployeeExcelReadonlyRepository(contextMock.Object);
+			var sut = new EmployeeExcelReader(contextMock.Object);
 
 			var result = sut.GetEmployees();
 

@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
-using NESS.VoucherManagement.Annotations;
-using NESS.VoucherManagement.Core;
+using NESS.VoucherManagement.Application;
+using NESS.VoucherManagement.Core.Model;
 using NESS.VoucherManagement.Persistence;
+using NESS.VoucherManagement.Properties;
 using NESS.VoucherManagement.Utils;
 using NESS.VoucherManagement.Utils.MVVM;
 
@@ -35,7 +36,7 @@ namespace NESS.VoucherManagement.ViewModels
 
 		public WorkingPeriodViewModel WorkingPeriodVm { get; }
 
-		public string DestinationFile { get; set; }
+		private string DestinationFile { get; set; }
 
 		public bool IsCalculating
 		{
@@ -110,43 +111,43 @@ namespace NESS.VoucherManagement.ViewModels
 			EmployeesVm.IsPopulated = true;
 		}
 
-		public void CalculateVouchers()
+		private void CalculateVouchers()
 		{
-			var context = new ExcelContext(EmployeesVm.Path, TimekeepingVm.Path, BusinessTripsVm.Path);
+			var readContext = new EmployeeExcelContext(EmployeesVm.Path, TimekeepingVm.Path, BusinessTripsVm.Path);
 
-			var repo = new EmployeeExcelReadonlyRepository(context);
-			var employees = repo.GetEmployees();
+			var reader = new EmployeeExcelReader(readContext);
 
-			//var vouchers = employees.Select(e => e.CalculateVouchers(20, new[] {new Operation("201", "Vacation")}));
+			var writeContext = new VoucherExcelContext(DestinationFile);
 
-			//var writer = new VoucherExcelWriter(DestinationFile);
+			var writer = new VoucherExcelWriter(writeContext);
 
-			//writer.Write(vouchers);
+			var operations = Settings.Default.OutOfOfficeOperations
+				.Cast<string>()
+				.Select(MapToOperation);
 
-			//IEmployeeReader er = new ExcelEmployeeReader();
-			//IEnumerable<ExcelEmployee> employees = er.Read(EmployeesVm.Path);
+			IHolidayProvider holidayProvider = new WebServiceHolidayProvider();
+			IWorkingDayProvider workingDayProvider = new CalendarWorkingDayProvider(holidayProvider);
 
-			//IBusinessTripReader btr = new ExcelBusinessTripReader();
-			//IEnumerable<ExcelBusinessTrip> businessTrips = btr.Read(BusinessTripsVm.Path);
+			//var workingDays = b.Count(year:WorkingPeriodVm.Year, month:WorkingPeriodVm.Month.Index);
 
-			//ITimekeepingReader tr = new ExcelTimekeepingReader();
-			//IEnumerable<ExcelTimesheet> timesheets = tr.Read(TimekeepingVm.Path);
+			var command = new CalculateVouchersCommand(operations, WorkingPeriodVm.Year, WorkingPeriodVm.Month.Index);
 
-			//IEnumerable<Employee> emps = GetEmployees(employees, businessTrips, timesheets);
+			var commandHandler = new CalculateVouchersCommandHandler(reader, writer, workingDayProvider);
 
-			//int workingDaysInMonth = GetWorkingDaysInMonth(this.WorkingPeriodVm.Month.Index);
-
-			//IEnumerable<Operation> outOfOfficeOperations = Configuration.Operations();
-
-			//IEnumerable<VoucherInfo> vouchers = emps.Select(e => e.CalculateVouchers(workingDaysInMonth, outOfOfficeOperations));
-
-			//IVoucherWriter vw = new ExcelVoucherWriter(DestinationFile);
-			//vw.Write(vouchers);
-
-			Program.Calculate(EmployeesVm.Path, BusinessTripsVm.Path, TimekeepingVm.Path, DestinationFile, WorkingPeriodVm.Month.Index, WorkingPeriodVm.Year);
+			commandHandler.Handle(command);
 		}
 
-		[NotifyPropertyChangedInvocator]
+		private static Operation MapToOperation(string s)
+		{
+			var split = s.Split(new[]
+			                    {
+				                    '='
+			                    }, StringSplitOptions.RemoveEmptyEntries);
+
+			return new Operation(split[0].Trim(), split[1].Trim());
+		}
+
+		[Annotations.NotifyPropertyChangedInvocator]
 		private void OnPropertyChanged([CallerMemberName] string propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

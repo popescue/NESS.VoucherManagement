@@ -6,13 +6,13 @@ using Npoi.Mapper;
 
 namespace NESS.VoucherManagement.Persistence
 {
-	public class ExcelContext : IExcelContext
+	public class EmployeeExcelContext : IExcelContext
 	{
 		private readonly string businessTripsFilePath;
 
 		private readonly string employeesFilePath;
 
-		private readonly string timekeepingFilePath;
+		private readonly string timesheetsFilePath;
 
 		private Mapper businessTripsMapper;
 
@@ -20,10 +20,10 @@ namespace NESS.VoucherManagement.Persistence
 
 		private Mapper timesheetMapper;
 
-		public ExcelContext(string employeesFilePath, string timekeepingFilePath, string businessTripsFilePath)
+		public EmployeeExcelContext(string employeesFilePath, string timesheetsFilePath, string businessTripsFilePath)
 		{
 			this.employeesFilePath = employeesFilePath;
-			this.timekeepingFilePath = timekeepingFilePath;
+			this.timesheetsFilePath = timesheetsFilePath;
 			this.businessTripsFilePath = businessTripsFilePath;
 
 			InitializeMappers();
@@ -37,25 +37,19 @@ namespace NESS.VoucherManagement.Persistence
 
 		private void InitializeMappers()
 		{
-			employeesMapper = new Mapper(employeesFilePath);
-
-			employeesMapper
+			employeesMapper = new Mapper(employeesFilePath)
 				.Map<ExcelEmployee>("Pers.no.", x => x.SapId)
 				.Map<ExcelEmployee>("Last name", x => x.LastName)
 				.Map<ExcelEmployee>("First name", x => x.FirstName)
 				.Map<ExcelEmployee>("ID number", x => x.PersonalId);
 
-			businessTripsMapper = new Mapper(businessTripsFilePath);
-
-			businessTripsMapper
+			businessTripsMapper = new Mapper(businessTripsFilePath)
 				.Map<ExcelBusinessTrip>("Company code", x => x.CompanyCode)
 				.Map<ExcelBusinessTrip>("SAP ID", x => x.EmployeeSapId)
 				.Map<ExcelBusinessTrip>("Nume Prenume", x => x.Name)
 				.Map<ExcelBusinessTrip>(3, x => x.DaysInDelegation);
 
-			timesheetMapper = new Mapper(timekeepingFilePath);
-
-			timesheetMapper
+			timesheetMapper = new Mapper(timesheetsFilePath)
 				.Map<ExcelTimesheet>("Pers.No.", x => x.EmployeeSapId)
 				.Map<ExcelTimesheet>("Name", x => x.EmployeeName)
 				.Map<ExcelTimesheet>("OpAc", x => x.OperationId)

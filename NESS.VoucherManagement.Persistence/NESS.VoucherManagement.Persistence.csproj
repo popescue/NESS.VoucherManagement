@@ -62,14 +62,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EmployeeExcelReadonlyRepository.cs" />
-    <Compile Include="ExcelContext.cs" />
+    <Compile Include="EmployeeExcelReader.cs" />
+    <Compile Include="EmployeeExcelContext.cs" />
     <Compile Include="IExcelContext.cs" />
     <Compile Include="Model\ExcelBusinessTrip.cs" />
     <Compile Include="Model\ExcelEmployee.cs" />
     <Compile Include="Model\ExcelTimesheet.cs" />
     <Compile Include="Model\ExcelVoucher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VoucherExcelContext.cs" />
+    <Compile Include="VoucherExcelWriter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NESS.VoucherManagement.Application\NESS.VoucherManagement.Application.csproj">

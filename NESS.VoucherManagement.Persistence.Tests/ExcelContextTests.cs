@@ -18,19 +18,40 @@ namespace NESS.VoucherManagement.Persistence.Tests
 					                        PersonalId = "1810203115230",
 					                        FirstName = "Rami-Cristian",
 					                        LastName = "Atieyeh"
+				                        },
+				                        new ExcelEmployee
+				                        {
+					                        SapId = "3700125",
+					                        PersonalId = "2810203115230",
+					                        FirstName = "Nadia-Simona",
+					                        LastName = "Ocnariu"
+				                        },
+				                        new ExcelEmployee
+				                        {
+					                        SapId = "3700105",
+					                        PersonalId = "1820203115230",
+					                        FirstName = "Eduard",
+					                        LastName = "Popescu"
+				                        },
+				                        new ExcelEmployee
+				                        {
+					                        SapId = "3700811",
+					                        PersonalId = "1830203115230",
+					                        FirstName = "Gheorghe",
+					                        LastName = "Constantin"
 				                        }
 			                        };
 
 			var employeesFilePath = @"ExcelFiles\employees.xlsx";
-			var timekeepingFilePath = @"ExcelFiles\timekeeping.xlsx";
+			var timekeepingFilePath = @"ExcelFiles\timesheets.xlsx";
 			var businessTripsFilePath = @"ExcelFiles\businessTrips.xlsx";
 
-			var sut = new ExcelContext(employeesFilePath, timekeepingFilePath, businessTripsFilePath);
+			var sut = new EmployeeExcelContext(employeesFilePath, timekeepingFilePath, businessTripsFilePath);
 
-			var emps = sut.Employees.ToList();
+			var employees = sut.Employees.ToList();
 
-			Assert.Equal(4, emps.Count);
-			Assert.Equal(expectedEmployees, emps, ExcelEmployee.ExcelEmployeeComparer);
+			Assert.Equal(4, employees.Count);
+			Assert.Equal(expectedEmployees, employees, ExcelEmployee.ExcelEmployeeComparer);
 		}
 	}
 }

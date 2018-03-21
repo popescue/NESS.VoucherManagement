@@ -40,6 +40,9 @@
     <Reference Include="MahApps.Metro, Version=1.6.0.362, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.6.0\lib\net45\MahApps.Metro.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -85,9 +88,11 @@
     </ApplicationDefinition>
     <Compile Include="Properties\Annotations1.cs" />
     <Compile Include="Utils\Converters\InverseBooleanConverter.cs" />
+    <Compile Include="ViewModels\CalendarWorkingDayProvider.cs" />
     <Compile Include="ViewModels\DropFileViewModel.cs" />
     <Compile Include="Models\Month.cs" />
     <Compile Include="Utils\MVVM\RelayCommand.cs" />
+    <Compile Include="ViewModels\WebServiceHolidayProvider.cs" />
     <Compile Include="ViewModels\WorkingPeriodViewModel.cs" />
     <Page Include="Views\DropFileControl.xaml">
       <SubType>Designer</SubType>
@@ -156,6 +161,10 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\NESS.VoucherManagement.Application\NESS.VoucherManagement.Application.csproj">
+      <Project>{55716921-384F-4312-AA5D-5FD7A338D94F}</Project>
+      <Name>NESS.VoucherManagement.Application</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NESS.VoucherManagement.Core\NESS.VoucherManagement.Core.csproj">
       <Project>{d3c2154b-1889-4831-8df8-81dac575cc90}</Project>
       <Name>NESS.VoucherManagement.Core</Name>

@@ -5,8 +5,8 @@ using NESS.VoucherManagement.Core.Model;
 
 namespace NESS.VoucherManagement.Application
 {
-	public interface IReadOnlyRepository
+	public interface IVoucherWriter
 	{
-		IEnumerable<Employee> GetEmployees();
+		void WriteVouchers(IEnumerable<Voucher> vouchers);
 	}
 }

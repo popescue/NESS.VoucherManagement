@@ -7,7 +7,7 @@ using Xunit;
 
 namespace NESS.VoucherManagement.Tests
 {
-	public class Class1
+	public class CalendarWorkingDayProviderTests
 	{
 		[Theory(DisplayName = "Gives correct week days count per month")]
 		[InlineData(2018, 1, 23)]

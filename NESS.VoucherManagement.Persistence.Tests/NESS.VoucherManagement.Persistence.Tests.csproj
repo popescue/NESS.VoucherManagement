@@ -62,19 +62,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EmployeeExcelReadonlyRepositoryTests.cs" />
-    <Compile Include="ExcelContextTests.cs" />
+    <Compile Include="EmployeeExcelReaderTests.cs" />
+    <Compile Include="EmployeeExcelContextTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="ExcelFiles\employees.xlsx">
+    <None Include="TestFiles\employees.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="ExcelFiles\businessTrips.xlsx">
+    <None Include="TestFiles\businessTrips.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="ExcelFiles\timesheets.xlsx">
+    <None Include="TestFiles\timesheets.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
@@ -95,7 +95,11 @@
       <Name>NESS.VoucherManagement.Persistence</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="TestFiles\not_excel.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

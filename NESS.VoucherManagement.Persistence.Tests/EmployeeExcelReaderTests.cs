@@ -8,7 +8,7 @@ using Xunit;
 
 namespace NESS.VoucherManagement.Persistence.Tests
 {
-	public class EmployeeExcelReadonlyRepositoryTests
+	public class EmployeeExcelReaderTests
 	{
 		[Fact(DisplayName = "Excel business trips are aggregated for the same employee")]
 		public void Test1()

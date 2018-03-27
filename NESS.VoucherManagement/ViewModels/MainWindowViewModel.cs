@@ -54,37 +54,34 @@ namespace NESS.VoucherManagement.ViewModels
 			get
 			{
 				return new RelayCommand(async parameter =>
-				                        {
-					                        IsCalculating = true;
-					                        var openFileDialog = new SaveFileDialog();
-					                        openFileDialog.Filter = "Excel Files|*.xlsx";
-					                        var dialogResult = openFileDialog.ShowDialog();
-					                        if (dialogResult == DialogResult.OK)
-					                        {
-						                        DestinationFile = openFileDialog.FileName;
-						                        await Task.Run(() =>
-						                                       {
-							                                       CalculateVouchers();
-						                                       });
-					                        }
+				{
+					IsCalculating = true;
+					var openFileDialog = new SaveFileDialog();
+					openFileDialog.Filter = "Excel Files|*.xlsx";
+					var dialogResult = openFileDialog.ShowDialog();
+					if (dialogResult == DialogResult.OK)
+					{
+						DestinationFile = openFileDialog.FileName;
+						await Task.Run(() =>
+						{
+							CalculateVouchers();
+						});
+					}
 
-					                        IsCalculating = false;
-				                        });
+					IsCalculating = false;
+				});
 			}
 		}
 
-		public ICommand TimekeepingDropCommand
+		public ICommand TimesheetsDropCommand
 		{
 			get
 			{
 				return new RelayCommand(e =>
-				                        {
-					                        var filePath = ((string[]) ((DragEventArgs) e).Data.GetData(DataFormats.FileDrop))[0];
-					                        PopulateTimekeeping(
-						                        filePath,
-						                        Icon.ExtractAssociatedIcon(filePath).ToBitmapImage()
-					                        );
-				                        });
+				{
+					var filePath = ((string[]) ((DragEventArgs) e).Data.GetData(DataFormats.FileDrop))[0];
+					PopulateTimekeeping(filePath, Icon.ExtractAssociatedIcon(filePath).ToBitmapImage());
+				});
 			}
 		}
 
@@ -140,9 +137,9 @@ namespace NESS.VoucherManagement.ViewModels
 		private static Operation MapToOperation(string s)
 		{
 			var split = s.Split(new[]
-			                    {
-				                    '='
-			                    }, StringSplitOptions.RemoveEmptyEntries);
+			{
+				'='
+			}, StringSplitOptions.RemoveEmptyEntries);
 
 			return new Operation(split[0].Trim(), split[1].Trim());
 		}

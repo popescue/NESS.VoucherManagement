@@ -40,9 +40,9 @@ namespace NESS.VoucherManagement.Views
 			);
 		}
 
-		private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
-		{
-			ExecuteButton.IsEnabled = false;
-		}
+		//private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+		//{
+		//	ExecuteButton.IsEnabled = false;
+		//}
 	}
 }

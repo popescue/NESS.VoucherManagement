@@ -28,7 +28,7 @@ namespace NESS.VoucherManagement.Tests
 
 			var sut = new CalendarWorkingDayProvider(holidayProviderMock.Object);
 
-			var result = sut.Count(year, month);
+			var result = sut.GetCount(year, month);
 
 			Assert.Equal(expectedWeekDays, result);
 		}
@@ -50,7 +50,7 @@ namespace NESS.VoucherManagement.Tests
 
 			var sut = new CalendarWorkingDayProvider(holidayProviderMock.Object);
 
-			var result = sut.Count(year, month);
+			var result = sut.GetCount(year, month);
 
 			Assert.Equal(20, result);
 		}
@@ -71,7 +71,7 @@ namespace NESS.VoucherManagement.Tests
 
 			var sut = new CalendarWorkingDayProvider(holidayProviderMock.Object);
 
-			var result = sut.Count(year, month);
+			var result = sut.GetCount(year, month);
 
 			Assert.Equal(21, result);
 		}

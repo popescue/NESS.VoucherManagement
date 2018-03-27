@@ -11,7 +11,7 @@ namespace NESS.VoucherManagement.ViewModels
 
 		public CalendarWorkingDayProvider(IHolidayProvider holidayProvider) => this.holidayProvider = holidayProvider;
 
-		public int Count(int year, int month)
+		public int GetCount(int year, int month)
 			=> GenerateWeekDays(year, month)
 				.Except(holidayProvider.GetHolidays(year, month))
 				.Count();

@@ -1,9 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Drawing;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
@@ -11,7 +9,6 @@ using NESS.VoucherManagement.Application;
 using NESS.VoucherManagement.Core.Model;
 using NESS.VoucherManagement.Persistence;
 using NESS.VoucherManagement.Properties;
-using NESS.VoucherManagement.Utils;
 using NESS.VoucherManagement.Utils.MVVM;
 
 namespace NESS.VoucherManagement.ViewModels
@@ -22,13 +19,13 @@ namespace NESS.VoucherManagement.ViewModels
 
 		public MainWindowViewModel()
 		{
-			TimekeepingVm = new DropFileViewModel("Pontaj");
+			TimesheetsVm = new DropFileViewModel("Pontaj");
 			BusinessTripsVm = new DropFileViewModel("Delegatii");
 			EmployeesVm = new DropFileViewModel("Angajati");
 			WorkingPeriodVm = new WorkingPeriodViewModel(DateTime.Now.Year);
 		}
 
-		public DropFileViewModel TimekeepingVm { get; }
+		public DropFileViewModel TimesheetsVm { get; }
 
 		public DropFileViewModel BusinessTripsVm { get; }
 
@@ -53,35 +50,24 @@ namespace NESS.VoucherManagement.ViewModels
 		{
 			get
 			{
-				return new RelayCommand(async parameter =>
+				return new RelayCommand(parameter =>
 				{
 					IsCalculating = true;
-					var openFileDialog = new SaveFileDialog();
-					openFileDialog.Filter = "Excel Files|*.xlsx";
+
+					var openFileDialog = new SaveFileDialog
+					{
+						Filter = "Excel Files|*.xlsx"
+					};
+
 					var dialogResult = openFileDialog.ShowDialog();
 					if (dialogResult == DialogResult.OK)
 					{
 						DestinationFile = openFileDialog.FileName;
-						await Task.Run(() =>
-						{
-							CalculateVouchers();
-						});
+						CalculateVouchers();
 					}
 
 					IsCalculating = false;
-				});
-			}
-		}
-
-		public ICommand TimesheetsDropCommand
-		{
-			get
-			{
-				return new RelayCommand(e =>
-				{
-					var filePath = ((string[]) ((DragEventArgs) e).Data.GetData(DataFormats.FileDrop))[0];
-					PopulateTimekeeping(filePath, Icon.ExtractAssociatedIcon(filePath).ToBitmapImage());
-				});
+				}, o => BusinessTripsVm.Path != null && EmployeesVm.Path != null && TimesheetsVm.Path != null);
 			}
 		}
 
@@ -89,9 +75,10 @@ namespace NESS.VoucherManagement.ViewModels
 
 		internal void PopulateTimekeeping(string filePath, BitmapImage icon)
 		{
-			TimekeepingVm.Path = filePath;
-			TimekeepingVm.FileIcon = icon;
-			TimekeepingVm.IsPopulated = true;
+			TimesheetsVm.Path = filePath;
+			TimesheetsVm.FileIcon = icon;
+			TimesheetsVm.IsPopulated = true;
+			CommandManager.InvalidateRequerySuggested();
 		}
 
 		internal void PopulateBusinessTrips(string filePath, BitmapImage icon)
@@ -99,6 +86,7 @@ namespace NESS.VoucherManagement.ViewModels
 			BusinessTripsVm.Path = filePath;
 			BusinessTripsVm.FileIcon = icon;
 			BusinessTripsVm.IsPopulated = true;
+			CommandManager.InvalidateRequerySuggested();
 		}
 
 		internal void PopulateEmployees(string filePath, BitmapImage icon)
@@ -106,28 +94,25 @@ namespace NESS.VoucherManagement.ViewModels
 			EmployeesVm.Path = filePath;
 			EmployeesVm.FileIcon = icon;
 			EmployeesVm.IsPopulated = true;
+			CommandManager.InvalidateRequerySuggested();
 		}
 
 		private void CalculateVouchers()
 		{
-			var readContext = new EmployeeExcelContext(EmployeesVm.Path, TimekeepingVm.Path, BusinessTripsVm.Path);
-
-			var reader = new EmployeeExcelReader(readContext);
-
-			var writeContext = new VoucherExcelContext(DestinationFile);
-
-			var writer = new VoucherExcelWriter(writeContext);
-
 			var operations = Settings.Default.OutOfOfficeOperations
 				.Cast<string>()
 				.Select(MapToOperation);
 
+			var command = new CalculateVouchersCommand(operations, WorkingPeriodVm.Year, WorkingPeriodVm.Month.Index);
+
+			var readContext = new EmployeeExcelContext(EmployeesVm.Path, TimesheetsVm.Path, BusinessTripsVm.Path);
+			var reader = new EmployeeExcelReader(readContext);
+
+			var writeContext = new VoucherExcelContext(DestinationFile);
+			var writer = new VoucherExcelWriter(writeContext);
+
 			IHolidayProvider holidayProvider = new WebServiceHolidayProvider();
 			IWorkingDayProvider workingDayProvider = new CalendarWorkingDayProvider(holidayProvider);
-
-			//var workingDays = b.Count(year:WorkingPeriodVm.Year, month:WorkingPeriodVm.Month.Index);
-
-			var command = new CalculateVouchersCommand(operations, WorkingPeriodVm.Year, WorkingPeriodVm.Month.Index);
 
 			var commandHandler = new CalculateVouchersCommandHandler(reader, writer, workingDayProvider);
 
@@ -136,10 +121,7 @@ namespace NESS.VoucherManagement.ViewModels
 
 		private static Operation MapToOperation(string s)
 		{
-			var split = s.Split(new[]
-			{
-				'='
-			}, StringSplitOptions.RemoveEmptyEntries);
+			var split = s.Split(new[] {'='}, StringSplitOptions.RemoveEmptyEntries);
 
 			return new Operation(split[0].Trim(), split[1].Trim());
 		}

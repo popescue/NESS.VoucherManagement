@@ -5,6 +5,6 @@ namespace NESS.VoucherManagement.Application
 {
 	public interface IWorkingDayProvider
 	{
-		int Count(int year, int month);
+		int GetCount(int year, int month);
 	}
 }

@@ -1,5 +1,4 @@
 ﻿<mah:MetroWindow
-	x:Class="NESS.VoucherManagement.Views.MainWindow"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,6 +6,8 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:viewModels="clr-namespace:NESS.VoucherManagement.ViewModels"
 	xmlns:views="clr-namespace:NESS.VoucherManagement.Views"
+	xmlns:Converters="clr-namespace:NESS.VoucherManagement.Utils.Converters"
+	x:Class="NESS.VoucherManagement.Views.MainWindow"
 	Title="Voucher Management"
 	Width="825"
 	Height="350"
@@ -22,8 +23,7 @@
 	WindowTransitionsEnabled="False"
 	mc:Ignorable="d">
 	<mah:MetroWindow.Resources>
-		<SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent" />
-		<SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Transparent" />
+		<Converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
 	</mah:MetroWindow.Resources>
 	<mah:MetroWindow.DataContext>
 		<viewModels:MainWindowViewModel />
@@ -54,10 +54,10 @@
 				Drop="TimekeepingDropHandler">
 
 				<views:DropFileControl
-					Description="{Binding TimekeepingVm.Description}"
-					FileIcon="{Binding TimekeepingVm.FileIcon}"
-					FilePath="{Binding TimekeepingVm.Path}"
-					FrontFacing="{Binding TimekeepingVm.IsPopulated}" />
+					Description="{Binding TimesheetsVm.Description}"
+					FileIcon="{Binding TimesheetsVm.FileIcon}"
+					FilePath="{Binding TimesheetsVm.Path}"
+					FrontFacing="{Binding TimesheetsVm.IsPopulated}" />
 			</Border>
 
 			<Border
@@ -150,13 +150,12 @@
 				Height="40">
 
 				<Button
-					x:Name="ExecuteButton"
-					Click="ButtonBase_OnClick"
 					Command="{Binding CalculateCommand}"
 					Content="Exporta rezultatul"
-					IsEnabled="{Binding IsCalculating, Converter={StaticResource InverseBooleanConverter}, Mode=TwoWay}" />
+					IsEnabled="{Binding IsCalculating, Converter={StaticResource InverseBooleanConverter}}" />
+
 				<mah:ProgressRing Margin="10 0 0 0" HorizontalAlignment="Left" Foreground="White" Height="3" Width="3"
-				                  IsActive="{Binding IsCalculating}" />
+								IsActive="{Binding IsCalculating}" />
 			</Grid>
 
 		</Grid>

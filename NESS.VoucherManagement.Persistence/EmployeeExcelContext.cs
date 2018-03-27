@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.Serialization;
 using NESS.VoucherManagement.Persistence.Model;
 using Npoi.Mapper;
 
@@ -23,13 +22,13 @@ namespace NESS.VoucherManagement.Persistence
 		private Mapper timesheetMapper;
 
 		/// <summary>
+		/// Creates an instance of the class.
 		/// </summary>
 		/// <param name="employeesFilePath"></param>
 		/// <param name="timesheetsFilePath"></param>
 		/// <param name="businessTripsFilePath"></param>
 		/// <exception cref="ArgumentNullException"></exception>
 		/// <exception cref="ArgumentException"></exception>
-		/// <exception cref="FileNotFoundException"></exception>
 		public EmployeeExcelContext(string employeesFilePath, string timesheetsFilePath, string businessTripsFilePath)
 		{
 			if (employeesFilePath == null) throw new ArgumentNullException(nameof(employeesFilePath));
@@ -43,36 +42,62 @@ namespace NESS.VoucherManagement.Persistence
 			this.employeesFilePath = employeesFilePath;
 			this.timesheetsFilePath = timesheetsFilePath;
 			this.businessTripsFilePath = businessTripsFilePath;
-
-			InitializeMappers();
 		}
 
-		public IEnumerable<ExcelTimesheet> Timesheets => timesheetMapper.Take<ExcelTimesheet>()
-			.Where(x => !string.IsNullOrWhiteSpace(x.Value.EmployeeSapId))
-			.Select(x => x.Value);
-
-		public IEnumerable<ExcelEmployee> Employees => employeesMapper.Take<ExcelEmployee>()
-			.Where(x => !string.IsNullOrWhiteSpace(x.Value.SapId))
-			.Select(x => x.Value);
-
-		public IEnumerable<ExcelBusinessTrip> BusinessTrips => businessTripsMapper.Take<ExcelBusinessTrip>()
-			.Where(x => !string.IsNullOrWhiteSpace(x.Value.EmployeeSapId))
-			.Select(x => x.Value);
-
-		private void InitializeMappers()
+		/// <summary>
+		///     Exposes a time sheet collection.
+		/// </summary>
+		/// <exception cref="FileNotFoundException"></exception>
+		/// <exception cref="InvalidFileTypeException"></exception>
+		public IEnumerable<ExcelTimesheet> Timesheets
 		{
-			try
+			get
 			{
-				employeesMapper = new Mapper(employeesFilePath)
-					.Map<ExcelEmployee>("Pers.no.", x => x.SapId)
-					.Map<ExcelEmployee>("Last name", x => x.LastName)
-					.Map<ExcelEmployee>("First name", x => x.FirstName)
-					.Map<ExcelEmployee>("ID number", x => x.PersonalId);
+				EnsureTimesheetMapperCreated();
+
+				return timesheetMapper.Take<ExcelTimesheet>()
+					.Where(x => !string.IsNullOrWhiteSpace(x.Value.EmployeeSapId))
+					.Select(x => x.Value);
 			}
-			catch (ArgumentException ex)
+		}
+
+		/// <summary>
+		///     Exposes an employee collection.
+		/// </summary>
+		/// <exception cref="FileNotFoundException"></exception>
+		/// <exception cref="InvalidFileTypeException"></exception>
+		public IEnumerable<ExcelEmployee> Employees
+		{
+			get
 			{
-				throw new InvalidFileTypeException(employeesFilePath, "Expecting an Excel file.", ex);
+				EnsureEmployeesMapperCreated();
+
+				return employeesMapper.Take<ExcelEmployee>()
+					.Where(x => !string.IsNullOrWhiteSpace(x.Value.SapId))
+					.Select(x => x.Value);
 			}
+		}
+
+		/// <summary>
+		///     Exposes a business trip collection.
+		/// </summary>
+		/// <exception cref="FileNotFoundException"></exception>
+		/// <exception cref="InvalidFileTypeException"></exception>
+		public IEnumerable<ExcelBusinessTrip> BusinessTrips
+		{
+			get
+			{
+				EnsureBusinessTripMapperCreated();
+
+				return businessTripsMapper.Take<ExcelBusinessTrip>()
+					.Where(x => !string.IsNullOrWhiteSpace(x.Value.EmployeeSapId))
+					.Select(x => x.Value);
+			}
+		}
+
+		private void EnsureBusinessTripMapperCreated()
+		{
+			if (businessTripsMapper != null) return;
 
 			try
 			{
@@ -86,6 +111,28 @@ namespace NESS.VoucherManagement.Persistence
 			{
 				throw new InvalidFileTypeException(businessTripsFilePath, "Expecting an Excel file.", ex);
 			}
+		}
+
+		private void EnsureEmployeesMapperCreated()
+		{
+			if (employeesMapper != null) return;
+			try
+			{
+				employeesMapper = new Mapper(employeesFilePath)
+					.Map<ExcelEmployee>("Pers.no.", x => x.SapId)
+					.Map<ExcelEmployee>("Last name", x => x.LastName)
+					.Map<ExcelEmployee>("First name", x => x.FirstName)
+					.Map<ExcelEmployee>("ID number", x => x.PersonalId);
+			}
+			catch (ArgumentException ex)
+			{
+				throw new InvalidFileTypeException(employeesFilePath, "Expecting an Excel file.", ex);
+			}
+		}
+
+		private void EnsureTimesheetMapperCreated()
+		{
+			if (timesheetMapper != null) return;
 
 			try
 			{
@@ -101,26 +148,5 @@ namespace NESS.VoucherManagement.Persistence
 				throw new InvalidFileTypeException(timesheetsFilePath, "Expecting an Excel file.", ex);
 			}
 		}
-	}
-
-	[Serializable]
-	public class InvalidFileTypeException : Exception
-	{
-		private const string DefaultMessage = "The file was not of the expected type.";
-
-		public InvalidFileTypeException(string filePath)
-			: base(DefaultMessage) => FilePath = filePath;
-
-		public InvalidFileTypeException(string filePath, string message)
-			: base(message) => FilePath = filePath;
-
-		public InvalidFileTypeException(string filePath, string message, Exception inner)
-			: base(message, inner) => FilePath = filePath;
-
-		protected InvalidFileTypeException(
-			SerializationInfo info,
-			StreamingContext context) : base(info, context) { }
-
-		public string FilePath { get; }
 	}
 }

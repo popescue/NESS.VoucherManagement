@@ -20,7 +20,7 @@ namespace NESS.VoucherManagement.Application
 		{
 			var employees = reader.GetEmployees();
 
-			var workingDaysThisMonth = workingDayProvider.Count(command.Year, command.Month);
+			var workingDaysThisMonth = workingDayProvider.GetCount(command.Year, command.Month);
 
 			var vouchers = employees
 				.Select(e => e.CalculateVouchers(workingDaysThisMonth, command.OutOfOfficeOperations))

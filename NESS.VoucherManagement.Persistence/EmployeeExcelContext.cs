@@ -119,10 +119,10 @@ namespace NESS.VoucherManagement.Persistence
 			try
 			{
 				employeesMapper = new Mapper(employeesFilePath)
-					.Map<ExcelEmployee>("Pers.no.", x => x.SapId)
-					.Map<ExcelEmployee>("Last name", x => x.LastName)
-					.Map<ExcelEmployee>("First name", x => x.FirstName)
-					.Map<ExcelEmployee>("ID number", x => x.PersonalId);
+					.Map<ExcelEmployee>(0, x => x.SapId)
+					.Map<ExcelEmployee>(2, x => x.LastName)
+					.Map<ExcelEmployee>(3, x => x.FirstName)
+					.Map<ExcelEmployee>(4, x => x.PersonalId);
 			}
 			catch (ArgumentException ex)
 			{

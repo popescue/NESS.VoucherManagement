@@ -1,12 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using NESS.VoucherManagement.Persistence.Model;
-using Npoi.Mapper;
 
 namespace NESS.VoucherManagement.Persistence
 {
+	using System.Collections.Generic;
+	using System.IO;
+	using Model;
+	using Npoi.Mapper;
+
 	public class EmployeeExcelContext : IExcelContext
 	{
 		private readonly string businessTripsFilePath;
@@ -22,7 +23,7 @@ namespace NESS.VoucherManagement.Persistence
 		private Mapper timesheetMapper;
 
 		/// <summary>
-		/// Creates an instance of the class.
+		///     Creates an instance of the class.
 		/// </summary>
 		/// <param name="employeesFilePath"></param>
 		/// <param name="timesheetsFilePath"></param>
@@ -111,6 +112,10 @@ namespace NESS.VoucherManagement.Persistence
 			{
 				throw new InvalidFileTypeException(businessTripsFilePath, "Expecting an Excel file.", ex);
 			}
+			catch (IOException ex)
+			{
+				throw new FileInUseException(businessTripsFilePath, ex);
+			}
 		}
 
 		private void EnsureEmployeesMapperCreated()
@@ -127,6 +132,10 @@ namespace NESS.VoucherManagement.Persistence
 			catch (ArgumentException ex)
 			{
 				throw new InvalidFileTypeException(employeesFilePath, "Expecting an Excel file.", ex);
+			}
+			catch (IOException ex)
+			{
+				throw new FileInUseException(employeesFilePath, ex);
 			}
 		}
 
@@ -146,6 +155,33 @@ namespace NESS.VoucherManagement.Persistence
 			{
 				throw new InvalidFileTypeException(timesheetsFilePath, "Expecting an Excel file.", ex);
 			}
+			catch (IOException ex)
+			{
+				throw new FileInUseException(timesheetsFilePath, ex);
+			}
 		}
+	}
+
+	public class FileInUseException : Exception
+	{
+		private readonly Exception innerException;
+
+		private readonly string message;
+
+		public FileInUseException(string filePath) => FilePath = filePath;
+
+		public FileInUseException(string filePath, Exception innerException)
+		{
+			FilePath = filePath;
+			this.innerException = innerException;
+		}
+
+		public FileInUseException(string filePath, string message) : base(message)
+		{
+			FilePath = filePath;
+			this.message = message;
+		}
+
+		public string FilePath { get; }
 	}
 }

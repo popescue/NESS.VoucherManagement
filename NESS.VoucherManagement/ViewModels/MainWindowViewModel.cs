@@ -1,18 +1,21 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Windows.Forms;
-using System.Windows.Input;
-using System.Windows.Media.Imaging;
-using NESS.VoucherManagement.Application;
-using NESS.VoucherManagement.Core.Model;
-using NESS.VoucherManagement.Persistence;
-using NESS.VoucherManagement.Properties;
-using NESS.VoucherManagement.Utils.MVVM;
 
 namespace NESS.VoucherManagement.ViewModels
 {
+	using System.ComponentModel;
+	using System.Diagnostics;
+	using System.IO;
+	using System.Runtime.CompilerServices;
+	using System.Windows.Forms;
+	using System.Windows.Input;
+	using System.Windows.Media.Imaging;
+	using Application;
+	using Core.Model;
+	using Persistence;
+	using Properties;
+	using Utils.MVVM;
+
 	public sealed class MainWindowViewModel : INotifyPropertyChanged
 	{
 		private bool isCalculating;
@@ -116,7 +119,16 @@ namespace NESS.VoucherManagement.ViewModels
 
 			var commandHandler = new CalculateVouchersCommandHandler(reader, writer, workingDayProvider);
 
-			commandHandler.Handle(command);
+			try
+			{
+				commandHandler.Handle(command);
+			}
+			catch (FileInUseException ex)
+			{
+				MessageBox.Show($"Fisierul '{ex.FilePath}' este deschis in alta aplicatie. Inchide aplicatia si mai incearca odata.", "Un fisier este blocat");
+
+				Debug.WriteLine(ex.ToString());
+			}
 		}
 
 		private static Operation MapToOperation(string s)

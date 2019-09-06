@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2036
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29230.47
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NESS.VoucherManagement", "NESS.VoucherManagement\NESS.VoucherManagement.csproj", "{FF526940-8C36-43A7-8645-9F7B8710BA71}"
 EndProject
@@ -18,6 +18,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NESS.VoucherManagement.Persistence.Tests", "NESS.VoucherManagement.Persistence.Tests\NESS.VoucherManagement.Persistence.Tests.csproj", "{73524740-6B8E-4E2C-829D-152533FB5935}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NESS.VoucherManagement.Tests", "NESS.VoucherManagement.Tests\NESS.VoucherManagement.Tests.csproj", "{B854126D-252D-42FF-BF09-8E698A02554A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{720F32EB-6E70-4268-A2AF-021B8FDA945E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Installer", "Installer", "{1127433A-B7FC-4A15-AE3C-B9C84A499A48}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -58,6 +62,12 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A914EA93-8651-410A-BB7A-77148D096AF7} = {1127433A-B7FC-4A15-AE3C-B9C84A499A48}
+		{33CA4E80-A50B-4E54-A371-3657311573AC} = {720F32EB-6E70-4268-A2AF-021B8FDA945E}
+		{73524740-6B8E-4E2C-829D-152533FB5935} = {720F32EB-6E70-4268-A2AF-021B8FDA945E}
+		{B854126D-252D-42FF-BF09-8E698A02554A} = {720F32EB-6E70-4268-A2AF-021B8FDA945E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5E9AEB76-E56D-4201-A04D-1593A1A27411}

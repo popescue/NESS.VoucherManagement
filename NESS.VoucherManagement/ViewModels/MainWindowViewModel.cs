@@ -123,7 +123,8 @@ namespace NESS.VoucherManagement.ViewModels
 		{
 			var split = s.Split(new[] {'='}, StringSplitOptions.RemoveEmptyEntries);
 
-			return new Operation(split[0].Trim(), split[1].Trim());
+			//return new Operation(split[0].Trim(), split[1].Trim());
+			return new Operation(split[0].Trim(), null);
 		}
 
 		[Annotations.NotifyPropertyChangedInvocator]

@@ -5,18 +5,14 @@
     <Setting Name="OutOfOfficeOperations" Type="System.Collections.Specialized.StringCollection" Scope="Application">
       <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;string&gt;1201 = Vacation&lt;/string&gt;
-  &lt;string&gt;401 = P000501 Sick Leave&lt;/string&gt;
-  &lt;string&gt;980 = Concediu de odihna&lt;/string&gt;
-  &lt;string&gt;201 = P000500 Vacation&lt;/string&gt;
-  &lt;string&gt;201 = Vacation&lt;/string&gt;
-  &lt;string&gt;401 = Sick Leave&lt;/string&gt;
-  &lt;string&gt;902 = Decesul unei rude&lt;/string&gt;
-  &lt;string&gt;501 = Celebration Leave&lt;/string&gt;
-  &lt;string&gt;901 = Concediu pentru casatorie&lt;/string&gt;
-  &lt;string&gt;910 = Invoire medicala fara certificat medical&lt;/string&gt;
-  &lt;string&gt;981 = Concediu medical&lt;/string&gt;
-  &lt;string&gt;701 = Compassionate Leave&lt;/string&gt;
+  &lt;string&gt;CO = Concediu de odihna&lt;/string&gt;
+  &lt;string&gt;ZCBIMP = Concediu medical&lt;/string&gt;
+  &lt;string&gt;CFP = Concediu fara plata&lt;/string&gt;
+  &lt;string&gt;CEV = Concediu evenimente deosebite&lt;/string&gt;
+  &lt;string&gt;NEM = Absenta nemotivata&lt;/string&gt;
+  &lt;string&gt;IP = Invoire platita&lt;/string&gt;
+  &lt;string&gt;PATERN = Concediu paternal&lt;/string&gt;
+  &lt;string&gt;STUD = Concediu studii platite&lt;/string&gt;
 &lt;/ArrayOfString&gt;</Value>
     </Setting>
   </Settings>

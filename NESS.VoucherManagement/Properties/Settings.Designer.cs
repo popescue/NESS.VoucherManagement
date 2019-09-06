@@ -12,7 +12,7 @@ namespace NESS.VoucherManagement.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.6.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.2.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -27,18 +27,14 @@ namespace NESS.VoucherManagement.Properties {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
 <ArrayOfString xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
-  <string>1201 = Vacation</string>
-  <string>401 = P000501 Sick Leave</string>
-  <string>980 = Concediu de odihna</string>
-  <string>201 = P000500 Vacation</string>
-  <string>201 = Vacation</string>
-  <string>401 = Sick Leave</string>
-  <string>902 = Decesul unei rude</string>
-  <string>501 = Celebration Leave</string>
-  <string>901 = Concediu pentru casatorie</string>
-  <string>910 = Invoire medicala fara certificat medical</string>
-  <string>981 = Concediu medical</string>
-  <string>701 = Compassionate Leave</string>
+  <string>CO = Concediu de odihna</string>
+  <string>ZCBIMP = Concediu medical</string>
+  <string>CFP = Concediu fara plata</string>
+  <string>CEV = Concediu evenimente deosebite</string>
+  <string>NEM = Absenta nemotivata</string>
+  <string>IP = Invoire platita</string>
+  <string>PATERN = Concediu paternal</string>
+  <string>STUD = Concediu studii platite</string>
 </ArrayOfString>")]
         public global::System.Collections.Specialized.StringCollection OutOfOfficeOperations {
             get {

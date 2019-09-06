@@ -3,10 +3,16 @@ using System.Linq;
 
 namespace NESS.VoucherManagement.Core.Model
 {
-	public struct Timesheet
+	public struct TimeSheet
 	{
-		public Timesheet(Operation operation) => Operation = operation;
+		public TimeSheet(Operation operation, DateTime date)
+		{
+			Operation = operation;
+			Date = date;
+		}
 
 		public Operation Operation { get; }
+
+		public DateTime Date { get; }
 	}
 }

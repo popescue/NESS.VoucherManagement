@@ -102,9 +102,9 @@ namespace NESS.VoucherManagement.Persistence
 			try
 			{
 				businessTripsMapper = new Mapper(businessTripsFilePath)
-					.Map<ExcelBusinessTrip>("Company code", x => x.CompanyCode)
-					.Map<ExcelBusinessTrip>("SAP ID", x => x.EmployeeSapId)
-					.Map<ExcelBusinessTrip>("Nume Prenume", x => x.Name)
+					.Map<ExcelBusinessTrip>(0, x => x.CompanyCode)
+					.Map<ExcelBusinessTrip>(1, x => x.EmployeeSapId)
+					.Map<ExcelBusinessTrip>(2, x => x.Name)
 					.Map<ExcelBusinessTrip>(3, x => x.DaysInDelegation);
 			}
 			catch (ArgumentException ex)
@@ -137,11 +137,11 @@ namespace NESS.VoucherManagement.Persistence
 			try
 			{
 				timesheetMapper = new Mapper(timesheetsFilePath)
-					.Map<ExcelTimesheet>("Pers.No.", x => x.EmployeeSapId)
-					.Map<ExcelTimesheet>("Name", x => x.EmployeeName)
-					.Map<ExcelTimesheet>("OpAc", x => x.OperationId)
-					.Map<ExcelTimesheet>("Ac.Descr.", x => x.OperationDescription)
-					.Map<ExcelTimesheet>("Date", x => x.Date).Format<ExcelTimesheet>("dd.MM.yyyy", t => t.Date);
+					.Map<ExcelTimesheet>(0, x => x.EmployeeSapId)
+					.Map<ExcelTimesheet>(1, x => x.EmployeeName)
+					.Map<ExcelTimesheet>(2, x => x.OperationId)
+					.Map<ExcelTimesheet>(2, x => x.OperationDescription)
+					.Map<ExcelTimesheet>(6, x => x.Date).Format<ExcelTimesheet>("dd.MM.yyyy", t => t.Date);
 			}
 			catch (ArgumentException ex)
 			{

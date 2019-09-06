@@ -20,7 +20,7 @@ namespace NESS.VoucherManagement.Persistence
 			                                           .Select(bt => new BusinessTrip(bt.DaysInDelegation))
 			                let timesheets = context.Timesheets
 			                                        .Where(t => t.EmployeeSapId == e.SapId)
-			                                        .Select(t => new Timesheet(new Operation(t.OperationId, t.OperationDescription)))
+			                                        .Select(t => new TimeSheet(new Operation(t.OperationId, t.OperationDescription), t.Date))
 			                select new Employee(e.FirstName, e.LastName, e.PersonalId, e.SapId, timesheets, businessTrips);
 
 			return employees;

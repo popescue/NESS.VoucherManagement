@@ -125,7 +125,7 @@ namespace NESS.VoucherManagement.ViewModels
 			}
 			catch (FileInUseException ex)
 			{
-				MessageBox.Show($"Fisierul '{ex.FilePath}' este deschis in alta aplicatie. Inchide aplicatia si mai incearca odata.", "Un fisier este blocat");
+				MessageBox.Show(string.Format(Resources.MainWindowViewModel_CalculateVouchers_FileInUse, ex.FilePath), Resources.MainWindowViewModel_CalculateVouchers_FileInUseCaption);
 
 				Debug.WriteLine(ex.ToString());
 			}

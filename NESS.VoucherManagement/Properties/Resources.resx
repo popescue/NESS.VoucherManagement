@@ -114,4 +114,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="MainWindowViewModel_CalculateVouchers_FileInUse" xml:space="preserve">
+    <value>Fisierul '{0}' este deschis in alta aplicatie. Inchide aplicatia si mai incearca odata.</value>
+  </data>
+  <data name="MainWindowViewModel_CalculateVouchers_FileInUseCaption" xml:space="preserve">
+    <value>Un fisier este blocat</value>
+  </data>
 </root>

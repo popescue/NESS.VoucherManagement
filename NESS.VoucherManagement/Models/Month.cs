@@ -1,12 +1,10 @@
-﻿using System;
-using System.Linq;
-
-namespace NESS.VoucherManagement.Models
+﻿namespace NESS.VoucherManagement.Models
 {
+	using System;
+	using System.Linq;
+
 	public struct Month
 	{
-		public override string ToString() => Name;
-
 		public Month(int index, string name)
 		{
 			Index = index;
@@ -15,6 +13,8 @@ namespace NESS.VoucherManagement.Models
 
 		public int Index { get; }
 
+		// ReSharper disable once UnusedAutoPropertyAccessor.Global
+		// ReSharper disable once MemberCanBePrivate.Global
 		public string Name { get; }
 	}
 }

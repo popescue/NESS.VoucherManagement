@@ -85,7 +85,8 @@
     </ApplicationDefinition>
     <Compile Include="Properties\Annotations1.cs" />
     <Compile Include="Utils\Converters\InverseBooleanConverter.cs" />
-    <Compile Include="ViewModels\CalendarWorkingDayProvider.cs" />
+    <Compile Include="ViewModels\MonthYear.cs" />
+    <Compile Include="ViewModels\WorkingDays.cs" />
     <Compile Include="ViewModels\DropFileViewModel.cs" />
     <Compile Include="Models\Month.cs" />
     <Compile Include="Utils\MVVM\RelayCommand.cs" />

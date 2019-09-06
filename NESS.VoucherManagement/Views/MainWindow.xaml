@@ -145,7 +145,7 @@
 
 				<Button
 					Command="{Binding CalculateCommand}"
-					Content="Exporta rezultatul"
+					Content="Exporta Tichete"
 					IsEnabled="{Binding IsCalculating, Converter={StaticResource InverseBooleanConverter}}" />
 
 				<mah:ProgressRing Margin="10 0 0 0" HorizontalAlignment="Left" Foreground="White" Height="3" Width="3"

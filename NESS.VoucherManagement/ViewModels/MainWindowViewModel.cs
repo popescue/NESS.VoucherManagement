@@ -9,10 +9,15 @@ namespace NESS.VoucherManagement.ViewModels
 	using System.Windows.Forms;
 	using System.Windows.Input;
 	using System.Windows.Media.Imaging;
+
 	using Application;
+
 	using Core.Model;
+
 	using Persistence;
+
 	using Properties;
+
 	using Utils.MVVM;
 
 	public sealed class MainWindowViewModel : INotifyPropertyChanged
@@ -24,7 +29,7 @@ namespace NESS.VoucherManagement.ViewModels
 			TimesheetsVm = new DropFileViewModel("Pontaj");
 			BusinessTripsVm = new DropFileViewModel("Delegatii");
 			EmployeesVm = new DropFileViewModel("Angajati");
-			WorkingPeriodVm = new WorkingPeriodViewModel(DateTime.Now.Year);
+			WorkingPeriodVm = new WorkingPeriodViewModel(new MonthYear(DateTime.Now.Year, DateTime.Now.Month));
 		}
 
 		public DropFileViewModel TimesheetsVm { get; }
@@ -105,27 +110,26 @@ namespace NESS.VoucherManagement.ViewModels
 				.Cast<string>()
 				.Select(MapToOperation);
 
-			var command = new CalculateVouchersCommand(operations, WorkingPeriodVm.Year, WorkingPeriodVm.Month.Index);
-
 			var readContext = new EmployeeExcelContext(EmployeesVm.Path, TimesheetsVm.Path, BusinessTripsVm.Path);
 			var reader = new EmployeeExcelReader(readContext);
 
 			var writeContext = new VoucherExcelContext(DestinationFile);
 			var writer = new VoucherExcelWriter(writeContext);
 
-			IHolidayProvider holidayProvider = new WebServiceHolidayProvider();
-			IWorkingDayProvider workingDayProvider = new CalendarWorkingDayProvider(holidayProvider);
-
-			var commandHandler = new CalculateVouchersCommandHandler(reader, writer, workingDayProvider);
-
 			try
 			{
-				commandHandler.Handle(command);
+				var employees = reader.GetEmployees();
+				var holidays = WebServiceHolidayProvider.GetHolidays(WorkingPeriodVm.MonthYear);
+				var workingDays = WorkingDays.Count(WorkingPeriodVm.MonthYear, holidays);
+
+				var vouchers = VoucherCalculator.CalculateVouchers(employees, workingDays, operations);
+
+				writer.WriteVouchers(vouchers);
 			}
 			catch (InvalidFileTypeException ex)
 			{
 				MessageBox.Show(string.Format(Resources.MainWindowViewModel_CalculateVouchers_InvalidFileTypeMessage, ex.FilePath), Resources.MainWindowViewModel_CalculateVouchers_InvalidFileTypeCaption);
-				
+
 				Debug.WriteLine(ex.ToString());
 			}
 			catch (FileInUseException ex)

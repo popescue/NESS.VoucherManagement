@@ -7,16 +7,16 @@
 	using Application;
 	using Newtonsoft.Json;
 
-	internal sealed class WebServiceHolidayProvider : IHolidayProvider
+	internal static class WebServiceHolidayProvider
 	{
-		public IEnumerable<DateTime> GetHolidays(int year, int month)
+		public static IEnumerable<DateTime> GetHolidays(MonthYear my)
 		{
-			var calendar = new HttpClient().GetStringAsync($"http://kayaposoft.com/enrico/json/v1.0/?action=getPublicHolidaysForYear&year={year}&country=rou").Result;
+			var calendar = new HttpClient().GetStringAsync($"http://kayaposoft.com/enrico/json/v1.0/?action=getPublicHolidaysForYear&year={my.Year}&country=rou").Result;
 
 			return JsonConvert.DeserializeObject<BankHolidayResponseDto[]>(calendar)
 				.Select(x => new DateTime(x.BankHolidayDateResponseDto.Year, x.BankHolidayDateResponseDto.Month,
 					x.BankHolidayDateResponseDto.Day))
-				.Where(x => x.Month == month)
+				.Where(x => x.Month == my.Month)
 				.ToList();
 		}
 

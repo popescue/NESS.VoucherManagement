@@ -49,13 +49,13 @@ namespace NESS.VoucherManagement.Persistence
 		/// </summary>
 		/// <exception cref="FileNotFoundException"></exception>
 		/// <exception cref="InvalidFileTypeException"></exception>
-		public IEnumerable<ExcelTimesheet> Timesheets
+		public IEnumerable<ExcelTimeSheetEntry> TimeSheetEntries
 		{
 			get
 			{
 				EnsureTimesheetMapperCreated();
 
-				return timesheetMapper.Take<ExcelTimesheet>()
+				return timesheetMapper.Take<ExcelTimeSheetEntry>()
 					.Where(x => !string.IsNullOrWhiteSpace(x.Value.EmployeeSapId))
 					.Select(x => x.Value);
 			}
@@ -105,7 +105,7 @@ namespace NESS.VoucherManagement.Persistence
 					.Map<ExcelBusinessTrip>(0, x => x.CompanyCode)
 					.Map<ExcelBusinessTrip>(1, x => x.EmployeeSapId)
 					.Map<ExcelBusinessTrip>(2, x => x.Name)
-					.Map<ExcelBusinessTrip>(3, x => x.DaysInDelegation);
+					.Map<ExcelBusinessTrip>(3, x => x.DaysInBusinessTrip);
 			}
 			catch (ArgumentException ex)
 			{
@@ -137,11 +137,10 @@ namespace NESS.VoucherManagement.Persistence
 			try
 			{
 				timesheetMapper = new Mapper(timesheetsFilePath)
-					.Map<ExcelTimesheet>(0, x => x.EmployeeSapId)
-					.Map<ExcelTimesheet>(1, x => x.EmployeeName)
-					.Map<ExcelTimesheet>(2, x => x.OperationId)
-					.Map<ExcelTimesheet>(2, x => x.OperationDescription)
-					.Map<ExcelTimesheet>(6, x => x.Date).Format<ExcelTimesheet>("dd.MM.yyyy", t => t.Date);
+					.Map<ExcelTimeSheetEntry>(0, x => x.EmployeeSapId)
+					.Map<ExcelTimeSheetEntry>(2, x => x.OperationId)
+					.Map<ExcelTimeSheetEntry>(2, x => x.OperationDescription)
+					.Map<ExcelTimeSheetEntry>(6, x => x.Date).Format<ExcelTimeSheetEntry>("dd.MM.yyyy", t => t.Date);
 			}
 			catch (ArgumentException ex)
 			{

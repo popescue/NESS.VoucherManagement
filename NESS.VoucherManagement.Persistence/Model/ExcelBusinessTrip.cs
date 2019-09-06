@@ -1,9 +1,12 @@
-﻿using System;
-using System.Linq;
-
-namespace NESS.VoucherManagement.Persistence.Model
+﻿namespace NESS.VoucherManagement.Persistence.Model
 {
-	public class ExcelBusinessTrip
+	using System;
+	using System.Diagnostics.CodeAnalysis;
+	using System.Linq;
+
+	// ReSharper disable once ClassNeverInstantiated.Global
+	[SuppressMessage("NDepend", "ND1207:NonStaticClassesShouldBeInstantiatedOrTurnedToStatic", Justification = "Used for deserialization by 3rd party tool")]
+	public sealed class ExcelBusinessTrip
 	{
 		public string EmployeeSapId { get; set; }
 
@@ -11,6 +14,6 @@ namespace NESS.VoucherManagement.Persistence.Model
 
 		public string Name { get; set; }
 
-		public int DaysInDelegation { get; set; }
+		public int DaysInBusinessTrip { get; set; }
 	}
 }

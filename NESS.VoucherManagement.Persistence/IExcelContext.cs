@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using NESS.VoucherManagement.Persistence.Model;
-
-namespace NESS.VoucherManagement.Persistence
+﻿namespace NESS.VoucherManagement.Persistence
 {
+	using System;
+	using System.Collections.Generic;
+	using System.IO;
+	using System.Linq;
+	using Model;
+
 	public interface IExcelContext
 	{
 		/// <summary>
@@ -27,6 +27,6 @@ namespace NESS.VoucherManagement.Persistence
 		/// </summary>
 		/// <exception cref="FileNotFoundException"></exception>
 		/// <exception cref="InvalidFileTypeException"></exception>
-		IEnumerable<ExcelTimesheet> Timesheets { get; }
+		IEnumerable<ExcelTimeSheetEntry> TimeSheetEntries { get; }
 	}
 }

@@ -1,8 +1,8 @@
-﻿using System;
-using System.Linq;
-
-namespace NESS.VoucherManagement.Core.Model
+﻿namespace NESS.VoucherManagement.Core.Model
 {
+	using System;
+	using System.Linq;
+
 	public struct BusinessTrip
 	{
 		public BusinessTrip(int days)
@@ -13,7 +13,5 @@ namespace NESS.VoucherManagement.Core.Model
 		}
 
 		public int Days { get; }
-
-		public static BusinessTrip NoDelegation() => new BusinessTrip(0);
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -51,3 +52,10 @@ using System.Windows;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
+
+[assembly: SuppressMessage("NDepend", "ND2012:AvoidHavingDifferentTypesWithSameName", Target = "NESS.VoucherManagement.Annotations", Scope = "deep", Justification = "TODO")]
+[assembly: SuppressMessage("NDepend", "ND2011:AvoidFieldsWithNameTooLong", Target = "NESS.VoucherManagement.Annotations", Scope = "deep", Justification = "TODO")]
+[assembly: SuppressMessage("NDepend", "ND2011:AvoidFieldsWithNameTooLong", Target = "NESS.VoucherManagement.Properties", Scope = "deep", Justification = "TODO")]
+[assembly: SuppressMessage("NDepend", "ND1406:NamespacesWithPoorRelationalCohesion", Target = "NESS.VoucherManagement.Properties", Justification = "TODO")]
+[assembly: SuppressMessage("NDepend", "ND1405:AssembliesWithPoorRelationalCohesion", Justification = "TODO")]
+[assembly: SuppressMessage("NDepend", "ND1406:NamespacesWithPoorRelationalCohesion", Target = "NESS.VoucherManagement.Annotations", Justification = "TODO")]

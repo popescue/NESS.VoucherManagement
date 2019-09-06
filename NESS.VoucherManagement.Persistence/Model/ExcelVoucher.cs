@@ -1,9 +1,9 @@
-﻿using System;
-using System.Linq;
-
-namespace NESS.VoucherManagement.Persistence.Model
+﻿namespace NESS.VoucherManagement.Persistence.Model
 {
-	public class ExcelVoucher
+	using System;
+	using System.Linq;
+
+	public sealed class ExcelVoucher
 	{
 		public decimal Value { get; set; }
 

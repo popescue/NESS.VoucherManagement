@@ -1,14 +1,13 @@
-﻿using System;
-using System.Linq;
-
-namespace NESS.VoucherManagement.ViewModels
+﻿namespace NESS.VoucherManagement.ViewModels
 {
+	using System;
 	using System.Collections.Generic;
+	using System.Linq;
 	using System.Net.Http;
 	using Application;
 	using Newtonsoft.Json;
 
-	internal class WebServiceHolidayProvider : IHolidayProvider
+	internal sealed class WebServiceHolidayProvider : IHolidayProvider
 	{
 		public IEnumerable<DateTime> GetHolidays(int year, int month)
 		{
@@ -21,7 +20,7 @@ namespace NESS.VoucherManagement.ViewModels
 				.ToList();
 		}
 
-		internal class BankHolidayResponseDto
+		private sealed class BankHolidayResponseDto
 		{
 			[JsonProperty("date")]
 			public BankHolidayDateResponseDto BankHolidayDateResponseDto { get; set; }
@@ -33,7 +32,7 @@ namespace NESS.VoucherManagement.ViewModels
 			public string EnglishName { get; set; }
 		}
 
-		internal class BankHolidayDateResponseDto
+		private sealed class BankHolidayDateResponseDto
 		{
 			[JsonProperty("day")]
 			public int Day { get; set; }

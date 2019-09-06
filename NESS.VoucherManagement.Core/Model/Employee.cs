@@ -44,13 +44,7 @@ namespace NESS.VoucherManagement.Core.Model
 
 	internal static class TimeSheetEnumerableExtensions
 	{
-		public static int OutOfOfficeCount(this IEnumerable<TimeSheet> timesheets, IEnumerable<Operation> outOfOfficeOperations)
-		{
-			var z = timesheets.GroupBy(a => a.Operation.Id);
-
-			var outOfOfficeCount = timesheets.Count(x => outOfOfficeOperations.Contains(x.Operation));
-
-			return outOfOfficeCount;
-		}
+		public static int OutOfOfficeCount(this IEnumerable<TimeSheet> timeSheets, IEnumerable<Operation> outOfOfficeOperations) 
+			=> timeSheets.Count(x => outOfOfficeOperations.Contains(x.Operation));
 	}
 }

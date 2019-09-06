@@ -11,6 +11,7 @@ namespace NESS.VoucherManagement.ViewModels
 		public WorkingPeriodViewModel(int year)
 		{
 			Year = year;
+			// ReSharper disable once PossibleNullReferenceException
 			AvailableMonths = DateTimeFormatInfo.CurrentInfo.MonthNames.Zip(Enumerable.Range(1, 12), (name, index) => new Month(index, name));
 			Month = AvailableMonths.Single(x => x.Index == DateTime.Now.Month);
 		}

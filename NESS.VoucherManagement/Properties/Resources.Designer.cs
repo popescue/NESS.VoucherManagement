@@ -61,7 +61,7 @@ namespace NESS.VoucherManagement.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Un fisier este blocat.
+        ///   Looks up a localized string similar to A file is locked.
         /// </summary>
         internal static string MainWindowViewModel_CalculateVouchers_FileInUseCaption {
             get {
@@ -70,7 +70,7 @@ namespace NESS.VoucherManagement.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fisierul &apos;{0}&apos; este deschis in alta aplicatie. Inchide aplicatia si mai incearca odata..
+        ///   Looks up a localized string similar to File &apos;{0}&apos; is opened in another application. Close the application and try again..
         /// </summary>
         internal static string MainWindowViewModel_CalculateVouchers_FileInUseMessage {
             get {
@@ -79,7 +79,7 @@ namespace NESS.VoucherManagement.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fisierul nu este Excel.
+        ///   Looks up a localized string similar to This is not an Excel file.
         /// </summary>
         internal static string MainWindowViewModel_CalculateVouchers_InvalidFileTypeCaption {
             get {
@@ -88,7 +88,7 @@ namespace NESS.VoucherManagement.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fisierul &apos;{0}&apos; nu este un fisier Excel (.xls sau .xlsx)..
+        ///   Looks up a localized string similar to File &apos;{0}&apos; is not an Excel file (.xls or .xlsx)..
         /// </summary>
         internal static string MainWindowViewModel_CalculateVouchers_InvalidFileTypeMessage {
             get {

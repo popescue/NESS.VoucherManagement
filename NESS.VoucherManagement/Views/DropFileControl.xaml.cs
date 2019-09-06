@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 
 namespace NESS.VoucherManagement.Views
 {
-	public partial class DropFileControl : UserControl
+	public partial class DropFileControl
 	{
 		// Using a DependencyProperty as the backing store for FilePath.  This enables animation, styling, binding, etc...
 		public static readonly DependencyProperty FilePathProperty =

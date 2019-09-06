@@ -3,5 +3,5 @@ using System.Linq;
 
 namespace NESS.VoucherManagement
 {
-	public partial class App : System.Windows.Application { }
+	public partial class App { }
 }

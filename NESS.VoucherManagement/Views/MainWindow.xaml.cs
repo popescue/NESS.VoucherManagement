@@ -1,11 +1,13 @@
-using System;
-using System.Linq;
-using System.Windows;
-using NESS.VoucherManagement.Utils;
-using NESS.VoucherManagement.ViewModels;
-
 namespace NESS.VoucherManagement.Views
 {
+	using System;
+	using System.Linq;
+	using System.Windows;
+
+	using Utils;
+
+	using ViewModels;
+
 	public partial class MainWindow
 	{
 		public MainWindow()
@@ -13,36 +15,40 @@ namespace NESS.VoucherManagement.Views
 			InitializeComponent();
 		}
 
-		private void TimekeepingDropHandler(object sender, DragEventArgs e)
+		private void TimeSheetsDropHandler(object sender, DragEventArgs e)
 		{
-			var filePath = ((string[]) e.Data.GetData(DataFormats.FileDrop))[0];
-			((MainWindowViewModel) DataContext).PopulateTimekeeping(
-				filePath,
-				System.Drawing.Icon.ExtractAssociatedIcon(filePath).ToBitmapImage()
-			);
+			var path = ExtractPath(e);
+
+			if (path == null) return;
+
+			((MainWindowViewModel) DataContext).PopulateTimekeeping(path, System.Drawing.Icon.ExtractAssociatedIcon(path).ToBitmapImage());
 		}
 
 		private void BusinessTripsDropHandler(object sender, DragEventArgs e)
 		{
-			var filePath = ((string[]) e.Data.GetData(DataFormats.FileDrop))[0];
-			((MainWindowViewModel) DataContext).PopulateBusinessTrips(
-				filePath,
-				System.Drawing.Icon.ExtractAssociatedIcon(filePath).ToBitmapImage()
-			);
+			var path = ExtractPath(e);
+
+			if (path == null) return;
+
+			((MainWindowViewModel) DataContext).PopulateBusinessTrips(path, System.Drawing.Icon.ExtractAssociatedIcon(path).ToBitmapImage());
 		}
 
 		private void EmployeesDropHandler(object sender, DragEventArgs e)
 		{
-			var filePath = ((string[]) e.Data.GetData(DataFormats.FileDrop))[0];
-			((MainWindowViewModel) DataContext).PopulateEmployees(
-				filePath,
-				System.Drawing.Icon.ExtractAssociatedIcon(filePath).ToBitmapImage()
-			);
+			var path = ExtractPath(e);
+
+			if (path == null) return;
+
+			((MainWindowViewModel) DataContext).PopulateEmployees(path, System.Drawing.Icon.ExtractAssociatedIcon(path).ToBitmapImage());
 		}
 
-		//private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
-		//{
-		//	ExecuteButton.IsEnabled = false;
-		//}
+		private static string ExtractPath(DragEventArgs e)
+		{
+			if (!e.Data.GetDataPresent(DataFormats.FileDrop)) return null;
+
+			if (!(e.Data.GetData(DataFormats.FileDrop, true) is string[] data)) return null;
+
+			return data[0];
+		}
 	}
 }

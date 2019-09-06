@@ -6,7 +6,6 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:viewModels="clr-namespace:NESS.VoucherManagement.ViewModels"
 	xmlns:views="clr-namespace:NESS.VoucherManagement.Views"
-	xmlns:Converters="clr-namespace:NESS.VoucherManagement.Utils.Converters"
 	x:Class="NESS.VoucherManagement.Views.MainWindow"
 	Title="Voucher Management"
 	Width="825"
@@ -22,9 +21,6 @@
 	WindowStartupLocation="CenterScreen"
 	WindowTransitionsEnabled="False"
 	mc:Ignorable="d">
-	<mah:MetroWindow.Resources>
-		<Converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
-	</mah:MetroWindow.Resources>
 	<mah:MetroWindow.DataContext>
 		<viewModels:MainWindowViewModel />
 	</mah:MetroWindow.DataContext>
@@ -51,7 +47,7 @@
 				Background="Transparent"
 				BorderBrush="White"
 				BorderThickness="2,2,0,2"
-				Drop="TimekeepingDropHandler">
+				Drop="TimeSheetsDropHandler">
 
 				<views:DropFileControl
 					Description="{Binding TimesheetsVm.Description}"
@@ -97,7 +93,7 @@
 				Background="Transparent"
 				BorderBrush="White"
 				BorderThickness="2,2,0,2"
-				Drop="TimekeepingDropHandler">
+				Drop="TimeSheetsDropHandler">
 				<Grid>
 					<Grid.RowDefinitions>
 						<RowDefinition />
@@ -114,7 +110,6 @@
 							VerticalAlignment="Center"
 							Content="Anul:" />
 						<mah:NumericUpDown
-							x:Name="YearNumbericDropDown"
 							Width="100"
 							Height="20"
 							HorizontalAlignment="Stretch"
@@ -131,7 +126,6 @@
 							VerticalAlignment="Center"
 							Content="Luna:" />
 						<ComboBox
-							x:Name="MonthDropDown"
 							Width="100"
 							Height="20"
 							HorizontalAlignment="Stretch"

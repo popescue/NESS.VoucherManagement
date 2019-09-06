@@ -61,20 +61,38 @@ namespace NESS.VoucherManagement.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fisierul &apos;{0}&apos; este deschis in alta aplicatie. Inchide aplicatia si mai incearca odata..
-        /// </summary>
-        internal static string MainWindowViewModel_CalculateVouchers_FileInUse {
-            get {
-                return ResourceManager.GetString("MainWindowViewModel_CalculateVouchers_FileInUse", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Un fisier este blocat.
         /// </summary>
         internal static string MainWindowViewModel_CalculateVouchers_FileInUseCaption {
             get {
                 return ResourceManager.GetString("MainWindowViewModel_CalculateVouchers_FileInUseCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fisierul &apos;{0}&apos; este deschis in alta aplicatie. Inchide aplicatia si mai incearca odata..
+        /// </summary>
+        internal static string MainWindowViewModel_CalculateVouchers_FileInUseMessage {
+            get {
+                return ResourceManager.GetString("MainWindowViewModel_CalculateVouchers_FileInUseMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fisierul nu este Excel.
+        /// </summary>
+        internal static string MainWindowViewModel_CalculateVouchers_InvalidFileTypeCaption {
+            get {
+                return ResourceManager.GetString("MainWindowViewModel_CalculateVouchers_InvalidFileTypeCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fisierul &apos;{0}&apos; nu este un fisier Excel (.xls sau .xlsx)..
+        /// </summary>
+        internal static string MainWindowViewModel_CalculateVouchers_InvalidFileTypeMessage {
+            get {
+                return ResourceManager.GetString("MainWindowViewModel_CalculateVouchers_InvalidFileTypeMessage", resourceCulture);
             }
         }
     }

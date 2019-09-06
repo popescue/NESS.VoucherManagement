@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="EmployeeExcelReader.cs" />
     <Compile Include="EmployeeExcelContext.cs" />
+    <Compile Include="FileInUseException.cs" />
     <Compile Include="IExcelContext.cs" />
     <Compile Include="InvalidFileTypeException.cs" />
     <Compile Include="Model\ExcelBusinessTrip.cs" />

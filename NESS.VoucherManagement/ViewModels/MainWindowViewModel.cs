@@ -5,7 +5,6 @@ namespace NESS.VoucherManagement.ViewModels
 {
 	using System.ComponentModel;
 	using System.Diagnostics;
-	using System.IO;
 	using System.Runtime.CompilerServices;
 	using System.Windows.Forms;
 	using System.Windows.Input;
@@ -123,9 +122,15 @@ namespace NESS.VoucherManagement.ViewModels
 			{
 				commandHandler.Handle(command);
 			}
+			catch (InvalidFileTypeException ex)
+			{
+				MessageBox.Show(string.Format(Resources.MainWindowViewModel_CalculateVouchers_InvalidFileTypeMessage, ex.FilePath), Resources.MainWindowViewModel_CalculateVouchers_InvalidFileTypeCaption);
+				
+				Debug.WriteLine(ex.ToString());
+			}
 			catch (FileInUseException ex)
 			{
-				MessageBox.Show(string.Format(Resources.MainWindowViewModel_CalculateVouchers_FileInUse, ex.FilePath), Resources.MainWindowViewModel_CalculateVouchers_FileInUseCaption);
+				MessageBox.Show(string.Format(Resources.MainWindowViewModel_CalculateVouchers_FileInUseMessage, ex.FilePath), Resources.MainWindowViewModel_CalculateVouchers_FileInUseCaption);
 
 				Debug.WriteLine(ex.ToString());
 			}

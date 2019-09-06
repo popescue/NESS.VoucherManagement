@@ -47,7 +47,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BankHolidayResponseDto.cs" />
     <Compile Include="Model\BusinessTrip.cs" />
     <Compile Include="Model\Employee.cs" />
     <Compile Include="Model\Voucher.cs" />

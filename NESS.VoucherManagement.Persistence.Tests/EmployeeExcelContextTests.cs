@@ -1,15 +1,17 @@
 ﻿using System;
-using System.IO;
 using System.Linq;
-using Xunit;
 
 namespace NESS.VoucherManagement.Persistence.Tests
 {
+	using System.IO;
+
+	using Xunit;
+
 	public class EmployeeExcelContextTests
 	{
 		[Theory(DisplayName = "Null argument file path throws exception")]
 		[InlineData(null, @"TestFiles\timesheets.xlsx", @"TestFiles\businessTrips.xlsx", "employeesFilePath")]
-		[InlineData(@"TestFiles\employees.xlsx", null, @"TestFiles\businessTrips.xlsx", "timesheetsFilePath")]
+		[InlineData(@"TestFiles\employees.xlsx", null, @"TestFiles\businessTrips.xlsx", "timeSheetsFilePath")]
 		[InlineData(@"TestFiles\employees.xlsx", @"TestFiles\timesheets.xlsx", null, "businessTripsFilePath")]
 		public void Test2(string employeesFilePath, string timesheetsFilePath, string businessTripsFilePath, string nullArgumentName)
 		{
@@ -18,7 +20,7 @@ namespace NESS.VoucherManagement.Persistence.Tests
 
 		[Theory(DisplayName = "Whitespace argument file path throws exception")]
 		[InlineData("  \t\r\n", @"TestFiles\timesheets.xlsx", @"TestFiles\businessTrips.xlsx", "employeesFilePath")]
-		[InlineData(@"TestFiles\employees.xlsx", "  \t\r\n", @"TestFiles\businessTrips.xlsx", "timesheetsFilePath")]
+		[InlineData(@"TestFiles\employees.xlsx", "  \t\r\n", @"TestFiles\businessTrips.xlsx", "timeSheetsFilePath")]
 		[InlineData(@"TestFiles\employees.xlsx", @"TestFiles\timesheets.xlsx", "  \t\r\n", "businessTripsFilePath")]
 		public void Test3(string employeesFilePath, string timesheetsFilePath, string businessTripsFilePath, string whitespaceArgumentName)
 		{
@@ -39,59 +41,47 @@ namespace NESS.VoucherManagement.Persistence.Tests
 			var employees = sut.Employees.ToList();
 			Assert.Equal(4, employees.Count);
 
-			var timesheets = sut.Timesheets.ToList();
+			var timesheets = sut.TimeSheetEntries.ToList();
 			Assert.Equal(20, timesheets.Count);
 
 			var businessTrips = sut.BusinessTrips.ToList();
 			Assert.Equal(15, businessTrips.Count);
 		}
 
-		[Fact(DisplayName = "Inexistent file throws exception")]
+		[Fact(DisplayName = "Nonexistent file throws exception")]
 		public void Test4()
 		{
-			var sut = new EmployeeExcelContext("inexistent.file", @"TestFiles\timesheets.xlsx", @"TestFiles\businessTrips.xlsx");
-
-			Assert.Throws<FileNotFoundException>(() => sut.Employees.ToList());
+			Assert.Throws<FileNotFoundException>(() => new EmployeeExcelContext("nonexistent.file", @"TestFiles\timesheets.xlsx", @"TestFiles\businessTrips.xlsx"));
 		}
 
-		[Fact(DisplayName = "Inexistent file throws exception")]
+		[Fact(DisplayName = "Nonexistent file throws exception")]
 		public void Test5()
 		{
-			var sut = new EmployeeExcelContext(@"TestFiles\employees.xlsx", "inexistent.file", @"TestFiles\businessTrips.xlsx");
-
-			Assert.Throws<FileNotFoundException>(() => sut.Timesheets.ToList());
+			Assert.Throws<FileNotFoundException>(() => new EmployeeExcelContext(@"TestFiles\employees.xlsx", "nonexistent.file", @"TestFiles\businessTrips.xlsx"));
 		}
 
-		[Fact(DisplayName = "Inexistent file throws exception")]
+		[Fact(DisplayName = "Nonexistent file throws exception")]
 		public void Test6()
 		{
-			var sut = new EmployeeExcelContext(@"TestFiles\employees.xlsx", @"TestFiles\timesheets.xlsx", "inexistent.file");
-
-			Assert.Throws<FileNotFoundException>(() => sut.BusinessTrips.ToList());
+			Assert.Throws<FileNotFoundException>(() => new EmployeeExcelContext(@"TestFiles\employees.xlsx", @"TestFiles\timesheets.xlsx", "nonexistent.file"));
 		}
 
 		[Fact(DisplayName = "Not excel file throws exception")]
 		public void Test7()
 		{
-			var sut = new EmployeeExcelContext(@"TestFiles\not_excel.txt", @"TestFiles\timesheets.xlsx", @"TestFiles\businessTrips.xlsx");
-
-			Assert.Throws<InvalidFileTypeException>(() => sut.Employees.ToList());
+			Assert.Throws<InvalidFileTypeException>(() => new EmployeeExcelContext(@"TestFiles\not_excel.txt", @"TestFiles\timesheets.xlsx", @"TestFiles\businessTrips.xlsx"));
 		}
 
 		[Fact(DisplayName = "Not excel file throws exception")]
 		public void Test8()
 		{
-			var sut = new EmployeeExcelContext(@"TestFiles\employees.xlsx", @"TestFiles\not_excel.txt", @"TestFiles\businessTrips.xlsx");
-
-			Assert.Throws<InvalidFileTypeException>(() => sut.Timesheets.ToList());
+			Assert.Throws<InvalidFileTypeException>(() => new EmployeeExcelContext(@"TestFiles\employees.xlsx", @"TestFiles\not_excel.txt", @"TestFiles\businessTrips.xlsx"));
 		}
 
 		[Fact(DisplayName = "Not excel file throws exception")]
 		public void Test9()
 		{
-			var sut = new EmployeeExcelContext(@"TestFiles\employees.xlsx", @"TestFiles\timesheets.xlsx", @"TestFiles\not_excel.txt");
-
-			Assert.Throws<InvalidFileTypeException>(() => sut.BusinessTrips.ToList());
+			Assert.Throws<InvalidFileTypeException>(() => new EmployeeExcelContext(@"TestFiles\employees.xlsx", @"TestFiles\timesheets.xlsx", @"TestFiles\not_excel.txt"));
 		}
 	}
 }

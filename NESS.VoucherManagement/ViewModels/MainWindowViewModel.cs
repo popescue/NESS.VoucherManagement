@@ -3,6 +3,7 @@ using System.Linq;
 
 namespace NESS.VoucherManagement.ViewModels
 {
+	using System.Collections.Generic;
 	using System.ComponentModel;
 	using System.Diagnostics;
 	using System.Runtime.CompilerServices;
@@ -26,13 +27,13 @@ namespace NESS.VoucherManagement.ViewModels
 
 		public MainWindowViewModel()
 		{
-			TimesheetsVm = new DropFileViewModel("Pontaj");
+			TimeSheetsVm = new DropFileViewModel("Pontaj");
 			BusinessTripsVm = new DropFileViewModel("Delegatii");
 			EmployeesVm = new DropFileViewModel("Angajati");
 			WorkingPeriodVm = new WorkingPeriodViewModel(new MonthYear(DateTime.Now.Year, DateTime.Now.Month));
 		}
 
-		public DropFileViewModel TimesheetsVm { get; }
+		public DropFileViewModel TimeSheetsVm { get; }
 
 		public DropFileViewModel BusinessTripsVm { get; }
 
@@ -74,7 +75,7 @@ namespace NESS.VoucherManagement.ViewModels
 					}
 
 					IsCalculating = false;
-				}, o => BusinessTripsVm.Path != null && EmployeesVm.Path != null && TimesheetsVm.Path != null);
+				}, o => BusinessTripsVm.Path != null && EmployeesVm.Path != null && TimeSheetsVm.Path != null);
 			}
 		}
 
@@ -82,9 +83,9 @@ namespace NESS.VoucherManagement.ViewModels
 
 		internal void PopulateTimekeeping(string filePath, BitmapImage icon)
 		{
-			TimesheetsVm.Path = filePath;
-			TimesheetsVm.FileIcon = icon;
-			TimesheetsVm.IsPopulated = true;
+			TimeSheetsVm.Path = filePath;
+			TimeSheetsVm.FileIcon = icon;
+			TimeSheetsVm.IsPopulated = true;
 			CommandManager.InvalidateRequerySuggested();
 		}
 
@@ -106,12 +107,12 @@ namespace NESS.VoucherManagement.ViewModels
 
 		private void CalculateVouchers()
 		{
-			var operations = Settings.Default.OutOfOfficeOperations
+			var outOfOfficeOperations = Settings.Default.OutOfOfficeOperations
 				.Cast<string>()
 				.Select(MapToOperation);
 
-			var readContext = new EmployeeExcelContext(EmployeesVm.Path, TimesheetsVm.Path, BusinessTripsVm.Path);
-			var reader = new EmployeeExcelReader(readContext);
+			IContext readContext = new EmployeeExcelContext(EmployeesVm.Path, TimeSheetsVm.Path, BusinessTripsVm.Path);
+			IEmployeeReader reader = new EmployeeExcelReader(readContext);
 
 			var writeContext = new VoucherExcelContext(DestinationFile);
 			var writer = new VoucherExcelWriter(writeContext);
@@ -122,7 +123,10 @@ namespace NESS.VoucherManagement.ViewModels
 				var holidays = WebServiceHolidayProvider.GetHolidays(WorkingPeriodVm.MonthYear);
 				var workingDays = WorkingDays.Count(WorkingPeriodVm.MonthYear, holidays);
 
-				var vouchers = VoucherCalculator.CalculateVouchers(employees, workingDays, operations);
+				var vouchers = (IEnumerable<Voucher>) employees
+					.Select(e => e.CalculateVouchers(workingDays, outOfOfficeOperations))
+					.OrderBy(v => v.Employee.LastName)
+					.ThenBy(v => v.Employee.FirstName);
 
 				writer.WriteVouchers(vouchers);
 			}

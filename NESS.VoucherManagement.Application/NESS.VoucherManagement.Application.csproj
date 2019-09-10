@@ -40,7 +40,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="VoucherCalculator.cs" />
     <Compile Include="IEmployeeReader.cs" />
     <Compile Include="IVoucherWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

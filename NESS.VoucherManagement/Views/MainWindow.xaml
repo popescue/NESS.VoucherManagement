@@ -50,10 +50,10 @@
 				Drop="TimeSheetsDropHandler">
 
 				<views:DropFileControl
-					Description="{Binding TimesheetsVm.Description}"
-					FileIcon="{Binding TimesheetsVm.FileIcon}"
-					FilePath="{Binding TimesheetsVm.Path}"
-					FrontFacing="{Binding TimesheetsVm.IsPopulated}" />
+					Description="{Binding TimeSheetsVm.Description}"
+					FileIcon="{Binding TimeSheetsVm.FileIcon}"
+					FilePath="{Binding TimeSheetsVm.Path}"
+					FrontFacing="{Binding TimeSheetsVm.IsPopulated}" />
 			</Border>
 
 			<Border

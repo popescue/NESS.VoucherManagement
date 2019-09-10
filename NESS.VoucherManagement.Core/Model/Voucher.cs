@@ -5,7 +5,7 @@ namespace NESS.VoucherManagement.Core.Model
 {
 	public class Voucher
 	{
-		public const decimal Value = 15M;
+		public const decimal Value = 15m;
 
 		public Voucher(Employee employee, int count)
 		{

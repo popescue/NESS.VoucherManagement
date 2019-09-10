@@ -10,15 +10,10 @@ namespace NESS.VoucherManagement.ViewModels
 	using System.Windows.Forms;
 	using System.Windows.Input;
 	using System.Windows.Media.Imaging;
-
 	using Application;
-
 	using Core.Model;
-
 	using Persistence;
-
 	using Properties;
-
 	using Utils.MVVM;
 
 	public sealed class MainWindowViewModel : INotifyPropertyChanged
@@ -111,17 +106,16 @@ namespace NESS.VoucherManagement.ViewModels
 				.Cast<string>()
 				.Select(MapToOperation);
 
-			IContext readContext = new EmployeeExcelContext(EmployeesVm.Path, TimeSheetsVm.Path, BusinessTripsVm.Path);
-			IEmployeeReader reader = new EmployeeExcelReader(readContext);
-
-			var writeContext = new VoucherExcelContext(DestinationFile);
-			var writer = new VoucherExcelWriter(writeContext);
-
 			try
 			{
+				IContext readContext = new EmployeeExcelContext(EmployeesVm.Path, TimeSheetsVm.Path, BusinessTripsVm.Path);
+				IEmployeeReader reader = new EmployeeExcelReader(readContext);
+
+				var writeContext = new VoucherExcelContext(DestinationFile);
+				var writer = new VoucherExcelWriter(writeContext);
+
 				var employees = reader.GetEmployees();
-				var holidays = WebServiceHolidayProvider.GetHolidays(WorkingPeriodVm.MonthYear);
-				var workingDays = WorkingDays.Count(WorkingPeriodVm.MonthYear, holidays);
+				var workingDays = WorkingDaysForMonth(WorkingPeriodVm.MonthYear);
 
 				var vouchers = (IEnumerable<Voucher>) employees
 					.Select(e => e.CalculateVouchers(workingDays, outOfOfficeOperations))
@@ -136,12 +130,12 @@ namespace NESS.VoucherManagement.ViewModels
 
 				Debug.WriteLine(ex.ToString());
 			}
-			catch (FileInUseException ex)
-			{
-				MessageBox.Show(string.Format(Resources.MainWindowViewModel_CalculateVouchers_FileInUseMessage, ex.FilePath), Resources.MainWindowViewModel_CalculateVouchers_FileInUseCaption);
+		}
 
-				Debug.WriteLine(ex.ToString());
-			}
+		private static int WorkingDaysForMonth(MonthYear monthYear)
+		{
+			var holidays = WebServiceHolidayProvider.GetHolidays(monthYear);
+			return WorkingDays.Count(monthYear, holidays);
 		}
 
 		private static Operation MapToOperation(string s)

@@ -4,21 +4,34 @@
 	using System.Collections.Generic;
 	using System.Linq;
 	using System.Net.Http;
-	using Application;
 	using Newtonsoft.Json;
 
 	internal static class WebServiceHolidayProvider
 	{
 		public static IEnumerable<DateTime> GetHolidays(MonthYear my)
 		{
-			var calendar = new HttpClient().GetStringAsync($"http://kayaposoft.com/enrico/json/v1.0/?action=getPublicHolidaysForYear&year={my.Year}&country=rou").Result;
+			string calendar;
 
-			return JsonConvert.DeserializeObject<BankHolidayResponseDto[]>(calendar)
-				.Select(x => new DateTime(x.BankHolidayDateResponseDto.Year, x.BankHolidayDateResponseDto.Month,
-					x.BankHolidayDateResponseDto.Day))
-				.Where(x => x.Month == my.Month)
-				.ToList();
+			using (var httpClient = new HttpClient())
+			{
+				calendar = httpClient.GetStringAsync(CalendarUri(my.Year)).Result;
+			}
+
+			var bankHolidays = JsonConvert.DeserializeObject<BankHolidayResponseDto[]>(calendar);
+
+			return GetHolidaysForMonth(bankHolidays, my.Month).ToList();
 		}
+
+		private static IEnumerable<DateTime> GetHolidaysForMonth(IEnumerable<BankHolidayResponseDto> bankHolidays, int month)
+		{
+			return bankHolidays
+				.Where(x => x.BankHolidayDateResponseDto.Month == month)
+				.Select(x => new DateTime(x.BankHolidayDateResponseDto.Year, x.BankHolidayDateResponseDto.Month,
+					x.BankHolidayDateResponseDto.Day));
+		}
+
+		private static string CalendarUri(int year)
+			=> $"http://kayaposoft.com/enrico/json/v1.0/?action=getPublicHolidaysForYear&year={year}&country=rou";
 
 		private sealed class BankHolidayResponseDto
 		{

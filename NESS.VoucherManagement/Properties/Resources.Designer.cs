@@ -61,24 +61,6 @@ namespace NESS.VoucherManagement.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A file is locked.
-        /// </summary>
-        internal static string MainWindowViewModel_CalculateVouchers_FileInUseCaption {
-            get {
-                return ResourceManager.GetString("MainWindowViewModel_CalculateVouchers_FileInUseCaption", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to File &apos;{0}&apos; is opened in another application. Close the application and try again..
-        /// </summary>
-        internal static string MainWindowViewModel_CalculateVouchers_FileInUseMessage {
-            get {
-                return ResourceManager.GetString("MainWindowViewModel_CalculateVouchers_FileInUseMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to This is not an Excel file.
         /// </summary>
         internal static string MainWindowViewModel_CalculateVouchers_InvalidFileTypeCaption {

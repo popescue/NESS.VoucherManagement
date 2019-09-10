@@ -14,11 +14,15 @@
 
 		public IEnumerable<Employee> GetEmployees()
 		{
-			var employees = from e in context.GetEmployees()
-				let businessTrips = context.GetBusinessTrips()
+			var excelEmployees = context.GetEmployees().ToList();
+			var excelBusinessTrips = context.GetBusinessTrips().ToList();
+			var excelTimeSheetEntries = context.GetTimeSheetEntries().ToList();
+
+			var employees = from e in excelEmployees
+				let businessTrips = excelBusinessTrips
 					.Where(bt => bt.EmployeeSapId == e.SapId)
 					.Select(bt => new BusinessTrip(bt.DaysInBusinessTrip))
-				let timesheets = context.GetTimeSheetEntries()
+				let timesheets = excelTimeSheetEntries
 					.Where(t => t.EmployeeSapId == e.SapId)
 					.Select(t => new TimeSheet(new Operation(t.OperationId, t.OperationDescription), t.Date))
 				select new Employee(e.FirstName, e.LastName, e.PersonalId, e.SapId, timesheets, businessTrips);

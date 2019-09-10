@@ -1,4 +1,7 @@
-﻿namespace NESS.VoucherManagement.ViewModels
+﻿using System;
+using System.Linq;
+
+namespace NESS.VoucherManagement.Calendar
 {
 	using System;
 	using System.Collections.Generic;
@@ -6,9 +9,9 @@
 
 	using Application;
 
-	public static class WorkingDays
+	public class LocalWeekDaysProvider : IWeekDaysProvider
 	{
-		public static int Count(MonthYear my, IEnumerable<DateTime> holidays) =>
+		public int Count(MonthYear my, IEnumerable<DateTime> holidays) =>
 			WeekDays(my.Year, my.Month)
 				.Except(holidays)
 				.Count();

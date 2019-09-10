@@ -1,19 +1,26 @@
-﻿using System;
-using System.Linq;
-
-namespace NESS.VoucherManagement.ViewModels
+﻿namespace NESS.VoucherManagement.ViewModels
 {
-	using System.Collections.Generic;
+	using System;
 	using System.ComponentModel;
 	using System.Diagnostics;
+	using System.Linq;
 	using System.Runtime.CompilerServices;
 	using System.Windows.Forms;
 	using System.Windows.Input;
 	using System.Windows.Media.Imaging;
+
 	using Application;
-	using Core.Model;
+
+	using Calendar;
+
+	using Hollidays;
+
 	using Persistence;
+
 	using Properties;
+
+	using Settings;
+
 	using Utils.MVVM;
 
 	public sealed class MainWindowViewModel : INotifyPropertyChanged
@@ -102,10 +109,6 @@ namespace NESS.VoucherManagement.ViewModels
 
 		private void CalculateVouchers()
 		{
-			var outOfOfficeOperations = Settings.Default.OutOfOfficeOperations
-				.Cast<string>()
-				.Select(MapToOperation);
-
 			try
 			{
 				IContext readContext = new EmployeeExcelContext(EmployeesVm.Path, TimeSheetsVm.Path, BusinessTripsVm.Path);
@@ -114,12 +117,13 @@ namespace NESS.VoucherManagement.ViewModels
 				var writeContext = new VoucherExcelContext(DestinationFile);
 				var writer = new VoucherExcelWriter(writeContext);
 
-				var employees = reader.Employees();
-				var workingDays = WorkingDaysForMonth(WorkingPeriodVm.MonthYear);
+				var operationsProvider = new SettingsOutOfOfficeOperationsProvider();
 
-				var vouchers = CalculateVouchers(employees, workingDays, outOfOfficeOperations);
+				var workingDaysForMonthProvider = new WorkingDaysProvider(new WebServiceHolidayProvider(), new LocalWeekDaysProvider());
 
-				writer.WriteVouchers(vouchers);
+				var vouchersUseCase = new VouchersUseCase(reader, writer, operationsProvider, workingDaysForMonthProvider);
+
+				vouchersUseCase.CalculateVouchers(WorkingPeriodVm.MonthYear);
 			}
 			catch (InvalidFileTypeException ex)
 			{
@@ -127,30 +131,6 @@ namespace NESS.VoucherManagement.ViewModels
 
 				Debug.WriteLine(ex.ToString());
 			}
-		}
-
-		private static IEnumerable<Voucher> CalculateVouchers(IEnumerable<Employee> employees, int workingDays, IEnumerable<Operation> outOfOfficeOperations)
-		{
-			var vouchers = (IEnumerable<Voucher>) employees
-				.Select(e => e.CalculateVouchers(workingDays, outOfOfficeOperations))
-				.OrderBy(v => v.Employee.LastName)
-				// ReSharper disable once TooManyChainedReferences
-				.ThenBy(v => v.Employee.FirstName);
-			return vouchers;
-		}
-
-		private static int WorkingDaysForMonth(MonthYear monthYear)
-		{
-			var holidays = WebServiceHolidayProvider.GetHolidays(monthYear);
-			return WorkingDays.Count(monthYear, holidays);
-		}
-
-		private static Operation MapToOperation(string s)
-		{
-			var split = s.Split(new[] {'='}, StringSplitOptions.RemoveEmptyEntries);
-
-			//return new Operation(split[0].Trim(), split[1].Trim());
-			return new Operation(split[0].Trim(), null);
 		}
 
 		[Annotations.NotifyPropertyChangedInvocator]

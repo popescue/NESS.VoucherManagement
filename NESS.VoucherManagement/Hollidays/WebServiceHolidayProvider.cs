@@ -1,14 +1,21 @@
-﻿namespace NESS.VoucherManagement.ViewModels
+﻿namespace NESS.VoucherManagement.Hollidays
 {
 	using System;
 	using System.Collections.Generic;
 	using System.Linq;
 	using System.Net.Http;
+
+	using Application;
+
+	using Calendar;
+
 	using Newtonsoft.Json;
 
-	internal static class WebServiceHolidayProvider
+	using ViewModels;
+
+	internal class WebServiceHolidayProvider : IHolidayProvider
 	{
-		public static IEnumerable<DateTime> GetHolidays(MonthYear my)
+		public IEnumerable<DateTime> GetHolidays(MonthYear my)
 		{
 			string calendar;
 
@@ -35,29 +42,22 @@
 
 		private sealed class BankHolidayResponseDto
 		{
-			[JsonProperty("date")]
-			public BankHolidayDateResponseDto BankHolidayDateResponseDto { get; set; }
+			[JsonProperty("date")] public BankHolidayDateResponseDto BankHolidayDateResponseDto { get; set; }
 
-			[JsonProperty("localName")]
-			public string LocalName { get; set; }
+			[JsonProperty("localName")] public string LocalName { get; set; }
 
-			[JsonProperty("englishName")]
-			public string EnglishName { get; set; }
+			[JsonProperty("englishName")] public string EnglishName { get; set; }
 		}
 
 		private sealed class BankHolidayDateResponseDto
 		{
-			[JsonProperty("day")]
-			public int Day { get; set; }
+			[JsonProperty("day")] public int Day { get; set; }
 
-			[JsonProperty("month")]
-			public int Month { get; set; }
+			[JsonProperty("month")] public int Month { get; set; }
 
-			[JsonProperty("year")]
-			public int Year { get; set; }
+			[JsonProperty("year")] public int Year { get; set; }
 
-			[JsonProperty("dayOfWeek")]
-			public int DayOfWeek { get; set; }
+			[JsonProperty("dayOfWeek")] public int DayOfWeek { get; set; }
 		}
 	}
 }

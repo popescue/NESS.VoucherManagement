@@ -11,11 +11,11 @@
 
 	public class EmployeeExcelContext : IContext
 	{
+		private readonly Mapper businessTripsMapper;
+
 		private readonly Mapper employeesMapper;
 
 		private readonly Mapper timeSheetMapper;
-
-		private readonly Mapper businessTripsMapper;
 
 		/// <summary>
 		///     Creates an instance of the class.
@@ -25,6 +25,7 @@
 		/// <param name="businessTripsFilePath"></param>
 		/// <exception cref="ArgumentNullException"></exception>
 		/// <exception cref="ArgumentException"></exception>
+		/// <exception cref="InvalidFileTypeException"></exception>
 		public EmployeeExcelContext(string employeesFilePath, string timeSheetsFilePath, string businessTripsFilePath)
 		{
 			if (employeesFilePath == null) throw new ArgumentNullException(nameof(employeesFilePath));
@@ -43,42 +44,38 @@
 		/// <summary>
 		///     Exposes an employee collection.
 		/// </summary>
-		/// <exception cref="FileNotFoundException"></exception>
-		/// <exception cref="InvalidFileTypeException"></exception>
 		public IEnumerable<ExcelTimeSheetEntry> GetTimeSheetEntries()
 		{
 			return timeSheetMapper.Take<ExcelTimeSheetEntry>()
 				.Where(x => !string.IsNullOrWhiteSpace(x.Value.EmployeeSapId))
-				.Select(x => x.Value)
-				.ToList();
+				.Select(x => x.Value);
 		}
 
 		/// <summary>
 		///     Exposes a time sheet collection.
 		/// </summary>
-		/// <exception cref="FileNotFoundException"></exception>
-		/// <exception cref="InvalidFileTypeException"></exception>
 		public IEnumerable<ExcelEmployee> GetEmployees()
 		{
 			return employeesMapper.Take<ExcelEmployee>()
 				.Where(x => !string.IsNullOrWhiteSpace(x.Value.SapId))
-				.Select(x => x.Value)
-				.ToList();
+				.Select(x => x.Value);
 		}
 
 		/// <summary>
 		///     Exposes a business trip collection.
 		/// </summary>
-		/// <exception cref="FileNotFoundException"></exception>
-		/// <exception cref="InvalidFileTypeException"></exception>
 		public IEnumerable<ExcelBusinessTrip> GetBusinessTrips()
 		{
 			return businessTripsMapper.Take<ExcelBusinessTrip>()
 				.Where(x => !string.IsNullOrWhiteSpace(x.Value.EmployeeSapId))
-				.Select(x => x.Value)
-				.ToList();
+				.Select(x => x.Value);
 		}
 
+		/// <summary>
+		///     Instantiates a mapper to read business trips.
+		/// </summary>
+		/// <param name="path"></param>
+		/// <exception cref="InvalidFileTypeException"></exception>
 		private static Mapper CreateBusinessTripsMapper(string path)
 		{
 			try
@@ -97,6 +94,11 @@
 			}
 		}
 
+		/// <summary>
+		///     Instantiates a mapper to read employee information.
+		/// </summary>
+		/// <param name="path"></param>
+		/// <exception cref="InvalidFileTypeException"></exception>
 		private static Mapper CreateEmployeesMapper(string path)
 		{
 			try
@@ -115,6 +117,11 @@
 			}
 		}
 
+		/// <summary>
+		///     Instantiates a mapper to read time-sheet information.
+		/// </summary>
+		/// <param name="path"></param>
+		/// <exception cref="InvalidFileTypeException"></exception>
 		private static Mapper CreateTimeSheetMapper(string path)
 		{
 			try
@@ -131,10 +138,6 @@
 			{
 				throw new InvalidFileTypeException(path, "Expecting an Excel file.", ex);
 			}
-			//catch (IOException ex)
-			//{
-			//	throw new FileInUseException(timesheetsFilePath, ex);
-			//}
 		}
 	}
 }

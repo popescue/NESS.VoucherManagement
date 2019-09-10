@@ -85,12 +85,15 @@
     </ApplicationDefinition>
     <Compile Include="Properties\Annotations1.cs" />
     <Compile Include="Utils\Converters\InverseBooleanConverter.cs" />
-    <Compile Include="ViewModels\MonthYear.cs" />
-    <Compile Include="ViewModels\WorkingDays.cs" />
+    <Compile Include="Calendar\IHolidayProvider.cs" />
+    <Compile Include="Calendar\IWeekDaysProvider.cs" />
+    <Compile Include="Calendar\LocalWeekDaysProvider.cs" />
     <Compile Include="ViewModels\DropFileViewModel.cs" />
     <Compile Include="Models\Month.cs" />
     <Compile Include="Utils\MVVM\RelayCommand.cs" />
-    <Compile Include="ViewModels\WebServiceHolidayProvider.cs" />
+    <Compile Include="Settings\SettingsOutOfOfficeOperationsProvider.cs" />
+    <Compile Include="Hollidays\WebServiceHolidayProvider.cs" />
+    <Compile Include="Calendar\WorkingDaysProvider.cs" />
     <Compile Include="ViewModels\WorkingPeriodViewModel.cs" />
     <Page Include="Views\DropFileControl.xaml">
       <SubType>Designer</SubType>
@@ -173,5 +176,6 @@
       <Name>NESS.VoucherManagement.Persistence</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

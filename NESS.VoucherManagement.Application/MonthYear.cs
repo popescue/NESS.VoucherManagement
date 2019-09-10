@@ -1,4 +1,7 @@
-﻿namespace NESS.VoucherManagement.ViewModels
+﻿using System;
+using System.Linq;
+
+namespace NESS.VoucherManagement.Application
 {
 	using System;
 	using System.Linq;

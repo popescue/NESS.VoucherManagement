@@ -5,6 +5,8 @@
 	using System.Globalization;
 	using System.Linq;
 
+	using Application;
+
 	using Models;
 
 	public class WorkingPeriodViewModel

@@ -3,7 +3,9 @@
 	using System;
 	using System.Collections.Generic;
 	using System.Linq;
+
 	using Application;
+
 	using Core.Model;
 
 	public class EmployeeExcelReader : IEmployeeReader
@@ -12,7 +14,7 @@
 
 		public EmployeeExcelReader(IContext context) => this.context = context;
 
-		public IEnumerable<Employee> GetEmployees()
+		public IEnumerable<Employee> Employees()
 		{
 			var excelEmployees = context.GetEmployees().ToList();
 			var excelBusinessTrips = context.GetBusinessTrips().ToList();
@@ -24,7 +26,7 @@
 					.Select(bt => new BusinessTrip(bt.DaysInBusinessTrip))
 				let timesheets = excelTimeSheetEntries
 					.Where(t => t.EmployeeSapId == e.SapId)
-					.Select(t => new TimeSheet(new Operation(t.OperationId, t.OperationDescription), t.Date))
+					.Select(t => new TimeSheetEntry(new Operation(t.OperationId, t.OperationDescription), t.Date))
 				select new Employee(e.FirstName, e.LastName, e.PersonalId, e.SapId, timesheets, businessTrips);
 
 			return employees;

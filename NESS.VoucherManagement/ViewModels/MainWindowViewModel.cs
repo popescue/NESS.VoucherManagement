@@ -114,13 +114,10 @@ namespace NESS.VoucherManagement.ViewModels
 				var writeContext = new VoucherExcelContext(DestinationFile);
 				var writer = new VoucherExcelWriter(writeContext);
 
-				var employees = reader.GetEmployees();
+				var employees = reader.Employees();
 				var workingDays = WorkingDaysForMonth(WorkingPeriodVm.MonthYear);
 
-				var vouchers = (IEnumerable<Voucher>) employees
-					.Select(e => e.CalculateVouchers(workingDays, outOfOfficeOperations))
-					.OrderBy(v => v.Employee.LastName)
-					.ThenBy(v => v.Employee.FirstName);
+				var vouchers = CalculateVouchers(employees, workingDays, outOfOfficeOperations);
 
 				writer.WriteVouchers(vouchers);
 			}
@@ -130,6 +127,16 @@ namespace NESS.VoucherManagement.ViewModels
 
 				Debug.WriteLine(ex.ToString());
 			}
+		}
+
+		private static IEnumerable<Voucher> CalculateVouchers(IEnumerable<Employee> employees, int workingDays, IEnumerable<Operation> outOfOfficeOperations)
+		{
+			var vouchers = (IEnumerable<Voucher>) employees
+				.Select(e => e.CalculateVouchers(workingDays, outOfOfficeOperations))
+				.OrderBy(v => v.Employee.LastName)
+				// ReSharper disable once TooManyChainedReferences
+				.ThenBy(v => v.Employee.FirstName);
+			return vouchers;
 		}
 
 		private static int WorkingDaysForMonth(MonthYear monthYear)

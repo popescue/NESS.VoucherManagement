@@ -3,9 +3,9 @@ using System.Linq;
 
 namespace NESS.VoucherManagement.Core.Model
 {
-	public struct TimeSheet
+	public struct TimeSheetEntry
 	{
-		public TimeSheet(Operation operation, DateTime date)
+		public TimeSheetEntry(Operation operation, DateTime date)
 		{
 			Operation = operation;
 			Date = date;

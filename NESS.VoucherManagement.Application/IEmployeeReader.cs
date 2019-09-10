@@ -7,6 +7,6 @@
 
 	public interface IEmployeeReader
 	{
-		IEnumerable<Employee> GetEmployees();
+		IEnumerable<Employee> Employees();
 	}
 }

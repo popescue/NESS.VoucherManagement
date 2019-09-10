@@ -1,11 +1,12 @@
-﻿using System;
-using System.Linq;
-
-namespace NESS.VoucherManagement.Persistence
+﻿namespace NESS.VoucherManagement.Persistence
 {
+	using System;
 	using System.Collections.Generic;
 	using System.IO;
+	using System.Linq;
+
 	using Model;
+
 	using Npoi.Mapper;
 
 	public class EmployeeExcelContext : IContext
@@ -40,7 +41,7 @@ namespace NESS.VoucherManagement.Persistence
 		}
 
 		/// <summary>
-		///     Exposes a time sheet collection.
+		///     Exposes an employee collection.
 		/// </summary>
 		/// <exception cref="FileNotFoundException"></exception>
 		/// <exception cref="InvalidFileTypeException"></exception>
@@ -53,7 +54,7 @@ namespace NESS.VoucherManagement.Persistence
 		}
 
 		/// <summary>
-		///     Exposes an employee collection.
+		///     Exposes a time sheet collection.
 		/// </summary>
 		/// <exception cref="FileNotFoundException"></exception>
 		/// <exception cref="InvalidFileTypeException"></exception>
@@ -130,6 +131,10 @@ namespace NESS.VoucherManagement.Persistence
 			{
 				throw new InvalidFileTypeException(path, "Expecting an Excel file.", ex);
 			}
+			//catch (IOException ex)
+			//{
+			//	throw new FileInUseException(timesheetsFilePath, ex);
+			//}
 		}
 	}
 }

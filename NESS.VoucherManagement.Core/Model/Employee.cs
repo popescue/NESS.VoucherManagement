@@ -14,7 +14,7 @@ namespace NESS.VoucherManagement.Core.Model
 
 		public string SapId { get; }
 
-		public Employee(string firstName, string lastName, string personalId, string sapId, IEnumerable<TimeSheet> timesheets, IEnumerable<BusinessTrip> businessTrips)
+		public Employee(string firstName, string lastName, string personalId, string sapId, IEnumerable<TimeSheetEntry> timesheets, IEnumerable<BusinessTrip> businessTrips)
 		{
 			TimeSheets = timesheets ?? throw new ArgumentNullException(nameof(timesheets));
 			BusinessTrips = businessTrips;
@@ -26,7 +26,7 @@ namespace NESS.VoucherManagement.Core.Model
 
 		public IEnumerable<BusinessTrip> BusinessTrips { get; }
 
-		public IEnumerable<TimeSheet> TimeSheets { get; }
+		public IEnumerable<TimeSheetEntry> TimeSheets { get; }
 
 		public Voucher CalculateVouchers(int workingDaysThisMonth, IEnumerable<Operation> outOfOfficeOperations)
 		{
@@ -44,7 +44,7 @@ namespace NESS.VoucherManagement.Core.Model
 
 	internal static class TimeSheetEnumerableExtensions
 	{
-		public static int OutOfOfficeCount(this IEnumerable<TimeSheet> timeSheets, IEnumerable<Operation> outOfOfficeOperations) 
+		public static int OutOfOfficeCount(this IEnumerable<TimeSheetEntry> timeSheets, IEnumerable<Operation> outOfOfficeOperations) 
 			=> timeSheets.Count(x => outOfOfficeOperations.Contains(x.Operation));
 	}
 }

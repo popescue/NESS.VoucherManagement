@@ -52,7 +52,7 @@
     <Compile Include="Model\Voucher.cs" />
     <Compile Include="Model\Operation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Model\TimeSheet.cs" />
+    <Compile Include="Model\TimeSheetEntry.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

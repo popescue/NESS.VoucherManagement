@@ -17,11 +17,13 @@
 			this.weekDaysProvider = weekDaysProvider;
 		}
 
-		public int WorkingDaysForMonth(MonthYear monthYear)
+		public int GetWorkingDays(When when)
 		{
-			var holidays = holidayProvider.GetHolidays(monthYear);
+			var holidays = holidayProvider.GetHolidays(when);
 
-			return weekDaysProvider.Count(monthYear, holidays);
+			var weekDays = weekDaysProvider.GetWeekDays(when);
+
+			return weekDays.Except(holidays).Count();
 		}
 	}
 }

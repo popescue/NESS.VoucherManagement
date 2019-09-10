@@ -47,12 +47,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Services\EmployeeVoucherCalculator.cs" />
+    <Compile Include="Services\VouchersService.cs" />
     <Compile Include="Model\BusinessTrip.cs" />
     <Compile Include="Model\Employee.cs" />
-    <Compile Include="Model\TimeSheetEntryEnumerableExtensions.cs" />
+    <Compile Include="Model\Extensions.cs" />
     <Compile Include="Model\Voucher.cs" />
-    <Compile Include="Model\Operation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Model\TimeSheetEntry.cs" />
   </ItemGroup>

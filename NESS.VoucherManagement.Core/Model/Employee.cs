@@ -1,19 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace NESS.VoucherManagement.Core.Model
 {
+	using System.Collections.Generic;
+
 	public class Employee
 	{
-		public string FirstName { get; }
-
-		public string LastName { get; }
-
-		public string PersonalId { get; }
-
-		public string SapId { get; }
-
+		// ReSharper disable once TooManyDependencies
 		public Employee(string firstName, string lastName, string personalId, string sapId, IEnumerable<TimeSheetEntry> timesheets, IEnumerable<BusinessTrip> businessTrips)
 		{
 			TimeSheetEntries = timesheets ?? throw new ArgumentNullException(nameof(timesheets));
@@ -24,20 +18,28 @@ namespace NESS.VoucherManagement.Core.Model
 			SapId = sapId;
 		}
 
+		public string FirstName { get; }
+
+		public string LastName { get; }
+
+		public string PersonalId { get; }
+
+		public string SapId { get; }
+
 		public IEnumerable<BusinessTrip> BusinessTrips { get; }
 
 		public IEnumerable<TimeSheetEntry> TimeSheetEntries { get; }
 
-		public Voucher CalculateVouchers(int workingDaysThisMonth, IEnumerable<Operation> outOfOfficeOperations)
+		public Voucher CalculateVouchers(int workingDaysThisMonth, IEnumerable<string> outOfOfficeOperations)
 		{
-			var workedDays = TimeSheetEntries.GroupBy(t => t.Date).Count();
-			
+			var daysEligibleForVouchers = Math.Min(workingDaysThisMonth, TimeSheetEntries.DaysOnPayroll());
+			var daysOutOfOffice = TimeSheetEntries.DaysOutOfOffice(outOfOfficeOperations);
+			var daysOnTrips = BusinessTrips.DaysOnTrips();
+
 			return new Voucher
 			(
 				this,
-				Math.Min(workingDaysThisMonth, workedDays)
-				- TimeSheetEntries.OutOfOfficeCount(outOfOfficeOperations)
-				- BusinessTrips.Sum(x => x.Days)
+				daysEligibleForVouchers - daysOutOfOffice - daysOnTrips
 			);
 		}
 	}

@@ -5,6 +5,6 @@
 
 	public interface IWorkingDaysProvider
 	{
-		int WorkingDaysForMonth(MonthYear monthYear);
+		int GetWorkingDays(When when);
 	}
 }

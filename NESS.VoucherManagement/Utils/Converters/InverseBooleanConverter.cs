@@ -5,7 +5,10 @@ using System.Windows.Data;
 
 namespace NESS.VoucherManagement.Utils.Converters
 {
+	using System.Diagnostics.CodeAnalysis;
+
 	[ValueConversion(typeof(bool), typeof(bool))]
+	[SuppressMessage("ReSharper", "TooManyArguments")]
 	public class InverseBooleanConverter : IValueConverter
 	{
 		#region IValueConverter Members

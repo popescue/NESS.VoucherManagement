@@ -8,6 +8,6 @@
 
 	public interface IWeekDaysProvider
 	{
-		int Count(MonthYear my, IEnumerable<DateTime> holidays);
+		IEnumerable<DateTime> GetWeekDays(When when);
 	}
 }

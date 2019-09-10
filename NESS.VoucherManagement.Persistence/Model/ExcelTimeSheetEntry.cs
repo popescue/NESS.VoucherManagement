@@ -10,9 +10,7 @@
 	{
 		public string EmployeeSapId { get; set; }
 
-		public string OperationId { get; set; }
-
-		public string OperationDescription { get; set; }
+		public string Operation { get; set; }
 
 		public DateTime Date { get; set; }
 	}

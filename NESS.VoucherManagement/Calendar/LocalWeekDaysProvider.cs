@@ -11,10 +11,8 @@ namespace NESS.VoucherManagement.Calendar
 
 	public class LocalWeekDaysProvider : IWeekDaysProvider
 	{
-		public int Count(MonthYear my, IEnumerable<DateTime> holidays) =>
-			WeekDays(my.Year, my.Month)
-				.Except(holidays)
-				.Count();
+		public IEnumerable<DateTime> GetWeekDays (When when) =>
+			WeekDays(when.Year, when.Month);
 
 		private static IEnumerable<DateTime> WeekDays(int year, int month)
 			=> Enumerable.Range(1, DateTime.DaysInMonth(year, month))

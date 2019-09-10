@@ -1,4 +1,5 @@
-﻿namespace NESS.VoucherManagement.Persistence
+﻿// ReSharper disable TooManyDeclarations
+namespace NESS.VoucherManagement.Persistence
 {
 	using System;
 	using System.Collections.Generic;
@@ -139,8 +140,7 @@
 
 				return new Mapper(fs)
 					.Map<ExcelTimeSheetEntry>(0, x => x.EmployeeSapId)
-					.Map<ExcelTimeSheetEntry>(2, x => x.OperationId)
-					.Map<ExcelTimeSheetEntry>(2, x => x.OperationDescription)
+					.Map<ExcelTimeSheetEntry>(2, x => x.Operation)
 					.Map<ExcelTimeSheetEntry>(6, x => x.Date).Format<ExcelTimeSheetEntry>("dd.MM.yyyy", t => t.Date);
 			}
 			catch (ArgumentException ex)

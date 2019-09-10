@@ -8,6 +8,7 @@ namespace NESS.VoucherManagement.Views
 
 	using ViewModels;
 
+	// ReSharper disable once UnusedMember.Global
 	public partial class MainWindow
 	{
 		public MainWindow()

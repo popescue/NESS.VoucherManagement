@@ -32,7 +32,7 @@
 			TimeSheetsVm = new DropFileViewModel("Pontaj");
 			BusinessTripsVm = new DropFileViewModel("Delegatii");
 			EmployeesVm = new DropFileViewModel("Angajati");
-			WorkingPeriodVm = new WorkingPeriodViewModel(new MonthYear(DateTime.Now.Year, DateTime.Now.Month));
+			WorkingPeriodVm = new WorkingPeriodViewModel(new When(DateTime.Now.Year, DateTime.Now.Month));
 		}
 
 		public DropFileViewModel TimeSheetsVm { get; }
@@ -66,7 +66,7 @@
 
 					var openFileDialog = new SaveFileDialog
 					{
-						Filter = "Excel Files|*.xlsx"
+						Filter = @"Excel Files | *.xlsx"
 					};
 
 					var dialogResult = openFileDialog.ShowDialog();
@@ -123,7 +123,7 @@
 
 				var vouchersUseCase = new VouchersUseCase(reader, writer, operationsProvider, workingDaysForMonthProvider);
 
-				vouchersUseCase.CalculateVouchers(WorkingPeriodVm.MonthYear);
+				vouchersUseCase.CalculateVouchers(WorkingPeriodVm.When);
 			}
 			catch (InvalidFileTypeException ex)
 			{

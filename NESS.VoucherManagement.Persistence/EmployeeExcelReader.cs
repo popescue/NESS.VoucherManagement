@@ -14,7 +14,7 @@
 
 		public EmployeeExcelReader(IReadContext readContext) => this.readContext = readContext;
 
-		public IEnumerable<Employee> Employees()
+		public IEnumerable<Employee> GetEmployees()
 		{
 			var excelEmployees = readContext.Employees.ToList();
 			var excelBusinessTrips = readContext.BusinessTrips.ToList();
@@ -26,7 +26,7 @@
 					.Select(bt => new BusinessTrip(bt.DaysInBusinessTrip))
 				let timesheets = excelTimeSheetEntries
 					.Where(t => t.EmployeeSapId == e.SapId)
-					.Select(t => new TimeSheetEntry(new Operation(t.OperationId, t.OperationDescription), t.Date))
+					.Select(t => new TimeSheetEntry(t.Operation, t.Date))
 				select new Employee(e.FirstName, e.LastName, e.PersonalId, e.SapId, timesheets, businessTrips);
 
 			return employees;

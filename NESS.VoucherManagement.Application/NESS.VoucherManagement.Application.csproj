@@ -44,7 +44,7 @@
     <Compile Include="IOutOfOfficeOperationsProvider.cs" />
     <Compile Include="IVoucherWriter.cs" />
     <Compile Include="IWorkingDaysProvider.cs" />
-    <Compile Include="MonthYear.cs" />
+    <Compile Include="When.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VouchersUseCase.cs" />
   </ItemGroup>

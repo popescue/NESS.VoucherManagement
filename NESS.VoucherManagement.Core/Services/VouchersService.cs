@@ -6,9 +6,9 @@ namespace NESS.VoucherManagement.Core.Services
 
 	using Model;
 
-	public class EmployeeVoucherCalculator
+	public class VouchersService
 	{
-		public IEnumerable<Voucher> CalculateVouchers(IEnumerable<Employee> employees, int workingDays, IEnumerable<Operation> outOfOfficeOperations)
+		public IEnumerable<Voucher> CalculateVouchers(IEnumerable<Employee> employees, int workingDays, IEnumerable<string> outOfOfficeOperations)
 			=> employees.Select(e => e.CalculateVouchers(workingDays, outOfOfficeOperations));
 	}
 }

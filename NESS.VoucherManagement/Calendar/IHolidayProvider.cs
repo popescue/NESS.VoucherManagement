@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-
-namespace NESS.VoucherManagement.Calendar
+﻿namespace NESS.VoucherManagement.Calendar
 {
 	using System;
 	using System.Collections.Generic;
@@ -11,6 +8,6 @@ namespace NESS.VoucherManagement.Calendar
 
 	public interface IHolidayProvider
 	{
-		IEnumerable<DateTime> GetHolidays(MonthYear my);
+		IEnumerable<DateTime> GetHolidays(When when);
 	}
 }

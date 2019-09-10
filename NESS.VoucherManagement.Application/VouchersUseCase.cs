@@ -11,12 +11,13 @@
 
 		private readonly IOutOfOfficeOperationsProvider outOfOfficeOperationsProvider;
 
-		private readonly EmployeeVoucherCalculator voucherCalculator;
+		private readonly VouchersService vouchersService;
 
 		private readonly IVoucherWriter voucherWriter;
 
 		private readonly IWorkingDaysProvider workingDaysProvider;
 
+		// ReSharper disable once TooManyDependencies
 		public VouchersUseCase(IEmployeeReader employeeReader, IVoucherWriter voucherWriter, IOutOfOfficeOperationsProvider outOfOfficeOperationsProvider, IWorkingDaysProvider workingDaysProvider)
 		{
 			this.employeeReader = employeeReader;
@@ -24,16 +25,16 @@
 			this.outOfOfficeOperationsProvider = outOfOfficeOperationsProvider;
 			this.workingDaysProvider = workingDaysProvider;
 
-			voucherCalculator = new EmployeeVoucherCalculator();
+			vouchersService = new VouchersService();
 		}
 
-		public void CalculateVouchers(MonthYear monthYear)
+		public void CalculateVouchers(When when)
 		{
-			var employees = employeeReader.Employees();
-			var workingDays = workingDaysProvider.WorkingDaysForMonth(monthYear);
-			var outOfOfficeOperations = outOfOfficeOperationsProvider.GetOutOfOfficeOperations();
+			var employees = employeeReader.GetEmployees();
+			var workingDays = workingDaysProvider.GetWorkingDays(when);
+			var outOfOfficeOperations = outOfOfficeOperationsProvider.GetOperations();
 
-			var vouchers = voucherCalculator.CalculateVouchers(employees, workingDays, outOfOfficeOperations);
+			var vouchers = vouchersService.CalculateVouchers(employees, workingDays, outOfOfficeOperations);
 
 			voucherWriter.WriteVouchers(vouchers);
 		}

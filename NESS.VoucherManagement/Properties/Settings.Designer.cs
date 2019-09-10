@@ -27,14 +27,14 @@ namespace NESS.VoucherManagement.Properties {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
 <ArrayOfString xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
-  <string>CO = Concediu de odihna</string>
-  <string>ZCBIMP = Concediu medical</string>
-  <string>CFP = Concediu fara plata</string>
-  <string>CEV = Concediu evenimente deosebite</string>
-  <string>NEM = Absenta nemotivata</string>
-  <string>IP = Invoire platita</string>
-  <string>PATERN = Concediu paternal</string>
-  <string>STUD = Concediu studii platite</string>
+  <string>CO</string>
+  <string>ZCBIMP</string>
+  <string>CFP</string>
+  <string>CEV</string>
+  <string>NEM</string>
+  <string>IP</string>
+  <string>PATERN</string>
+  <string>STUD</string>
 </ArrayOfString>")]
         public global::System.Collections.Specialized.StringCollection OutOfOfficeOperations {
             get {

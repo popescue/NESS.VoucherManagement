@@ -8,6 +8,7 @@
 	using System.Windows.Data;
 
 	[SuppressMessage("NDepend", "ND1700:PotentiallyDeadTypes", Justification = "Used in WPF as resource")]
+	[SuppressMessage("ReSharper", "TooManyArguments")]
 	internal sealed class FilePathValueConverter : IValueConverter
 	{
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

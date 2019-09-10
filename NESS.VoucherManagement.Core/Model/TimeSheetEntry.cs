@@ -1,17 +1,17 @@
-﻿using System;
-using System.Linq;
-
-namespace NESS.VoucherManagement.Core.Model
+﻿namespace NESS.VoucherManagement.Core.Model
 {
+	using System;
+	using System.Linq;
+
 	public struct TimeSheetEntry
 	{
-		public TimeSheetEntry(Operation operation, DateTime date)
+		public TimeSheetEntry(string operation, DateTime date)
 		{
 			Operation = operation;
 			Date = date;
 		}
 
-		public Operation Operation { get; }
+		public string Operation { get; }
 
 		public DateTime Date { get; }
 	}

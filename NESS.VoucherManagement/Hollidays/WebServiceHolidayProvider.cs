@@ -11,22 +11,20 @@
 
 	using Newtonsoft.Json;
 
-	using ViewModels;
-
 	internal class WebServiceHolidayProvider : IHolidayProvider
 	{
-		public IEnumerable<DateTime> GetHolidays(MonthYear my)
+		public IEnumerable<DateTime> GetHolidays(When when)
 		{
 			string calendar;
 
 			using (var httpClient = new HttpClient())
 			{
-				calendar = httpClient.GetStringAsync(CalendarUri(my.Year)).Result;
+				calendar = httpClient.GetStringAsync(CalendarUri(when.Year)).Result;
 			}
 
 			var bankHolidays = JsonConvert.DeserializeObject<BankHolidayResponseDto[]>(calendar);
 
-			return GetHolidaysForMonth(bankHolidays, my.Month).ToList();
+			return GetHolidaysForMonth(bankHolidays, when.Month).ToList();
 		}
 
 		private static IEnumerable<DateTime> GetHolidaysForMonth(IEnumerable<BankHolidayResponseDto> bankHolidays, int month)

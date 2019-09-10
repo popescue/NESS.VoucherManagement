@@ -28,6 +28,7 @@
 			vouchersMapper.Save(outputFilePath, Vouchers);
 		}
 
+		// ReSharper disable once TooManyDeclarations
 		private void InitializeMappers()
 		{
 			vouchersMapper = new Mapper()

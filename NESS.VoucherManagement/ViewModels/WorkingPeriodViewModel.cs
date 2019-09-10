@@ -11,7 +11,7 @@
 
 	public class WorkingPeriodViewModel
 	{
-		public WorkingPeriodViewModel(MonthYear monthYear)
+		public WorkingPeriodViewModel(When monthYear)
 		{
 			Year = monthYear.Year;
 
@@ -22,7 +22,7 @@
 			Month = AvailableMonths.Single(x => x.Index == monthYear.Month);
 		}
 
-		public MonthYear MonthYear => new MonthYear(Year, Month.Index);
+		public When When => new When(Year, Month.Index);
 
 		public int Year { get; set; }
 

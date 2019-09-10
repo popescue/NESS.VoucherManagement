@@ -12,9 +12,9 @@
 
 	public class VoucherExcelWriter : IVoucherWriter
 	{
-		private readonly VoucherExcelContext writeContext;
+		private readonly IWriteContext writeContext;
 
-		public VoucherExcelWriter(VoucherExcelContext writeContext) => this.writeContext = writeContext;
+		public VoucherExcelWriter(IWriteContext writeContext) => this.writeContext = writeContext;
 
 		public void WriteVouchers(IEnumerable<Voucher> vouchers)
 		{

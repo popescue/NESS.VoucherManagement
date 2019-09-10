@@ -111,7 +111,7 @@
 		{
 			try
 			{
-				IContext readContext = new EmployeeExcelContext(EmployeesVm.Path, TimeSheetsVm.Path, BusinessTripsVm.Path);
+				IReadContext readContext = new EmployeeExcelContext(EmployeesVm.Path, TimeSheetsVm.Path, BusinessTripsVm.Path);
 				IEmployeeReader reader = new EmployeeExcelReader(readContext);
 
 				var writeContext = new VoucherExcelContext(DestinationFile);

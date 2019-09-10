@@ -9,7 +9,7 @@
 
 	using Npoi.Mapper;
 
-	public class EmployeeExcelContext : IContext
+	public class EmployeeExcelContext : IReadContext
 	{
 		private readonly Mapper businessTripsMapper;
 
@@ -44,31 +44,40 @@
 		/// <summary>
 		///     Exposes an employee collection.
 		/// </summary>
-		public IEnumerable<ExcelTimeSheetEntry> GetTimeSheetEntries()
+		public IEnumerable<ExcelTimeSheetEntry> TimeSheetEntries
 		{
-			return timeSheetMapper.Take<ExcelTimeSheetEntry>()
-				.Where(x => !string.IsNullOrWhiteSpace(x.Value.EmployeeSapId))
-				.Select(x => x.Value);
+			get
+			{
+				return timeSheetMapper.Take<ExcelTimeSheetEntry>()
+					.Where(x => !string.IsNullOrWhiteSpace(x.Value.EmployeeSapId))
+					.Select(x => x.Value);
+			}
 		}
 
 		/// <summary>
 		///     Exposes a time sheet collection.
 		/// </summary>
-		public IEnumerable<ExcelEmployee> GetEmployees()
+		public IEnumerable<ExcelEmployee> Employees
 		{
-			return employeesMapper.Take<ExcelEmployee>()
-				.Where(x => !string.IsNullOrWhiteSpace(x.Value.SapId))
-				.Select(x => x.Value);
+			get
+			{
+				return employeesMapper.Take<ExcelEmployee>()
+					.Where(x => !string.IsNullOrWhiteSpace(x.Value.SapId))
+					.Select(x => x.Value);
+			}
 		}
 
 		/// <summary>
 		///     Exposes a business trip collection.
 		/// </summary>
-		public IEnumerable<ExcelBusinessTrip> GetBusinessTrips()
+		public IEnumerable<ExcelBusinessTrip> BusinessTrips
 		{
-			return businessTripsMapper.Take<ExcelBusinessTrip>()
-				.Where(x => !string.IsNullOrWhiteSpace(x.Value.EmployeeSapId))
-				.Select(x => x.Value);
+			get
+			{
+				return businessTripsMapper.Take<ExcelBusinessTrip>()
+					.Where(x => !string.IsNullOrWhiteSpace(x.Value.EmployeeSapId))
+					.Select(x => x.Value);
+			}
 		}
 
 		/// <summary>

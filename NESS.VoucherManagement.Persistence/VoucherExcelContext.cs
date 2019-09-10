@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using NESS.VoucherManagement.Persistence.Model;
-using Npoi.Mapper;
-
-namespace NESS.VoucherManagement.Persistence
+﻿namespace NESS.VoucherManagement.Persistence
 {
-	public class VoucherExcelContext
+	using System;
+	using System.Collections.Generic;
+	using System.Linq;
+
+	using Model;
+
+	using Npoi.Mapper;
+
+	public class VoucherExcelContext : IWriteContext
 	{
 		private readonly string outputFilePath;
 
@@ -21,6 +23,11 @@ namespace NESS.VoucherManagement.Persistence
 
 		public IEnumerable<ExcelVoucher> Vouchers { get; set; }
 
+		public void SaveChanges()
+		{
+			vouchersMapper.Save(outputFilePath, Vouchers);
+		}
+
 		private void InitializeMappers()
 		{
 			vouchersMapper = new Mapper()
@@ -30,11 +37,6 @@ namespace NESS.VoucherManagement.Persistence
 				.Map<ExcelVoucher>(3, x => x.PersonalId, "CNP")
 				.Map<ExcelVoucher>(4, x => x.Count, "NR_TICHETE")
 				.Map<ExcelVoucher>(5, x => x.Value, "FV");
-		}
-
-		public void SaveChanges()
-		{
-			vouchersMapper.Save(outputFilePath, Vouchers);
 		}
 	}
 }

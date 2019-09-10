@@ -10,15 +10,15 @@
 
 	public class EmployeeExcelReader : IEmployeeReader
 	{
-		private readonly IContext context;
+		private readonly IReadContext readContext;
 
-		public EmployeeExcelReader(IContext context) => this.context = context;
+		public EmployeeExcelReader(IReadContext readContext) => this.readContext = readContext;
 
 		public IEnumerable<Employee> Employees()
 		{
-			var excelEmployees = context.GetEmployees().ToList();
-			var excelBusinessTrips = context.GetBusinessTrips().ToList();
-			var excelTimeSheetEntries = context.GetTimeSheetEntries().ToList();
+			var excelEmployees = readContext.Employees.ToList();
+			var excelBusinessTrips = readContext.BusinessTrips.ToList();
+			var excelTimeSheetEntries = readContext.TimeSheetEntries.ToList();
 
 			var employees = from e in excelEmployees
 				let businessTrips = excelBusinessTrips

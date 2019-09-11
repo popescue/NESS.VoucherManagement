@@ -42,7 +42,7 @@ namespace NESS.VoucherManagement.Persistence.Tests
 
 			var sut = new EmployeeExcelReader(contextMock.Object);
 
-			var result = sut.Employees();
+			var result = sut.GetEmployees();
 
 			Assert.Equal(new[]
 			{
@@ -77,7 +77,7 @@ namespace NESS.VoucherManagement.Persistence.Tests
 
 			var sut = new EmployeeExcelReader(contextMock.Object);
 
-			var result = sut.Employees();
+			var result = sut.GetEmployees();
 
 			Assert.Equal(new[]
 			{
@@ -101,24 +101,22 @@ namespace NESS.VoucherManagement.Persistence.Tests
 				new ExcelTimeSheetEntry
 				{
 					EmployeeSapId = "S01",
-					OperationId = "1",
-					OperationDescription = "A"
+					Operation = "A"
 				},
 				new ExcelTimeSheetEntry
 				{
 					EmployeeSapId = "S01",
-					OperationId = "2",
-					OperationDescription = "B"
+					Operation = "B"
 				}
 			});
 
 			var sut = new EmployeeExcelReader(contextMock.Object);
 
-			var result = sut.Employees();
+			var result = sut.GetEmployees();
 
 			Assert.Equal(new[]
 			{
-				new TimeSheetEntry(new Operation("1", "A"), DateTime.Now), new TimeSheetEntry(new Operation("2", "B"), DateTime.Now)
+				new TimeSheetEntry("A", DateTime.Now), new TimeSheetEntry("B", DateTime.Now)
 			}, result.Single().TimeSheetEntries, new TimesheetComparer());
 		}
 
@@ -135,27 +133,25 @@ namespace NESS.VoucherManagement.Persistence.Tests
 			});
 			contextMock.Setup(x => x.TimeSheetEntries).Returns(new[]
 			{
-				new ExcelTimeSheetEntry()
+				new ExcelTimeSheetEntry
 				{
 					EmployeeSapId = "S01",
-					OperationId = "1",
-					OperationDescription = "A"
+					Operation = "A"
 				},
-				new ExcelTimeSheetEntry()
+				new ExcelTimeSheetEntry
 				{
 					EmployeeSapId = "S02",
-					OperationId = "2",
-					OperationDescription = "B"
+					Operation = "B"
 				}
 			});
 
 			var sut = new EmployeeExcelReader(contextMock.Object);
 
-			var result = sut.Employees();
+			var result = sut.GetEmployees();
 
 			Assert.Equal(new[]
 			{
-				new TimeSheetEntry(new Operation("1", "A"), DateTime.Now), 
+				new TimeSheetEntry("A", DateTime.Now)
 			}, result.Single().TimeSheetEntries, new TimesheetComparer());
 		}
 
@@ -172,23 +168,21 @@ namespace NESS.VoucherManagement.Persistence.Tests
 			});
 			contextMock.Setup(x => x.TimeSheetEntries).Returns(new[]
 			{
-				new ExcelTimeSheetEntry()
+				new ExcelTimeSheetEntry
 				{
 					EmployeeSapId = "S02",
-					OperationId = "1",
-					OperationDescription = "A"
+					Operation = "A"
 				},
-				new ExcelTimeSheetEntry()
+				new ExcelTimeSheetEntry
 				{
 					EmployeeSapId = "S02",
-					OperationId = "2",
-					OperationDescription = "B"
+					Operation = "B"
 				}
 			});
 
 			var sut = new EmployeeExcelReader(contextMock.Object);
 
-			var result = sut.Employees();
+			var result = sut.GetEmployees();
 
 			Assert.Empty(result.Single().TimeSheetEntries);
 		}
@@ -220,7 +214,7 @@ namespace NESS.VoucherManagement.Persistence.Tests
 
 			var sut = new EmployeeExcelReader(contextMock.Object);
 
-			var result = sut.Employees();
+			var result = sut.GetEmployees();
 
 			Assert.Empty(result.Single().BusinessTrips);
 		}

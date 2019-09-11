@@ -1,10 +1,12 @@
 ﻿// ReSharper disable TooManyDeclarations
+
 namespace NESS.VoucherManagement.Persistence
 {
 	using System;
 	using System.Collections.Generic;
 	using System.IO;
 	using System.Linq;
+	using System.Threading.Tasks;
 
 	using Model;
 
@@ -53,6 +55,27 @@ namespace NESS.VoucherManagement.Persistence
 					.Where(x => !string.IsNullOrWhiteSpace(x.Value.EmployeeSapId))
 					.Select(x => x.Value);
 			}
+		}
+
+		public Task<IEnumerable<ExcelEmployee>> GetEmployeesAsync()
+		{
+			return Task.FromResult(employeesMapper.Take<ExcelEmployee>()
+				.Where(x => !string.IsNullOrWhiteSpace(x.Value.SapId))
+				.Select(x => x.Value));
+		}
+
+		public Task<IEnumerable<ExcelBusinessTrip>> GetBusinessTripsAsync()
+		{
+			return Task.FromResult(businessTripsMapper.Take<ExcelBusinessTrip>()
+				.Where(x => !string.IsNullOrWhiteSpace(x.Value.EmployeeSapId))
+				.Select(x => x.Value));
+		}
+
+		public Task<IEnumerable<ExcelTimeSheetEntry>> GetTimeSheetEntriesAsync()
+		{
+			return Task.FromResult(timeSheetMapper.Take<ExcelTimeSheetEntry>()
+				.Where(x => !string.IsNullOrWhiteSpace(x.Value.EmployeeSapId))
+				.Select(x => x.Value));
 		}
 
 		/// <summary>

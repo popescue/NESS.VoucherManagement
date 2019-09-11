@@ -5,6 +5,7 @@
 	using System.Diagnostics;
 	using System.Linq;
 	using System.Runtime.CompilerServices;
+	using System.Threading.Tasks;
 	using System.Windows.Forms;
 	using System.Windows.Input;
 	using System.Windows.Media.Imaging;
@@ -60,7 +61,7 @@
 		{
 			get
 			{
-				return new RelayCommand(parameter =>
+				return new RelayCommand(async parameter =>
 				{
 					IsCalculating = true;
 
@@ -73,7 +74,12 @@
 					if (dialogResult == DialogResult.OK)
 					{
 						DestinationFile = openFileDialog.FileName;
+
+#if ASYNC
+						await CalculateVouchersAsync().ConfigureAwait(false);
+#else
 						CalculateVouchers();
+#endif
 					}
 
 					IsCalculating = false;
@@ -117,13 +123,39 @@
 				var writeContext = new VoucherExcelContext(DestinationFile);
 				var writer = new VoucherExcelWriter(writeContext);
 
-				var operationsProvider = new SettingsOutOfOfficeOperationsProvider();
+				var operationsProvider = new OutOfOfficeOperationsProvider();
 
 				var workingDaysForMonthProvider = new WorkingDaysProvider(new WebServiceHolidayProvider(), new LocalWeekDaysProvider());
 
 				var vouchersUseCase = new VouchersUseCase(reader, writer, operationsProvider, workingDaysForMonthProvider);
 
 				vouchersUseCase.CalculateVouchers(WorkingPeriodVm.When);
+			}
+			catch (InvalidFileTypeException ex)
+			{
+				MessageBox.Show(string.Format(Resources.MainWindowViewModel_CalculateVouchers_InvalidFileTypeMessage, ex.FilePath), Resources.MainWindowViewModel_CalculateVouchers_InvalidFileTypeCaption);
+
+				Debug.WriteLine(ex.ToString());
+			}
+		}
+
+		private async Task CalculateVouchersAsync()
+		{
+			try
+			{
+				IReadContext readContext = new EmployeeExcelContext(EmployeesVm.Path, TimeSheetsVm.Path, BusinessTripsVm.Path);
+				IEmployeeReader reader = new EmployeeExcelReader(readContext);
+
+				var writeContext = new VoucherExcelContext(DestinationFile);
+				var writer = new VoucherExcelWriter(writeContext);
+
+				var operationsProvider = new OutOfOfficeOperationsProvider();
+
+				var workingDaysForMonthProvider = new WorkingDaysProvider(new WebServiceHolidayProvider(), new LocalWeekDaysProvider());
+
+				var vouchersUseCase = new VouchersUseCase(reader, writer, operationsProvider, workingDaysForMonthProvider);
+
+				await vouchersUseCase.CalculateVouchersAsync(WorkingPeriodVm.When).ConfigureAwait(false);
 			}
 			catch (InvalidFileTypeException ex)
 			{

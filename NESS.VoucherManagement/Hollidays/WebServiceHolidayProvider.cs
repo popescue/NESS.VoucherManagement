@@ -4,6 +4,7 @@
 	using System.Collections.Generic;
 	using System.Linq;
 	using System.Net.Http;
+	using System.Threading.Tasks;
 
 	using Application;
 
@@ -25,6 +26,18 @@
 			var bankHolidays = JsonConvert.DeserializeObject<BankHolidayResponseDto[]>(calendar);
 
 			return GetHolidaysForMonth(bankHolidays, when.Month).ToList();
+		}
+
+		public async Task<IEnumerable<DateTime>> GetHolidaysAsync(When when)
+		{
+			using (var httpClient = new HttpClient())
+			{
+				var calendar = await httpClient.GetStringAsync(CalendarUri(when.Year)).ConfigureAwait(false);
+
+				var bankHolidays = JsonConvert.DeserializeObject<BankHolidayResponseDto[]>(calendar);
+
+				return GetHolidaysForMonth(bankHolidays, when.Month).ToList();
+			}
 		}
 
 		private static IEnumerable<DateTime> GetHolidaysForMonth(IEnumerable<BankHolidayResponseDto> bankHolidays, int month)

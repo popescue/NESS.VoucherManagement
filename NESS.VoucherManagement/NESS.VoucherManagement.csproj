@@ -20,7 +20,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;CODE_ANALYSIS</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;CODE_ANALYSIS, ASYNC</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -91,7 +91,7 @@
     <Compile Include="ViewModels\DropFileViewModel.cs" />
     <Compile Include="Models\Month.cs" />
     <Compile Include="Utils\MVVM\RelayCommand.cs" />
-    <Compile Include="Settings\SettingsOutOfOfficeOperationsProvider.cs" />
+    <Compile Include="Settings\OutOfOfficeOperationsProvider.cs" />
     <Compile Include="Hollidays\WebServiceHolidayProvider.cs" />
     <Compile Include="Calendar\WorkingDaysProvider.cs" />
     <Compile Include="ViewModels\WorkingPeriodViewModel.cs" />

@@ -2,6 +2,7 @@
 {
 	using System;
 	using System.Linq;
+	using System.Threading.Tasks;
 
 	using Core.Services;
 
@@ -32,6 +33,17 @@
 		{
 			var employees = employeeReader.GetEmployees();
 			var workingDays = workingDaysProvider.GetWorkingDays(when);
+			var outOfOfficeOperations = outOfOfficeOperationsProvider.GetOperations();
+
+			var vouchers = vouchersService.CalculateVouchers(employees, workingDays, outOfOfficeOperations);
+
+			voucherWriter.WriteVouchers(vouchers);
+		}
+
+		public async Task CalculateVouchersAsync(When when)
+		{
+			var employees = employeeReader.GetEmployees();
+			var workingDays = await workingDaysProvider.GetWorkingDaysAsync(when).ConfigureAwait(false);
 			var outOfOfficeOperations = outOfOfficeOperationsProvider.GetOperations();
 
 			var vouchers = vouchersService.CalculateVouchers(employees, workingDays, outOfOfficeOperations);

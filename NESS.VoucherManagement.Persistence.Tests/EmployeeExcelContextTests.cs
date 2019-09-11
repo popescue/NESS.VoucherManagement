@@ -32,17 +32,17 @@ namespace NESS.VoucherManagement.Persistence.Tests
 		[Fact(DisplayName = "Context maps excel files to classes")]
 		public void Test1()
 		{
-			var employeesFilePath = @"TestFiles\employees.xlsx";
-			var timesheetsFilePath = @"TestFiles\timesheets.xlsx";
-			var businessTripsFilePath = @"TestFiles\businessTrips.xlsx";
+			const string employeesFilePath = @"TestFiles\employees.xlsx";
+			const string timesheetsFilePath = @"TestFiles\timesheets.xlsx";
+			const string businessTripsFilePath = @"TestFiles\businessTrips.xlsx";
 
 			var sut = new EmployeeExcelContext(employeesFilePath, timesheetsFilePath, businessTripsFilePath);
 
 			var employees = sut.Employees.ToList();
 			Assert.Equal(4, employees.Count);
 
-			var timesheets = sut.TimeSheetEntries.ToList();
-			Assert.Equal(20, timesheets.Count);
+			var timeSheets = sut.TimeSheetEntries.ToList();
+			Assert.Equal(20, timeSheets.Count);
 
 			var businessTrips = sut.BusinessTrips.ToList();
 			Assert.Equal(15, businessTrips.Count);

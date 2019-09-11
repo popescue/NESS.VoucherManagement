@@ -3,6 +3,7 @@
 	using System;
 	using System.Collections.Generic;
 	using System.Linq;
+	using System.Threading.Tasks;
 
 	using Model;
 
@@ -26,6 +27,11 @@
 		public void SaveChanges()
 		{
 			vouchersMapper.Save(outputFilePath, Vouchers);
+		}
+
+		public Task SaveChangesAsync()
+		{
+			return Task.Run(() => vouchersMapper.Save(outputFilePath, Vouchers));
 		}
 
 		// ReSharper disable once TooManyDeclarations

@@ -2,6 +2,7 @@
 {
 	using System;
 	using System.Linq;
+	using System.Threading.Tasks;
 
 	using Application;
 
@@ -20,6 +21,15 @@
 		public int GetWorkingDays(When when)
 		{
 			var holidays = holidayProvider.GetHolidays(when);
+
+			var weekDays = weekDaysProvider.GetWeekDays(when);
+
+			return weekDays.Except(holidays).Count();
+		}
+
+		public async Task<int> GetWorkingDaysAsync(When when)
+		{
+			var holidays = await holidayProvider.GetHolidaysAsync(when).ConfigureAwait(false);
 
 			var weekDays = weekDaysProvider.GetWeekDays(when);
 

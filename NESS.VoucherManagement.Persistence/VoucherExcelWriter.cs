@@ -3,6 +3,7 @@
 	using System;
 	using System.Collections.Generic;
 	using System.Linq;
+	using System.Threading.Tasks;
 
 	using Application;
 
@@ -32,6 +33,24 @@
 				});
 
 			writeContext.SaveChanges();
+		}
+
+		public Task WriteVouchersAsync(IEnumerable<Voucher> vouchers)
+		{
+			writeContext.Vouchers = vouchers
+				.OrderBy(v => v.Employee.LastName)
+				.ThenBy(v => v.Employee.FirstName)
+				.Select(v => new ExcelVoucher
+				{
+					SapId = v.Employee.SapId,
+					FirstName = v.Employee.FirstName,
+					LastName = v.Employee.LastName,
+					PersonalId = v.Employee.PersonalId,
+					Count = v.Count,
+					Value = Voucher.Value
+				});
+
+			return writeContext.SaveChangesAsync();
 		}
 	}
 }
